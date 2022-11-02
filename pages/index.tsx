@@ -17,6 +17,9 @@ export default function Home() {
         <Link href="/Mantine" passHref legacyBehavior>
           <Button component='a'>Next Link Button</Button>
         </Link>
+        <Link href="/api/graphql" passHref legacyBehavior>
+          <Button component='a'>GraphQL</Button>
+        </Link>
       </main>
 
       <footer className={styles.footer}>
