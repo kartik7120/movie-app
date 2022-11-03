@@ -1,6 +1,11 @@
 import { gql } from "@apollo/client";
+import { GraphQLObjectType, GraphQLScalarType } from "graphql";
 
 export const typeDefs = gql` #graghql
+
+    scaler mediaType
+    scaler timeWindow
+
     type User {
         name:String!
         id:ID
@@ -29,5 +34,17 @@ export const typeDefs = gql` #graghql
 
     type Query {
         users: [User]
+        treading(mediaType:mediaType,timeWindow:timeWindow):Trending
     }
 `
+
+function mediaTypeFunction(mediaType: { mediaType: "all" | "movie" | "tv" | "person" }) {
+    return mediaType
+}
+
+export const mediaType = new GraphQLScalarType({
+    name: "mediaType",
+    description: "Feild is used to set the range of the trediness that the user wants",
+    serialize: () => mediaTypeFunction,
+    parseValue: () => mediaTypeFunction
+})
