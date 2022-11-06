@@ -39,7 +39,7 @@ export const typeDefs = gql` #graghql
         backdrop_path:String
         popularity:Int!
         vote_count:Int!
-        video:Boolean!
+        video:Boolean
         total_pages:Int!
         total_results:Int!
     }
