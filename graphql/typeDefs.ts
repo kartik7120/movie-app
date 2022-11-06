@@ -3,8 +3,20 @@ import { GraphQLObjectType, GraphQLScalarType } from "graphql";
 
 export const typeDefs = gql` #graghql
 
-    scaler mediaType
-    scaler timeWindow
+    scalar  mediaType
+    scalar  timeWindow
+
+    enum MediaType {
+        ALL
+        MOVIE
+        PERSON
+        TV
+    }
+
+    enum TimeWindow {
+        DAY
+        WEEK
+    }
 
     type User {
         name:String!
@@ -14,16 +26,16 @@ export const typeDefs = gql` #graghql
 
     "Get the daily or weekly trending items"
     type Trending {
-        page:Int!
+        page:Int! @deprecated(reason:"Not being used")
         poster_path:String
         adult:Boolean!
         overview:String!
-        release_date:String!
-        genre_id:[Int]!
+        release_date:String
+        genre_ids:[Int]!
         id:Int!
-        original_title:String!
+        original_title:String
         original_language:String!
-        title:String!
+        title:String
         backdrop_path:String
         popularity:Int!
         vote_count:Int!
@@ -34,17 +46,6 @@ export const typeDefs = gql` #graghql
 
     type Query {
         users: [User]
-        treading(mediaType:mediaType,timeWindow:timeWindow):Trending
+        trending(mediaType:MediaType,timeWindow:TimeWindow):[Trending]
     }
-`
-
-function mediaTypeFunction(mediaType: { mediaType: "all" | "movie" | "tv" | "person" }) {
-    return mediaType
-}
-
-export const mediaType = new GraphQLScalarType({
-    name: "mediaType",
-    description: "Feild is used to set the range of the trediness that the user wants",
-    serialize: () => mediaTypeFunction,
-    parseValue: () => mediaTypeFunction
-})
+`;
