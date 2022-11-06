@@ -16,7 +16,7 @@ export const config = {
 }
 
 const server = new ApolloServer({
-    context: ({ req }) => ({ req }),
+    context: ({ req }: { req: NextApiRequest }) => ({ req }),
     typeDefs,
     resolvers,
 });
