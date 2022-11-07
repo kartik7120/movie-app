@@ -78,7 +78,6 @@ export const typeDefs = gql` #graghql
     }
 
     type Query {
-        users: [User]
         trending(mediaType:MediaType,timeWindow:TimeWindow):[Trending]
         nowPlayingMovies:NowPlayingMovies
         upcomingMovies:NowPlayingMovies
