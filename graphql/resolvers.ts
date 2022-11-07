@@ -59,7 +59,7 @@ export const resolvers = {
             return result.results;
         },
         getVideoMedia: async (parent: any, args: any, context: any, info: any) => {
-            // /movie/{movie_id}/videos
+            
             if (args.id === undefined || args.id === null) {
                 throw new GraphQLError("Please provide id of the media", {
                     extensions: {
