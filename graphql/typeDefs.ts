@@ -1,10 +1,6 @@
 import { gql } from "@apollo/client";
-import { GraphQLObjectType, GraphQLScalarType } from "graphql";
 
 export const typeDefs = gql` #graghql
-
-    scalar  mediaType
-    scalar  timeWindow
 
     enum MediaType {
         ALL
