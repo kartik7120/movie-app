@@ -55,7 +55,7 @@ export const typeDefs = gql` #graghql
         video:Boolean
         vote_average:Int
     }
-
+    "Describes the currently streaming TV shows"
     type NowPlayingTv {
         poster_path:String
         popularity:Int
