@@ -39,12 +39,12 @@ export const typeDefs = gql` #graghql
         total_pages:Int!
         total_results:Int!
     }
-
+    "Date type returned by NowPlaying Type"
     type Dates {
         maximum:String
         minimum:String
     }
-
+    "Describes the currently playing movies in theatre"
     type NowPlaying {
         poster_path:String
         adult:Boolean
