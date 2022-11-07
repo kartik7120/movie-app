@@ -13,7 +13,6 @@ export const resolvers = {
         WEEK: "week"
     },
     Query: {
-        users: () => [],
         trending: async (parent: any, args: any, context: any, info: any) => {
             if (args.mediaType === undefined || args.mediaType === null) {
                 throw new GraphQLError("mediaType is null or undefined");
