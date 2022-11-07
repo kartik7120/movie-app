@@ -18,8 +18,7 @@ export const resolvers = {
             if (args.mediaType === undefined || args.mediaType === null) {
                 throw new GraphQLError("mediaType is null or undefined");
             }
-            const query2 = await fetch(`${process.env.API_URL!}trending/
-            ${args.mediaType}/${args.timeWindow}?api_key=35aa9d224935ab595e7f1d1d7a85bf92`);
+            const query2 = await fetch(`${process.env.API_URL!}trending/${args.mediaType}/${args.timeWindow}?api_key=${process.env.API_KEY}`);
             const query2Result = await query2.json();
             const result2 = query2Result.results;
             return result2;
