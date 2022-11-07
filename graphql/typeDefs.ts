@@ -63,7 +63,7 @@ export const typeDefs = gql` #graghql
     }
 
     type NowPlayingMovies {
-        newPlaying:[NowPlaying]
+        nowPlaying:[NowPlaying]
         dates:Dates
     }
 
