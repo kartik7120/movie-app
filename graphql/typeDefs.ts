@@ -90,5 +90,6 @@ export const typeDefs = gql` #graghql
         upcomingMovies:NowPlayingMovies
         nowPlayingTv:[NowPlayingTv]
         topRatedMovies:[NowPlaying]
+        topRatedTvShows:[NowPlayingTv]
     }
 `;
