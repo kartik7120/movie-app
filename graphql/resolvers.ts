@@ -12,6 +12,10 @@ export const resolvers = {
         DAY: "day",
         WEEK: "week"
     },
+    SourceMedia: {
+        MOVIE: "movie",
+        TV: "tv"
+    },
     Query: {
         trending: async (parent: any, args: any, context: any, info: any) => {
             if (args.mediaType === undefined || args.mediaType === null) {
@@ -51,6 +55,30 @@ export const resolvers = {
         },
         topRatedTvShows: async (parent: any, args: any, context: any, info: any) => {
             const query = await fetch(`${process.env.API_URL}tv/top_rated?api_key=${process.env.API_KEY}`);
+            const result = await query.json();
+            return result.results;
+        },
+        getVideoMedia: async (parent: any, args: any, context: any, info: any) => {
+            // /movie/{movie_id}/videos
+            if (args.id === undefined || args.id === null) {
+                throw new GraphQLError("Please provide id of the media", {
+                    extensions: {
+                        code: "BAD_USER_INPUT",
+                        status: 404
+                    }
+                })
+            }
+
+            if (args.sourceMedia === undefined || args.sourceMedia === null) {
+                throw new GraphQLError("Please provide source media type", {
+                    extensions: {
+                        code: "BAD_USER_INPUT",
+                        status: 404
+                    }
+                })
+            }
+
+            const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/videos?api_key=${process.env.API_KEY}`);
             const result = await query.json();
             return result.results;
         },
