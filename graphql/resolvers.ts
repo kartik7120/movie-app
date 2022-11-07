@@ -50,5 +50,10 @@ export const resolvers = {
             const result = await query.json();
             return result.results;
         },
+        topRatedTvShows: async (parent: any, args: any, context: any, info: any) => {
+            const query = await fetch(`${process.env.API_URL}tv/top_rated?api_key=${process.env.API_KEY}`);
+            const result = await query.json();
+            return result.results;
+        },
     }
 }
