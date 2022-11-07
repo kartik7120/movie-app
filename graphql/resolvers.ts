@@ -39,6 +39,11 @@ export const resolvers = {
                 dates: result.dates,
                 nowPlaying: result.results
             }
-        }
+        },
+        nowPlayingTv: async (parent: any, args: any, context: any, info: any) => {
+            const query = await fetch(`${process.env.API_URL}tv/on_the_air?api_key=${process.env.API_KEY}`);
+            const result = await query.json();
+            return result.results;
+        },
     },
 }
