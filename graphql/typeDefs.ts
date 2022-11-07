@@ -62,6 +62,22 @@ export const typeDefs = gql` #graghql
         vote_average:Int
     }
 
+    type NowPlayingTv {
+        poster_path:String
+        popularity:Int
+        id:ID!
+        backdrop_path:String
+        vote_average:Int
+        overview:String
+        first_air_date:String
+        origin_country:[String]
+        genre_ids:[Int]
+        original_language:String
+        vote_count:Int
+        name:String
+        original_string:String
+    }
+
     type NowPlayingMovies {
         nowPlaying:[NowPlaying]
         dates:Dates
@@ -71,5 +87,7 @@ export const typeDefs = gql` #graghql
         users: [User]
         trending(mediaType:MediaType,timeWindow:TimeWindow):[Trending]
         nowPlayingMovies:NowPlayingMovies
+        upcomingMovies:NowPlayingMovies
+        nowPlayingTv:[NowPlayingTv]
     }
 `;
