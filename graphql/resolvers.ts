@@ -31,6 +31,14 @@ export const resolvers = {
                 dates: result.dates,
                 nowPlaying: result.results
             }
+        },
+        upcomingMovies: async (parent: any, args: any, context: any, info: any) => {
+            const query = await fetch(`${process.env.API_URL}movie/upcoming?api_key=${process.env.API_KEY}`);
+            const result = await query.json();
+            return {
+                dates: result.dates,
+                nowPlaying: result.results
+            }
         }
     },
 }
