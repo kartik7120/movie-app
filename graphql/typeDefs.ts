@@ -14,12 +14,6 @@ export const typeDefs = gql` #graghql
         WEEK
     }
 
-    type User {
-        name:String!
-        id:ID
-        password:String!
-    }
-
     "Get the daily or weekly trending items"
     type Trending {
         page:Int! @deprecated(reason:"Not being used")
