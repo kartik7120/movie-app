@@ -23,5 +23,11 @@ export const resolvers = {
             const result2 = query2Result.results;
             return result2;
         },
+        nowPlayingMovies: async (parent: any, args: any, context: any, info: any) => {
+
+            const query = await fetch(`${process.env.API_URL}movie/now_playing?api_key=${process.env.API_KEY}`);
+            const result = await query.json();
+            
+        }
     },
 }

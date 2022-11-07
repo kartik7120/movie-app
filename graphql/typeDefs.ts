@@ -40,8 +40,36 @@ export const typeDefs = gql` #graghql
         total_results:Int!
     }
 
+    type Dates {
+        maximum:String
+        minimum:String
+    }
+
+    type NowPlaying {
+        poster_path:String
+        adult:Boolean
+        overview:String
+        release_date:String
+        genre_ids:[Int]!
+        id:ID!
+        original_title:String
+        original_language:String
+        title:String
+        backdrop_path:String
+        popularity:Int
+        vote_count:Int
+        video:Boolean
+        vote_average:Int
+    }
+
+    type NowPlayingMovies {
+        newPlaying:[NowPlaying]
+        dates:Dates
+    }
+
     type Query {
         users: [User]
         trending(mediaType:MediaType,timeWindow:TimeWindow):[Trending]
+        nowPlayingMovies:NowPlayingMovies
     }
 `;
