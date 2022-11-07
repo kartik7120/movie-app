@@ -14,6 +14,11 @@ export const typeDefs = gql` #graghql
         WEEK
     }
 
+    enum SourceMedia {
+        MOVIE
+        TV
+    }
+
     "Get the daily or weekly trending items"
     type Trending {
         page:Int! @deprecated(reason:"Not being used")
@@ -77,6 +82,20 @@ export const typeDefs = gql` #graghql
         dates:Dates
     }
 
+    type MediaVideo {
+        # id:ID!
+        iso_639_1:String
+        iso_3166_1:String
+        name:String
+        key:String
+        site:String
+        size:Int
+        type:String
+        official:Boolean
+        published_at:String
+        id:String
+    }
+
     type Query {
         trending(mediaType:MediaType,timeWindow:TimeWindow):[Trending]
         nowPlayingMovies:NowPlayingMovies
@@ -84,5 +103,6 @@ export const typeDefs = gql` #graghql
         nowPlayingTv:[NowPlayingTv]
         topRatedMovies:[NowPlaying]
         topRatedTvShows:[NowPlayingTv]
+        getVideoMedia(id:ID!,sourceMedia:SourceMedia!):[MediaVideo]
     }
 `;
