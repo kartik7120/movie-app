@@ -120,5 +120,6 @@ export const typeDefs = gql` #graghql
         topRatedMovies:[NowPlaying]
         topRatedTvShows:[NowPlayingTv]
         getVideoMedia(id:ID!,sourceMedia:SourceMedia!):[MediaVideo]
+        getImageMedia(id:ID!,sourceMedia:SourceMedia!):MediaImages
     }
 `;
