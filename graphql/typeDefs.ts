@@ -92,8 +92,24 @@ export const typeDefs = gql` #graghql
         size:Int
         type:String
         official:Boolean
-        published_at:String
+        publishedAt:String
         id:String
+    }
+
+    type Backdrop {
+        aspect_ratio:String
+        file_path:String
+        height:Int
+        iso_639_1:String
+        vote_average:Int
+        vote_count:Int
+        width:Int
+    }
+
+    type MediaImages {
+        backdrops:[Backdrop]
+        posters:[Backdrop]
+        id:ID!
     }
 
     type Query {
