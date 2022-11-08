@@ -97,11 +97,11 @@ export const typeDefs = gql` #graghql
     }
 
     type Backdrop {
-        aspect_ratio:String
+        aspect_ratio:Float
         file_path:String
         height:Int
         iso_639_1:String
-        vote_average:Int
+        vote_average:Float
         vote_count:Int
         width:Int
     }
