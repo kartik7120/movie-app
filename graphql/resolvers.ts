@@ -59,7 +59,7 @@ export const resolvers = {
             return result.results;
         },
         getVideoMedia: async (parent: any, args: any, context: any, info: any) => {
-            
+
             if (args.id === undefined || args.id === null) {
                 throw new GraphQLError("Please provide id of the media", {
                     extensions: {
@@ -82,5 +82,29 @@ export const resolvers = {
             const result = await query.json();
             return result.results;
         },
+        getImageMedia: async (parent: any, args: any, context: any, info: any) => {
+
+            if (args.id === undefined || args.id === null) {
+                throw new GraphQLError("Please provide id of the media", {
+                    extensions: {
+                        code: "BAD_USER_INPUT",
+                        status: 404
+                    }
+                })
+            }
+
+            if (args.sourceMedia === undefined || args.sourceMedia === null) {
+                throw new GraphQLError("Please provide source media type", {
+                    extensions: {
+                        code: "BAD_USER_INPUT",
+                        status: 404
+                    }
+                })
+            }
+
+            const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}`);
+            const result = await query.json();
+            return result;
+        }
     }
 }
