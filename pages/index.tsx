@@ -1,10 +1,27 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
 import { Button } from "@mantine/core";
 import Link from 'next/link';
+import { Carousel } from '@mantine/carousel';
+import { useQuery, gql } from '@apollo/client';
+import CardComponent from '../components/CardComponent';
+
+const NOW_PLAYING = gql`
+  query nowPlaying {
+    getPopularMovies {
+    adult
+    title
+
+    }
+  }
+`
 
 export default function Home() {
+
+  // const { loading, data, error } = useQuery(NOW_PLAYING, {
+  // })
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,7 +30,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
+        <Carousel sx={{ maxWidth: "90%" }} slidesToScroll={1} mx="auto" slideSize="25%" align="start"
+          loop withControls withIndicators height={300}>
+          <Carousel.Slide><CardComponent /></Carousel.Slide>
+          <Carousel.Slide><CardComponent /></Carousel.Slide>
+          <Carousel.Slide><CardComponent /></Carousel.Slide>
+          <Carousel.Slide><CardComponent /></Carousel.Slide>
+          <Carousel.Slide><CardComponent /></Carousel.Slide>
+          <Carousel.Slide><CardComponent /></Carousel.Slide>
+        </Carousel>
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
         </Link>
