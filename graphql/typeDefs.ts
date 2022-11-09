@@ -58,7 +58,7 @@ export const typeDefs = gql` #graghql
         popularity:Int
         vote_count:Int
         video:Boolean
-        vote_average:Int
+        vote_average:Float
     }
     "Describes the currently streaming TV shows"
     type NowPlayingTv {
