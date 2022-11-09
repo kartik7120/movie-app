@@ -10,17 +10,21 @@ import CardComponent from '../components/CardComponent';
 const NOW_PLAYING = gql`
   query nowPlaying {
     getPopularMovies {
-    adult
-    title
-
-    }
+    # id
+    # original_title
+    # vote_count
+    # vote_average
+    poster_path
+    # adult
+    # title
+    # release_date
   }
+}
 `
 
 export default function Home() {
 
-  // const { loading, data, error } = useQuery(NOW_PLAYING, {
-  // })
+  const { loading, data, error } = useQuery(NOW_PLAYING);
 
   return (
     <div className={styles.container}>
@@ -31,14 +35,12 @@ export default function Home() {
       </Head>
 
       <main>
-        <Carousel sx={{ maxWidth: "90%" }} slidesToScroll={1} mx="auto" slideSize="25%" align="start"
-          loop withControls withIndicators height={300}>
-          <Carousel.Slide><CardComponent /></Carousel.Slide>
-          <Carousel.Slide><CardComponent /></Carousel.Slide>
-          <Carousel.Slide><CardComponent /></Carousel.Slide>
-          <Carousel.Slide><CardComponent /></Carousel.Slide>
-          <Carousel.Slide><CardComponent /></Carousel.Slide>
-          <Carousel.Slide><CardComponent /></Carousel.Slide>
+        <Carousel sx={{ maxWidth: "90%" }} slidesToScroll={2} mx="auto" slideSize="25%" align="start" loop withControls height={300}>
+          {data ? data.getPopularMovies.map((movie: any, index: number) => (
+            <Carousel.Slide key={Math.random() * index * 45}>
+              <CardComponent poster_path={movie.poster_path} />
+            </Carousel.Slide>
+          )) : <Carousel.Slide>2</Carousel.Slide>}
         </Carousel>
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
