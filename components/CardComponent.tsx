@@ -27,7 +27,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
         <Card.Section>
             <Image
                 src={`https://image.tmdb.org/t/p/w200${props.poster_path}`}
-                alt="Norway"
+                alt={`${props.original_title} poster`}
                 priority={true}
                 width={170}
                 height={200}
@@ -49,7 +49,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
 
         <Group position="apart">
             <Button type="button" variant="outline" leftIcon={<BsFillPlayFill />}>Trailer</Button>
-            <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25}/></ActionIcon>
+            <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
         </Group>
     </Card>
 }
