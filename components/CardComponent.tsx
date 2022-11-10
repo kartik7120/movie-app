@@ -1,29 +1,50 @@
-import { Badge, Button, Card, Group, Text } from "@mantine/core";
+import { ActionIcon, Badge, Button, Card, createStyles, Group, Text } from "@mantine/core";
 import Image from "next/image";
+import { BsStar } from "react-icons/bs";
+import { AiFillStar, AiOutlinePlus } from "react-icons/ai";
 
 interface CardProps {
-    poster_path: String
+    poster_path: string,
+    original_title: string
 }
 
-export default function CardComponent(props: CardProps) {
+const useStyles = createStyles((theme, params, gerRef) => ({
+    wrapper: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "left"
+    },
+    wrapper2: {
+        marginBottom: "2rem"
+    }
+}))
 
-    const url: string = `https://image.tmdb.org/t/p/w200${props.poster_path}`;
+export default function CardComponent(props: CardProps): JSX.Element {
 
-    return <Card shadow="md" p="lg" radius="md" withBorder sx={{ width: 200 ,height:"100%"}}>
+    const { classes } = useStyles();
+
+    return <Card shadow="md" p="lg" radius="md" withBorder sx={{ width: 170, height: "100%" }}>
         <Card.Section>
             <Image
-                src={url}
+                src={`https://image.tmdb.org/t/p/w200${props.poster_path}`}
                 alt="Norway"
                 priority={true}
-                fill
+                width={170}
+                height={200}
             />
-
         </Card.Section>
-        {/* <Text size="sm" color="dimmed">
-            With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-        </Text>
-        <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-            Book classic tour now
-        </Button> */}
+        <div className={classes.wrapper2}>
+            <Group position="apart" mt={3}>
+                <div className={classes.wrapper}>
+                    <AiFillStar color="yellow" size={20} style={{ alignSelf: "center" }} />
+                    <Text variant="text" pl={3}>6.5</Text>
+                </div>
+                <ActionIcon radius="sm" variant="subtle" size="lg"><BsStar color="cyan" size={18} /></ActionIcon>
+            </Group>
+            <Text size="md" align="left" component="p">
+                {props.original_title}
+            </Text>
+        </div>
+        <Button type="button" variant="outline" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
     </Card>
 }

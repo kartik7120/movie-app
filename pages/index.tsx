@@ -6,12 +6,13 @@ import Link from 'next/link';
 import { Carousel } from '@mantine/carousel';
 import { useQuery, gql } from '@apollo/client';
 import CardComponent from '../components/CardComponent';
+import carosel from "../styles/carosel.module.css";
 
 const NOW_PLAYING = gql`
   query nowPlaying {
     getPopularMovies {
     # id
-    # original_title
+    original_title
     # vote_count
     # vote_average
     poster_path
@@ -35,13 +36,16 @@ export default function Home() {
       </Head>
 
       <main>
-        <Carousel sx={{ maxWidth: "90%" }} slidesToScroll={2} mx="auto" slideSize="25%" align="start" loop withControls height={300}>
-          {data ? data.getPopularMovies.map((movie: any, index: number) => (
-            <Carousel.Slide key={Math.random() * index * 45}>
-              <CardComponent poster_path={movie.poster_path} />
-            </Carousel.Slide>
-          )) : <Carousel.Slide>2</Carousel.Slide>}
-        </Carousel>
+        <div className={carosel.wrapper}>
+          <Carousel sx={{ flex: 1, maxHeight: "100%" }} slidesToScroll={5} align="center" withControls slideSize="20%">
+            {data ? data.getPopularMovies.map((movie: any, index: number) => (
+              <Carousel.Slide key={Math.random() * index * 45}>
+                <CardComponent original_title={movie.original_title} poster_path={movie.poster_path} />
+              </Carousel.Slide>
+            )) : <Carousel.Slide>2</Carousel.Slide>
+            }
+          </Carousel>
+        </div>
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
         </Link>
