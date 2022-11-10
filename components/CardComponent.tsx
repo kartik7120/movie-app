@@ -1,7 +1,7 @@
 import { ActionIcon, Badge, Button, Card, createStyles, Group, Text } from "@mantine/core";
 import Image from "next/image";
-import { BsStar } from "react-icons/bs";
-import { AiFillStar, AiOutlinePlus } from "react-icons/ai";
+import { BsStar, BsFillPlayFill } from "react-icons/bs";
+import { AiFillStar, AiOutlinePlus, AiOutlineInfoCircle } from "react-icons/ai";
 
 interface CardProps {
     poster_path: string,
@@ -46,5 +46,10 @@ export default function CardComponent(props: CardProps): JSX.Element {
             </Text>
         </div>
         <Button type="button" variant="outline" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
+
+        <Group position="apart">
+            <Button type="button" variant="outline" leftIcon={<BsFillPlayFill />}>Trailer</Button>
+            <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25}/></ActionIcon>
+        </Group>
     </Card>
 }
