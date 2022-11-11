@@ -15,7 +15,17 @@ const useStyles = createStyles((theme, params, gerRef) => ({
         justifyContent: "left"
     },
     wrapper2: {
-        marginBottom: "2rem"
+        marginBottom: "2rem",
+    },
+    wrapper3: {
+        marginTop: "2rem"
+    },
+    wrapper4: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: "1rem"
     }
 }))
 
@@ -40,16 +50,17 @@ export default function CardComponent(props: CardProps): JSX.Element {
                     <Text variant="text" pl={3}>6.5</Text>
                 </div>
                 <ActionIcon radius="sm" variant="subtle" size="lg"><BsStar color="cyan" size={18} /></ActionIcon>
+                <Text size="md" align="left" component="p" m={0} style={{ height: "2rem" }}>
+                    {props.original_title}
+                </Text>
             </Group>
-            <Text size="md" align="left" component="p">
-                {props.original_title}
-            </Text>
         </div>
-        <Button type="button" variant="outline" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
-
-        <Group position="apart">
-            <Button type="button" variant="outline" leftIcon={<BsFillPlayFill />}>Trailer</Button>
-            <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
-        </Group>
+        <div className={classes.wrapper3}>
+            <Button type="button" variant="outline" size="md" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
+            <div className={classes.wrapper4}>
+                <Button type="button" variant="outline" size="sm" leftIcon={<BsFillPlayFill />}>Trailer</Button>
+                <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
+            </div>
+        </div>
     </Card>
 }
