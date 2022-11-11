@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Button, Card, createStyles, Group, Text } from "@mantine/core";
+import { ActionIcon, Badge, Button, Card, createStyles, Group, Text, useMantineTheme } from "@mantine/core";
 import Image from "next/image";
 import { BsStar, BsFillPlayFill } from "react-icons/bs";
 import { AiFillStar, AiOutlinePlus, AiOutlineInfoCircle } from "react-icons/ai";
@@ -32,6 +32,7 @@ const useStyles = createStyles((theme, params, gerRef) => ({
 export default function CardComponent(props: CardProps): JSX.Element {
 
     const { classes } = useStyles();
+    const theme = useMantineTheme();
 
     return <Card shadow="md" p="lg" radius="md" withBorder sx={{ width: 170, height: "100%" }}>
         <Card.Section>
@@ -58,7 +59,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
         <div className={classes.wrapper3}>
             <Button type="button" variant="outline" size="md" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
             <div className={classes.wrapper4}>
-                <Button type="button" variant="outline" size="sm" leftIcon={<BsFillPlayFill />}>Trailer</Button>
+                <Button type="button" variant="outline" size="sm" color="teal" leftIcon={<BsFillPlayFill size={20}/>}>Trailer</Button>
                 <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
             </div>
         </div>
