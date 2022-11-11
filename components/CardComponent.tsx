@@ -34,14 +34,14 @@ export default function CardComponent(props: CardProps): JSX.Element {
     const { classes } = useStyles();
     const theme = useMantineTheme();
 
-    return <Card shadow="md" p="lg" radius="md" withBorder sx={{ width: 170, height: "100%" }}>
+    return <Card shadow="md" p="lg" radius="sm" withBorder sx={{ width: "75%", height: "100%" }}>
         <Card.Section>
             <Image
-                src={`https://image.tmdb.org/t/p/w200${props.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w500${props.poster_path}`}
                 alt={`${props.original_title} poster`}
                 priority={true}
-                width={170}
-                height={200}
+                width={200}
+                height={270}
             />
         </Card.Section>
         <div className={classes.wrapper2}>
@@ -52,7 +52,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 </div>
                 <ActionIcon radius="sm" variant="subtle" size="lg"><BsStar color="cyan" size={18} /></ActionIcon>
                 <Text size="md" align="left" component="p" m={0} style={{ height: "2rem" }}>
-                    {props.original_title}
+                    {props.original_title || "NaN"}
                 </Text>
             </Group>
         </div>
