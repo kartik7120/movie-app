@@ -1,6 +1,7 @@
 import { ActionIcon, Badge, Button, Card, createStyles, Group, Text, useMantineTheme } from "@mantine/core";
 import Image from "next/image";
 import { BsStar, BsFillPlayFill } from "react-icons/bs";
+import { MediaQuery } from "@mantine/core";
 import { AiFillStar, AiOutlinePlus, AiOutlineInfoCircle } from "react-icons/ai";
 import styles from "../styles/card.module.css";
 interface CardProps {
@@ -25,7 +26,11 @@ const useStyles = createStyles((theme, params, gerRef) => ({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: "1rem"
+        marginTop: "1rem",
+        // '@media (max-width:670px)': {
+        //     flexDirection: "column",
+        //     alignItems: "flex-start"
+        // }
     },
     imgClass: {
         maxWidth: "100%",
@@ -63,9 +68,19 @@ export default function CardComponent(props: CardProps): JSX.Element {
             </Text>
         </div>
         <div className={classes.wrapper3}>
-            <Button type="button" variant="outline" size="md" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
+            <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
+                <Button type="button" variant="outline" size="sm" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
+            </MediaQuery>
+            <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
+                <Button type="button" variant="outline" size="md" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
+            </MediaQuery>
             <div className={classes.wrapper4}>
-                <Button type="button" variant="outline" size="sm" color="teal" leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
+                <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
+                    <Button type="button" variant="outline" size="xs" color="teal" leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
+                </MediaQuery>
+                <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
+                    <Button type="button" variant="outline" size="sm" color="teal" leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
+                </MediaQuery>
                 <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
             </div>
         </div>
