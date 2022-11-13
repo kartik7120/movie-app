@@ -37,7 +37,12 @@ export default function Home() {
 
       <main>
         <div className={carosel.wrapper}>
-          <Carousel sx={{ flex: 1, maxHeight: "100%" }} slidesToScroll={5} align="center" withControls slideSize="20%">
+          <Carousel breakpoints={[
+            { maxWidth: 'md', slideSize: '25%' },
+            { maxWidth: 'sm', slideSize: '50%', slideGap: 0 },
+            { maxWidth: "xs", slideSize: "75", slideGap: 0 }
+          ]}
+            sx={{ flex: 1 }} slidesToScroll={1} align="start" dragFree={true} withControls slideSize="20%">
             {data ? data.getPopularMovies.map((movie: any, index: number) => (
               <Carousel.Slide key={Math.random() * index * 45}>
                 <CardComponent original_title={movie.original_title} poster_path={movie.poster_path} />
