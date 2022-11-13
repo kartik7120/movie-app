@@ -8,6 +8,7 @@ import { useQuery, gql } from '@apollo/client';
 import CardComponent from '../components/CardComponent';
 import carosel from "../styles/carosel.module.css";
 import { SegmentedControl } from '@mantine/core';
+import React from 'react';
 
 const NOW_PLAYING = gql`
   query nowPlaying {
@@ -27,7 +28,7 @@ const NOW_PLAYING = gql`
 export default function Home() {
 
   const { loading, data, error } = useQuery(NOW_PLAYING);
-
+  const [value, setValue] = React.useState('movie');
   return (
     <div className={styles.container}>
       <Head>
@@ -52,10 +53,13 @@ export default function Home() {
             }
           </Carousel>
         </div>
-        <SegmentedControl data={[
-          { label: "In Theaters", value: "movie" },
-          { label: "On Tv", value: "tv" }
-        ]} size="md" color="yellow" />
+        <SegmentedControl
+          value={value}
+          onChange={setValue}
+          data={[
+            { label: "In Theaters", value: "movie" },
+            { label: "On Tv", value: "tv" }
+          ]} size="md" color="yellow" />
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
         </Link>
