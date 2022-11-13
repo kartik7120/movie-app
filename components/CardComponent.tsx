@@ -27,10 +27,6 @@ const useStyles = createStyles((theme, params, gerRef) => ({
         justifyContent: "space-between",
         alignItems: "center",
         marginTop: "1rem",
-        // '@media (max-width:670px)': {
-        //     flexDirection: "column",
-        //     alignItems: "flex-start"
-        // }
     },
     imgClass: {
         maxWidth: "100%",
