@@ -6,11 +6,17 @@
 .card {
   width: 90%;
   height: 100%;
-  max-width: 100%;
+  max-width: 90%;
 }
 
 @media screen and (max-width: 768px) {
   .card {
-    width: 80%;
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 690px) {
+  .card {
+    width: 90%;
   }
 }

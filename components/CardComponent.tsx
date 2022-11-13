@@ -14,6 +14,7 @@ const useStyles = createStyles((theme, params, gerRef) => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "left",
+        maxWidth: "100%"
     },
     wrapper2: {
         marginBottom: "2rem",
@@ -52,7 +53,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
             />
         </Card.Section>
         <div className={classes.wrapper2}>
-            <Group position="apart" mt={3}>
+            <Group position="apart" mt={3} sx={{ maxWidth: "100%" }}>
                 <div className={classes.wrapper}>
                     <AiFillStar color="yellow" size={20} style={{ alignSelf: "center" }} />
                     <Text variant="text" pl={3}>6.5</Text>
@@ -77,7 +78,12 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
                     <Button type="button" variant="outline" size="sm" color="teal" leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
                 </MediaQuery>
-                <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
+                <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
+                    <ActionIcon radius="md" variant="subtle" size="md"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
+                </MediaQuery>
+                <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
+                    <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
+                </MediaQuery>
             </div>
         </div>
     </Card>

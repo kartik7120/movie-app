@@ -40,7 +40,7 @@ export default function Home() {
           <Carousel breakpoints={[
             { maxWidth: 'md', slideSize: '25%' },
             { maxWidth: 'sm', slideSize: '50%', slideGap: 0 },
-            { maxWidth: "xs", slideSize: "75", slideGap: 0 }
+            { maxWidth: "xs", slideSize: "75%", slideGap: 0 }
           ]}
             sx={{ flex: 1 }} slidesToScroll={1} align="start" dragFree={true} withControls slideSize="20%">
             {data ? data.getPopularMovies.map((movie: any, index: number) => (
