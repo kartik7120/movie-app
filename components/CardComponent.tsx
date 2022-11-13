@@ -61,28 +61,34 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 <ActionIcon radius="sm" variant="subtle" size="lg"><BsStar color="cyan" size={18} /></ActionIcon>
             </Group>
             <Text size="md" align="left" component="p" m={1} style={{ height: "2rem" }}>
-                {props.original_title || "NaN"}
+                {props.original_title}
             </Text>
         </div>
         <div className={classes.wrapper3}>
             <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
-                <Button type="button" variant="outline" size="sm" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
+                <Button type="button" variant="outline" size="sm" leftIcon={<AiOutlinePlus />}>Watchlist</Button>
             </MediaQuery>
             <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
-                <Button type="button" variant="outline" size="md" leftIcon={<AiOutlinePlus />}> Watchlist</Button>
+                <Button type="button" variant="outline" size="md" leftIcon={<AiOutlinePlus />}>Watchlist</Button>
             </MediaQuery>
             <div className={classes.wrapper4}>
                 <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
-                    <Button type="button" variant="outline" size="xs" color="teal" leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
+                    <Button type="button" variant="outline" size="xs" color="teal"
+                        leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
                 </MediaQuery>
                 <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
-                    <Button type="button" variant="outline" size="sm" color="teal" leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
+                    <Button type="button" variant="outline" size="sm" color="teal"
+                        leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
                 </MediaQuery>
                 <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
-                    <ActionIcon radius="md" variant="subtle" size="md"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
+                    <ActionIcon radius="md" variant="subtle" size="md">
+                        <AiOutlineInfoCircle color="white" size={25} />
+                    </ActionIcon>
                 </MediaQuery>
                 <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
-                    <ActionIcon radius="md" variant="subtle" size="xl"><AiOutlineInfoCircle color="white" size={25} /></ActionIcon>
+                    <ActionIcon radius="md" variant="subtle" size="xl">
+                        <AiOutlineInfoCircle color="white" size={25} />
+                    </ActionIcon>
                 </MediaQuery>
             </div>
         </div>
