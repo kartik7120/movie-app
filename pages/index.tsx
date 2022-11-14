@@ -9,26 +9,15 @@ import CardComponent from '../components/CardComponent';
 import carosel from "../styles/carosel.module.css";
 import { SegmentedControl } from '@mantine/core';
 import React from 'react';
+import PopularMovies from '../components/PopularMovies';
+import PopularTv from '../components/PopularTv';
 
-const NOW_PLAYING = gql`
-  query nowPlaying {
-    getPopularMovies {
-    # id
-    original_title
-    # vote_count
-    # vote_average
-    poster_path
-    # adult
-    # title
-    # release_date
-  }
-}
-`
+type MediaType = "movie" | "tv";
 
 export default function Home() {
 
-  const { loading, data, error } = useQuery(NOW_PLAYING);
-  const [value, setValue] = React.useState('movie');
+  const [value, setValue] = React.useState<MediaType | undefined>('movie');
+
   return (
     <div className={styles.container}>
       <Head>
@@ -39,27 +28,17 @@ export default function Home() {
 
       <main>
         <div className={carosel.wrapper}>
-          <Carousel breakpoints={[
-            { maxWidth: 'md', slideSize: '25%' },
-            { maxWidth: 'sm', slideSize: '50%', slideGap: 0 },
-            { maxWidth: "xs", slideSize: "75%", slideGap: 0 }
-          ]}
-            sx={{ flex: 1 }} slidesToScroll={1} align="start" dragFree={true} withControls slideSize="20%">
-            {data ? data.getPopularMovies.map((movie: any, index: number) => (
-              <Carousel.Slide key={Math.random() * index * 45}>
-                <CardComponent original_title={movie.original_title} poster_path={movie.poster_path} />
-              </Carousel.Slide>
-            )) : <Carousel.Slide>2</Carousel.Slide>
-            }
-          </Carousel>
+          <SegmentedControl
+            value={value}
+            onChange={(value: MediaType) => {
+              setValue(value)
+            }}
+            data={[
+              { label: "In Theaters", value: "movie" },
+              { label: "On Tv", value: "tv" }
+            ]} size="md" color="yellow" />
+          {value === "movie" ? <PopularMovies /> : <PopularTv />}
         </div>
-        <SegmentedControl
-          value={value}
-          onChange={setValue}
-          data={[
-            { label: "In Theaters", value: "movie" },
-            { label: "On Tv", value: "tv" }
-          ]} size="md" color="yellow" />
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
         </Link>
