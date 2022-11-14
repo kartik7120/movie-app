@@ -3,6 +3,7 @@ import CardComponent from '../components/CardComponent';
 import { Carousel } from "@mantine/carousel";
 import React from "react";
 import { useQuery } from "@apollo/client";
+import CarouselWrapper from "./CarouselComponent";
 
 const NOW_PLAYING = gql`
   query nowPlaying {
@@ -22,17 +23,12 @@ const NOW_PLAYING = gql`
 export default function PopularMovies(): JSX.Element {
     const { loading, data, error } = useQuery(NOW_PLAYING);
 
-    return <Carousel breakpoints={[
-        { maxWidth: 'md', slideSize: '25%' },
-        { maxWidth: 'sm', slideSize: '50%', slideGap: 0 },
-        { maxWidth: "xs", slideSize: "75%", slideGap: 0 }
-    ]}
-        sx={{ flex: 1 }} slidesToScroll={1} align="start" dragFree={true} withControls slideSize="20%">
+    return <CarouselWrapper>
         {data ? data.getPopularMovies.map((movie: any, index: number) => (
             <Carousel.Slide key={Math.random() * index * 45}>
                 <CardComponent original_title={movie.original_title} poster_path={movie.poster_path} />
             </Carousel.Slide>
         )) : <Carousel.Slide>2</Carousel.Slide>
         }
-    </Carousel>
+    </CarouselWrapper>
 }
