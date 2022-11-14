@@ -19,7 +19,7 @@ const NOW_PLAYING = gql`
 }
 `
 
-export default function PopularMovies() {
+export default function PopularMovies(): JSX.Element {
     const { loading, data, error } = useQuery(NOW_PLAYING);
 
     return <Carousel breakpoints={[
