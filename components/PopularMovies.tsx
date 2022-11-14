@@ -1,7 +1,5 @@
 import { gql } from "apollo-server-micro";
 import CardComponent from '../components/CardComponent';
-import carosel from "../styles/carosel.module.css";
-import { SegmentedControl } from '@mantine/core';
 import { Carousel } from "@mantine/carousel";
 import React from "react";
 import { useQuery } from "@apollo/client";
