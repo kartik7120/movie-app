@@ -9,6 +9,7 @@ import PopularMovies from '../components/PopularMovies';
 import PopularTv from '../components/PopularTv';
 import NowPlayingMovies from '../components/NowPlayingMovies';
 import NowPlayingTv from '../components/NowPlayingTv';
+import CaroselHeading from "../components/CaroselHeadingWrapper";
 
 type MediaType = "movie" | "tv";
 
@@ -27,17 +28,7 @@ export default function Home() {
 
       <main>
         <div className={carosel.wrapper}>
-          <Group align="center" position='left' mb="sm">
-            <MediaQuery styles={{ display: "none" }} query="(min-width:586px)">
-              <Title order={1} weight={300} align="center" size={23}>
-                What&#39;s Popular
-              </Title>
-            </MediaQuery>
-            <MediaQuery query='(max-width:586px)' styles={{ display: "none" }}>
-              <Title order={1} weight={500} align="center" size={30}>
-                What&#39;s Popular
-              </Title>
-            </MediaQuery>
+          <CaroselHeading heading="What's Popular">
             <SegmentedControl
               value={value}
               onChange={(value: MediaType) => {
@@ -47,21 +38,11 @@ export default function Home() {
                 { label: "In Theaters", value: "movie" },
                 { label: "On Tv", value: "tv" }
               ]} size="md" color="yellow" />
-          </Group>
+          </CaroselHeading>
           {value === "movie" ? <PopularMovies /> : <PopularTv />}
         </div>
         <div className={carosel.wrapper}>
-          <Group align="center" position='left' mb="sm">
-            <MediaQuery styles={{ display: "none" }} query="(min-width:586px)">
-              <Title order={1} weight={300} align="center" size={23}>
-                Now Playing
-              </Title>
-            </MediaQuery>
-            <MediaQuery query='(max-width:586px)' styles={{ display: "none" }}>
-              <Title order={1} weight={500} align="center" size={30}>
-                Now Playing
-              </Title>
-            </MediaQuery>
+          <CaroselHeading heading='Now Playing'>
             <SegmentedControl
               value={state}
               onChange={(value: MediaType) => {
@@ -71,13 +52,13 @@ export default function Home() {
                 { label: "In Theaters", value: "movie" },
                 { label: "On Tv", value: "tv" }
               ]} size="md" color="yellow" />
-          </Group>
+          </CaroselHeading>
           {state === "movie" ? <NowPlayingMovies /> : <NowPlayingTv />}
         </div>
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
         </Link>
-      </main>
+      </main >
 
       <footer className={styles.footer}>
         <a
@@ -91,6 +72,6 @@ export default function Home() {
           </span>
         </a>
       </footer>
-    </div>
+    </div >
   )
 }
