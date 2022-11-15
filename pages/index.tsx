@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import { Button, Group, SegmentedControl, Title } from "@mantine/core";
+import { Button, Group, SegmentedControl, Title, MediaQuery } from "@mantine/core";
 import Link from 'next/link';
 import carosel from "../styles/carosel.module.css";
 import React from 'react';
@@ -24,10 +24,17 @@ export default function Home() {
 
       <main>
         <div className={carosel.wrapper}>
-          <Group align="start" position='left'>
-            <Title order={1} weight={500} align="center" size={30}>
-              What&#39;s Popular
-            </Title>
+          <Group align="center" position='left' mb="sm">
+            <MediaQuery styles={{ display: "none" }} query="(min-width:586px)">
+              <Title order={1} weight={300} align="center" size={23}>
+                What&#39;s Popular
+              </Title>
+            </MediaQuery>
+            <MediaQuery query='(max-width:586px)' styles={{ display: "none" }}>
+              <Title order={1} weight={500} align="center" size={30}>
+                What&#39;s Popular
+              </Title>
+            </MediaQuery>
             <SegmentedControl
               value={value}
               onChange={(value: MediaType) => {
