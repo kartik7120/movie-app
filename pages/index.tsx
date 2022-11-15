@@ -12,11 +12,13 @@ import NowPlayingTv from '../components/NowPlayingTv';
 import CaroselHeading from "../components/CaroselHeadingWrapper";
 
 type MediaType = "movie" | "tv";
+type Trending = "day" | "week";
 
 export default function Home() {
 
   const [value, setValue] = React.useState<MediaType | undefined>('movie');
   const [state, setState] = React.useState<MediaType | undefined>('movie');
+  const [trending, setTrending] = React.useState<Trending | undefined>('day');
 
   return (
     <div className={styles.container}>
@@ -54,6 +56,19 @@ export default function Home() {
               ]} size="md" color="yellow" />
           </CaroselHeading>
           {state === "movie" ? <NowPlayingMovies /> : <NowPlayingTv />}
+        </div>
+        <div className={carosel.wrapper}>
+          <CaroselHeading heading='Trending'>
+            <SegmentedControl
+              value={trending}
+              onChange={(value: Trending) => {
+                setTrending(value)
+              }}
+              data={[
+                { label: "Today", value: "day" },
+                { label: "This Week", value: "week" }
+              ]} size="md" color="yellow" />
+          </CaroselHeading>
         </div>
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
