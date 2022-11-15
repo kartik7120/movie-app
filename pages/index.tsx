@@ -7,12 +7,14 @@ import carosel from "../styles/carosel.module.css";
 import React from 'react';
 import PopularMovies from '../components/PopularMovies';
 import PopularTv from '../components/PopularTv';
+import NowPlayingMovies from '../components/NowPlayingMovies';
 
 type MediaType = "movie" | "tv";
 
 export default function Home() {
 
   const [value, setValue] = React.useState<MediaType | undefined>('movie');
+  const [state, setState] = React.useState<MediaType | undefined>('movie');
 
   return (
     <div className={styles.container}>
@@ -46,6 +48,30 @@ export default function Home() {
               ]} size="md" color="yellow" />
           </Group>
           {value === "movie" ? <PopularMovies /> : <PopularTv />}
+        </div>
+        <div className={carosel.wrapper}>
+          <Group align="center" position='left' mb="sm">
+            <MediaQuery styles={{ display: "none" }} query="(min-width:586px)">
+              <Title order={1} weight={300} align="center" size={23}>
+                Now Playing
+              </Title>
+            </MediaQuery>
+            <MediaQuery query='(max-width:586px)' styles={{ display: "none" }}>
+              <Title order={1} weight={500} align="center" size={30}>
+                Now Playing
+              </Title>
+            </MediaQuery>
+            <SegmentedControl
+              value={state}
+              onChange={(value: MediaType) => {
+                setState(value)
+              }}
+              data={[
+                { label: "In Theaters", value: "movie" },
+                { label: "On Tv", value: "tv" }
+              ]} size="md" color="yellow" />
+          </Group>
+          {state === "movie" ? <NowPlayingMovies /> : "tv"}
         </div>
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
