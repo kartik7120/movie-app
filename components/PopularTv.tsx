@@ -16,7 +16,7 @@ const NOW_PLAYING_TV = gql` #graphql
 `
 
 export default function PopularTv() {
-    const { loading, data, error } = useQuery(NOW_PLAYING_TV)
+    const { loading, data, error } = useQuery(NOW_PLAYING_TV);
     return <>
         <CarouselWrapper>
             {data ? data.getPoplarTv.map((tv: any, index: number) => (

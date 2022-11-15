@@ -21,14 +21,14 @@ const NOW_PLAYING = gql`
 `
 
 export default function PopularMovies(): JSX.Element {
-    const { loading, data, error } = useQuery(NOW_PLAYING);
+  const { loading, data, error } = useQuery(NOW_PLAYING);
 
-    return <CarouselWrapper>
-        {data ? data.getPopularMovies.map((movie: any, index: number) => (
-            <Carousel.Slide key={Math.random() * index * 45}>
-                <CardComponent original_title={movie.original_title} poster_path={movie.poster_path} />
-            </Carousel.Slide>
-        )) : <Carousel.Slide>2</Carousel.Slide>
-        }
-    </CarouselWrapper>
+  return <CarouselWrapper>
+    {data ? data.getPopularMovies.map((movie: any, index: number) => (
+      <Carousel.Slide key={Math.random() * index * 45}>
+        <CardComponent original_title={movie.original_title} poster_path={movie.poster_path} />
+      </Carousel.Slide>
+    )) : <Carousel.Slide>2</Carousel.Slide>
+    }
+  </CarouselWrapper>
 }

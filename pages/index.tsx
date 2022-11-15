@@ -1,10 +1,9 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import { Button } from "@mantine/core";
+import { Button, Group, SegmentedControl, Title } from "@mantine/core";
 import Link from 'next/link';
 import carosel from "../styles/carosel.module.css";
-import { SegmentedControl } from '@mantine/core';
 import React from 'react';
 import PopularMovies from '../components/PopularMovies';
 import PopularTv from '../components/PopularTv';
@@ -25,15 +24,20 @@ export default function Home() {
 
       <main>
         <div className={carosel.wrapper}>
-          <SegmentedControl
-            value={value}
-            onChange={(value: MediaType) => {
-              setValue(value)
-            }}
-            data={[
-              { label: "In Theaters", value: "movie" },
-              { label: "On Tv", value: "tv" }
-            ]} size="md" color="yellow" />
+          <Group align="start" position='left'>
+            <Title order={1} weight={500} align="center" size={30}>
+              What&#39;s Popular
+            </Title>
+            <SegmentedControl
+              value={value}
+              onChange={(value: MediaType) => {
+                setValue(value)
+              }}
+              data={[
+                { label: "In Theaters", value: "movie" },
+                { label: "On Tv", value: "tv" }
+              ]} size="md" color="yellow" />
+          </Group>
           {value === "movie" ? <PopularMovies /> : <PopularTv />}
         </div>
         <Link href="/api/graphql" passHref legacyBehavior>
