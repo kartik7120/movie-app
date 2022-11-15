@@ -21,9 +21,9 @@ export default function NowPlayingMovies() {
     const { loading, data, error } = useQuery(NOW_PLAYING_MOVIES);
     return <>
         <CarouselWrapper>
-            {data ? data.nowPlayingMovies.nowPlaying.map((tv: any, index: number) => (
-                <Carousel.Slide key={tv.id}>
-                    <CardComponent original_title={tv.title} poster_path={tv.poster_path} />
+            {data ? data.nowPlayingMovies.nowPlaying.map((movie: any, index: number) => (
+                <Carousel.Slide key={movie.id}>
+                    <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
                 </Carousel.Slide>
             )) : ""}
         </CarouselWrapper>

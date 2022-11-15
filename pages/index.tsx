@@ -8,6 +8,7 @@ import React from 'react';
 import PopularMovies from '../components/PopularMovies';
 import PopularTv from '../components/PopularTv';
 import NowPlayingMovies from '../components/NowPlayingMovies';
+import NowPlayingTv from '../components/NowPlayingTv';
 
 type MediaType = "movie" | "tv";
 
@@ -71,7 +72,7 @@ export default function Home() {
                 { label: "On Tv", value: "tv" }
               ]} size="md" color="yellow" />
           </Group>
-          {state === "movie" ? <NowPlayingMovies /> : "tv"}
+          {state === "movie" ? <NowPlayingMovies /> : <NowPlayingTv />}
         </div>
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>

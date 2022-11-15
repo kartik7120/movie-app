@@ -9,12 +9,12 @@ const NOW_PLAYING = gql`
   query nowPlaying {
     getPopularMovies {
     # id
-    original_title
+    # original_title
     # vote_count
     # vote_average
     poster_path
     # adult
-    # title
+    title
     # release_date
   }
 }
@@ -26,7 +26,7 @@ export default function PopularMovies(): JSX.Element {
   return <CarouselWrapper>
     {data ? data.getPopularMovies.map((movie: any, index: number) => (
       <Carousel.Slide key={Math.random() * index * 45}>
-        <CardComponent original_title={movie.original_title} poster_path={movie.poster_path} />
+        <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
       </Carousel.Slide>
     )) : <Carousel.Slide>2</Carousel.Slide>
     }
