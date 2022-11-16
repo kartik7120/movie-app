@@ -10,15 +10,16 @@ import PopularTv from '../components/PopularTv';
 import NowPlayingMovies from '../components/NowPlayingMovies';
 import NowPlayingTv from '../components/NowPlayingTv';
 import CaroselHeading from "../components/CaroselHeadingWrapper";
+import TrendingComponent from "../components/Trending";
 
 type MediaType = "movie" | "tv";
-type Trending = "day" | "week";
+type Trending = "DAY" | "WEEK";
 
 export default function Home() {
 
   const [value, setValue] = React.useState<MediaType | undefined>('movie');
   const [state, setState] = React.useState<MediaType | undefined>('movie');
-  const [trending, setTrending] = React.useState<Trending | undefined>('day');
+  const [trending, setTrending] = React.useState<Trending | undefined>('DAY');
 
   return (
     <div className={styles.container}>
@@ -65,10 +66,12 @@ export default function Home() {
                 setTrending(value)
               }}
               data={[
-                { label: "Today", value: "day" },
-                { label: "This Week", value: "week" }
+                { label: "Today", value: "DAY" },
+                { label: "This Week", value: "WEEK" }
               ]} size="md" color="yellow" />
           </CaroselHeading>
+          {trending === "DAY" ? <TrendingComponent key={Math.random() * 12} timeWindow={trending} />
+            : <TrendingComponent key={Math.random() * 71} timeWindow={trending!} />}
         </div>
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
