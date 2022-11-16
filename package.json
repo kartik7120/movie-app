@@ -31,6 +31,9 @@
     "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.13.12",
+    "@graphql-codegen/typescript": "^2.8.2",
+    "@graphql-codegen/typescript-resolvers": "^2.7.7",
     "@types/cors": "^2.8.12",
     "@types/micro-cors": "^0.1.2",
     "@types/node": "18.11.7",
