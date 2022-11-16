@@ -1,5 +1,6 @@
-import { typeDefs } from "../../graphql/typeDefs";
+// import { typeDefs } from "../../graphql/typeDefs";
 import { resolvers } from "../../graphql/resolvers";
+import { readFileSync, readSync } from "fs";
 import { ApolloServer } from "apollo-server-micro";
 import { NextApiResponse, NextApiRequest } from "next";
 import Cors from "cors";
@@ -14,6 +15,8 @@ export const config = {
         bodyParser: false
     }
 }
+
+const typeDefs = readFileSync("F:\\MovieApp\\my-app\\graphql\\schema.graphql", { encoding: "utf-8" });
 
 const server = new ApolloServer({
     context: ({ req }: { req: NextApiRequest }) => ({ req }),
