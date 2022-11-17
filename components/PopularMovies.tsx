@@ -4,6 +4,7 @@ import { Carousel } from "@mantine/carousel";
 import React from "react";
 import { useQuery } from "@apollo/client";
 import CarouselWrapper from "./CarouselComponent";
+import { LoadingOverlay } from "@mantine/core";
 
 const NOW_PLAYING = gql`
   query nowPlaying {
@@ -22,6 +23,10 @@ const NOW_PLAYING = gql`
 
 export default function PopularMovies(): JSX.Element {
   const { loading, data, error } = useQuery(NOW_PLAYING);
+
+  if (loading) {
+    return <LoadingOverlay visible={true} overlayBlur={0} overlayOpacity={0} loaderProps={{ size: "lg", variant: "dots" }} />
+  }
 
   return <CarouselWrapper>
     {data ? data.getPopularMovies.map((movie: any, index: number) => (

@@ -4,7 +4,7 @@ import { gql } from "apollo-server-micro";
 import CardComponent from "./CardComponent";
 import CarouselWrapper from "./CarouselComponent";
 import { Trending, MediaType, TimeWindow } from "../schemaTypes";
-
+import { Loader, LoadingOverlay } from "@mantine/core";
 interface Props {
     timeWindow: string
 }
@@ -28,12 +28,16 @@ export default function TrendingComponent(props: Props): JSX.Element {
         fetchPolicy: "network-only",
     });
 
+    if (loading) {
+        return <LoadingOverlay visible={true} overlayBlur={0} overlayOpacity={0} loaderProps={{ size: "lg", variant: "dots" }} />
+    }
+
     return <CarouselWrapper>
         {data ? data.trending.map((movie: any, index: number) => (
             <Carousel.Slide key={Math.random() * index * 37}>
                 <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
             </Carousel.Slide>
-        )) : <Carousel.Slide>2</Carousel.Slide>
+        )) : <LoadingOverlay visible={true} />
         }
     </CarouselWrapper>
 }
