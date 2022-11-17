@@ -4,6 +4,7 @@ import { AppProps } from 'next/app';
 import { MantineProvider } from '@mantine/core';
 import { ApolloProvider } from '@apollo/client';
 import client from '../apollo-client';
+import Navbar from '../components/Navbar';
 // import { rtlCache } from '../rtl-cache';
 
 
@@ -15,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       withNormalizeCSS
     // emotionCache={rtlCache}
     >
+      <Navbar />
       <Component {...pageProps} />
     </MantineProvider>
   </div>
