@@ -25,7 +25,7 @@ export default function TrendingComponent(props: Props): JSX.Element {
             mediaType: "ALL",
             timeWindow: props.timeWindow
         },
-        fetchPolicy: "network-only",
+        fetchPolicy: "cache-and-network",
     });
 
     if (loading) {
