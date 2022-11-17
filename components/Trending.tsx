@@ -23,7 +23,7 @@ export default function TrendingComponent(props: Props): JSX.Element {
     const { loading, data, error } = useQuery(TRENDING, {
         variables: {
             mediaType: "ALL",
-            timeWindow: "WEEK"
+            timeWindow: props.timeWindow
         },
         fetchPolicy: "network-only",
     });
