@@ -76,7 +76,7 @@ export default function Home() {
         <Link href="/api/graphql" passHref legacyBehavior>
           <Button component='a'>GraphQL</Button>
         </Link>
-      </main >
+      </main>
 
       <footer className={styles.footer}>
         <a
