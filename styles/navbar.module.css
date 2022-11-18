@@ -7,6 +7,10 @@
   width: 80%;
 }
 
+.wrapper2 {
+  display: none;
+}
+
 .drawer {
   display: none;
 }
@@ -18,5 +22,41 @@
   .drawer {
     display: block;
     order: -1;
+  }
+}
+.wrapper2Div {
+  width: 30%;
+}
+
+@media screen and (max-width: 1043px) {
+  .watchlist {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 721px) {
+  .divider {
+    display: none;
+  }
+  .profileBtn {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .wrapper {
+    display: none;
+  }
+  .wrapper2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .wrapper2Div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
   }
 }
