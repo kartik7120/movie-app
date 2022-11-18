@@ -7,8 +7,16 @@
   width: 80%;
 }
 
+.drawer {
+  display: none;
+}
+
 @media screen and (max-width: 1299px) {
   .navMenu {
     display: none;
+  }
+  .drawer {
+    display: block;
+    order: -1;
   }
 }

@@ -29,7 +29,7 @@ const useStyles = createStyles((theme, params, getRef) => ({
 
 export default function Navbar(): JSX.Element {
     const { classes } = useStyles();
-    const [open, setOpened] = React.useState<boolean>(false);
+    const [opened, setOpened] = React.useState<boolean>(false);
 
     return <div className={navbar.wrapper}>
         <FaImdb size={50} color="#F08C00" />
@@ -38,6 +38,12 @@ export default function Navbar(): JSX.Element {
             rightSection={<Select placeholder="Select" data={[
                 { value: "all", label: "All" }
             ]} />} />
+        <Drawer opened={opened} onClose={() => setOpened(false)} title="Menu" padding="xl" size="xl">
+            <div>Menu Content</div>
+        </Drawer>
+        <ActionIcon className={navbar.drawer} onClick={() => setOpened(true)}>
+            <FiMenu />
+        </ActionIcon>
         <Divider orientation="vertical" size="md" m={0} />
         <Button leftIcon={<BsFillBookmarkPlusFill />} variant="filled">Watchlist</Button>
         <Button leftIcon={<Avatar src={null} radius="md" />} variant="subtle">Profile</Button>
