@@ -1,12 +1,14 @@
 import { createStyles } from "@mantine/styles";
 import navbar from "../styles/navbar.module.css";
 import { FaImdb } from "react-icons/fa";
-import { ActionIcon, Button, Select, Divider } from "@mantine/core";
+import { ActionIcon, Button, Select, Divider, Drawer } from "@mantine/core";
 import { AiOutlineMenu } from "react-icons/ai";
 import { TextInput } from "@mantine/core";
 import { BiSearchAlt } from "react-icons/bi";
 import { BsFillBookmarkPlusFill } from "react-icons/bs";
 import { Avatar } from "@mantine/core";
+import React from "react";
+import { FiMenu } from "react-icons/fi";
 
 const useStyles = createStyles((theme, params, getRef) => ({
     wrapper: {
@@ -27,10 +29,11 @@ const useStyles = createStyles((theme, params, getRef) => ({
 
 export default function Navbar(): JSX.Element {
     const { classes } = useStyles();
+    const [open, setOpened] = React.useState<boolean>(false);
 
     return <div className={navbar.wrapper}>
         <FaImdb size={50} color="#F08C00" />
-        <Button leftIcon={<AiOutlineMenu />} variant="filled">Menu</Button>
+        <Button leftIcon={<AiOutlineMenu />} variant="filled" className={navbar.navMenu}>Menu</Button>
         <TextInput placeholder="Search" icon={<BiSearchAlt />} style={{ width: "60%" }} rightSectionWidth={100}
             rightSection={<Select placeholder="Select" data={[
                 { value: "all", label: "All" }
