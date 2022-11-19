@@ -180,6 +180,12 @@ type Crew {
   job: String!
 }
 
+type Credits {
+  id:Int!
+  cast:[Cast]!
+  Crew:[Crew]!
+}
+
 type Backdrop {
   aspect_ratio: Float
   file_path: String
