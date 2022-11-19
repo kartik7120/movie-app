@@ -15,6 +15,15 @@ enum SourceMedia {
   TV
 }
 
+enum Status {
+  RUMORED
+  PLANNED
+  IN_PRODUCTION
+  POST_PRODUCTION
+  RELEASED
+  CANCELED
+}
+
 "Get the daily or weekly trending items"
 type Trending {
   page: Int! @deprecated(reason: "Not being used")
@@ -90,6 +99,56 @@ type MediaVideo {
   official: Boolean
   publishedAt: String
   id: String
+}
+
+type Genre {
+  id: ID!
+  name: String!
+}
+
+type ProductionCompanies {
+  name: String!
+  id: ID!
+  logo_path: String
+  origin_country: String!
+}
+
+type ProductionCountries {
+  iso_3166_1: String!
+  name: String!
+}
+
+type SpokenLanguages {
+  iso_639_1:String
+  name:String
+}
+
+type MovieDetails {
+  adult:Boolean!
+  backdrop_path:String
+  # belongs_to_collection:
+  budget:Int!
+  genres:[Genre]
+  homepage:String
+  id:ID!
+  imdb_id:String
+  original_language:String
+  original_title:String
+  overview:String
+  popularity:Int
+  poster_path:String
+  production_companies:[ProductionCompanies]
+  production_countries:[ProductionCountries]
+  release_date:String
+  revenue:Int
+  runtime:Int
+  spoken_languages:[SpokenLanguages]
+  status:Status
+  tagline:String
+  title:String!
+  video:Boolean!
+  vote_average:Float
+  vote_count:Int
 }
 
 type Backdrop {
