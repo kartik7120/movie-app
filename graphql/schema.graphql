@@ -151,6 +151,35 @@ type MovieDetails {
   vote_count: Int
 }
 
+type Cast {
+  adult: Boolean!
+  gender: Int
+  id: Int!
+  known_for_department: String!
+  name: String!
+  original_name: String!
+  popularity: Int!
+  profile_path: String
+  cast_id: Int!
+  character: String!
+  credit_id: String!
+  order: Int
+}
+
+type Crew {
+  adult: Boolean!
+  gender: Int
+  id: Int!
+  known_for_department: String!
+  name: String!
+  original_name: String!
+  popularity: Int!
+  profile_path: String
+  credit_id: String!
+  department: String!
+  job: String!
+}
+
 type Backdrop {
   aspect_ratio: Float
   file_path: String
