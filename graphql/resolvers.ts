@@ -118,5 +118,16 @@ export const resolvers = {
             const result = await query.json();
             return result.results
         },
+        getSimilarMovies: async (parent: any, args: any, context: any, info: any) => {
+
+            if (args.id === null || args.id === undefined) {
+                throw new GraphQLError("Please provide id for the movie");
+            }
+
+            const query = await fetch(`${process.env.API_URL}movie/${args.id}/similar?api_key=${process.env.API_KEY}&page=${args.page || 1}`);
+            const result = await query.json();
+
+            return result.results;
+        }
     }
 }
