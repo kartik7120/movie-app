@@ -16,6 +16,18 @@ export const resolvers = {
         MOVIE: "movie",
         TV: "tv"
     },
+    Recommendation: {
+        __resolveType: (obj: any, context: any, info: any) => {
+            if (obj.name) {
+                return `NowPlayingTv`;
+            }
+
+            if (obj.title) {
+                return `NowPlaying`
+            }
+            return null;
+        },
+    },
     Query: {
         trending: async (parent: any, args: any, context: any, info: any) => {
             if (args.mediaType === undefined || args.mediaType === null) {
@@ -162,6 +174,19 @@ export const resolvers = {
             const query = await fetch(`${process.env.API_URL}${args.mediaType}/${args.id}/credits?api_key=${process.env.API_KEY}`)
             const result = await query.json();
             return result;
+        },
+        getrecommendations: async (parent: any, args: any, context: any, info: any) => {
+            if (args.id === null || args.id === undefined) {
+                throw new GraphQLError("Provide id");
+            }
+
+            if (args.sourceMedia === null || args.sourceMedia === undefined) {
+                throw new GraphQLError("Provide media type");
+            }
+
+            const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/recommendations?api_key=${process.env.API_KEY}&page=${args.page || 1}`)
+            const result = await query.json();
+            return result.results;
         }
-    }
+    },
 }

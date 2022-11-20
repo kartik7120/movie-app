@@ -212,6 +212,8 @@ type MovieKeywords {
   keywords: [Keyword]
 }
 
+union Recommendation = NowPlaying | NowPlayingTv
+
 type Query {
   trending(mediaType: MediaType, timeWindow: TimeWindow): [Trending]
   nowPlayingMovies: NowPlayingMovies
@@ -226,4 +228,9 @@ type Query {
   getSimilarMovies(id: ID!, page: Int): [NowPlaying]
   getKeywords(id: ID!, mediaType: SourceMedia!): MovieKeywords
   getCast(id: ID!, mediaType: SourceMedia!): Credits
+  getrecommendations(
+    id: ID!
+    sourceMedia: SourceMedia!
+    page: Int
+  ): Recommendation
 }
