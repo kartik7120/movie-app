@@ -223,4 +223,5 @@ type Query {
   getImageMedia(id: ID!, sourceMedia: SourceMedia!): MediaImages
   getPopularMovies: [NowPlaying]
   getPoplarTv: [NowPlayingTv]
+  getSimilarMovies(id: ID!, page: Int): [NowPlaying]
 }
