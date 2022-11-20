@@ -149,6 +149,19 @@ export const resolvers = {
             }
             else
                 return result;
+        },
+        getCast: async (parent: any, args: any, context: any, info: any) => {
+            if (args.id === null || args.id === undefined) {
+                throw new GraphQLError("Provide id");
+            }
+
+            if (args.mediaType === null || args.mediaType === undefined) {
+                throw new GraphQLError("Provide media type");
+            }
+
+            const query = await fetch(`${process.env.API_URL}${args.mediaType}/${args.id}/credits?api_key=${process.env.API_KEY}`)
+            const result = await query.json();
+            return result;
         }
     }
 }

@@ -181,7 +181,7 @@ type Crew {
 }
 
 type Credits {
-  id: Int!
+  id: ID
   cast: [Cast]!
   Crew: [Crew]!
 }
@@ -225,4 +225,5 @@ type Query {
   getPoplarTv: [NowPlayingTv]
   getSimilarMovies(id: ID!, page: Int): [NowPlaying]
   getKeywords(id: ID!, mediaType: SourceMedia!): MovieKeywords
+  getCast(id: ID!, mediaType: SourceMedia!): Credits
 }
