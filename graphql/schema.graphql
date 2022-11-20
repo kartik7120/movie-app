@@ -181,9 +181,9 @@ type Crew {
 }
 
 type Credits {
-  id:Int!
-  cast:[Cast]!
-  Crew:[Crew]!
+  id: Int!
+  cast: [Cast]!
+  Crew: [Crew]!
 }
 
 type Backdrop {
@@ -200,6 +200,16 @@ type MediaImages {
   backdrops: [Backdrop]
   posters: [Backdrop]
   id: ID!
+}
+
+type Keyword {
+  id: ID!
+  name: String!
+}
+
+type MovieKeywords {
+  id: ID!
+  keywords: [Keyword]
 }
 
 type Query {
