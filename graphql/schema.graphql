@@ -224,4 +224,5 @@ type Query {
   getPopularMovies: [NowPlaying]
   getPoplarTv: [NowPlayingTv]
   getSimilarMovies(id: ID!, page: Int): [NowPlaying]
+  getKeywords(id: ID!, mediaType: SourceMedia!): MovieKeywords
 }

@@ -128,6 +128,27 @@ export const resolvers = {
             const result = await query.json();
 
             return result.results;
+        },
+        getKeywords: async (parent: any, args: any, context: any, info: any) => {
+            if (args.id === null || args.id === undefined) {
+                throw new GraphQLError("Provide id");
+            }
+
+            if (args.mediaType === null || args.mediaType === undefined) {
+                throw new GraphQLError("Provide media type");
+            }
+
+            const query = await fetch(`${process.env.API_URL}${args.mediaType}/${args.id}/keywords?api_key=${process.env.API_KEY}&page=${args.page || 1}`)
+            const result = await query.json();
+
+            if (args.mediaType === "tv") {
+                return {
+                    id: result.id,
+                    keywords: result.results
+                }
+            }
+            else
+                return result;
         }
     }
 }
