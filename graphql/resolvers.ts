@@ -16,6 +16,14 @@ export const resolvers = {
         MOVIE: "movie",
         TV: "tv"
     },
+    Status: {
+        RUMORED: "Rumored",
+        PLANNED: "Planned",
+        IN_PRODUCTION: "In Production",
+        POST_PRODUCTION: "Post Production",
+        RELEASED: "Released",
+        CANCELED: "Canceled"
+    },
     Recommendation: {
         __resolveType: (obj: any, context: any, info: any) => {
             if (obj.name) {
@@ -188,6 +196,16 @@ export const resolvers = {
             const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/recommendations?api_key=${process.env.API_KEY}&page=${args.page || 1}`)
             const result = await query.json();
             return result.results;
+        },
+        getMovieDetails: async (parent: any, args: any, context: any, info: any) => {
+
+            if (args.id === null || args.id === undefined) {
+                throw new GraphQLError("Provide id");
+            }
+
+            const query = await fetch(`${process.env.API_URL}movie/${args.id}?api_key=${process.env.API_KEY}`)
+            const result = await query.json();
+            return result;
         }
     },
 }
