@@ -27,6 +27,7 @@ export default function TrendingComponent(props: Props): JSX.Element {
         root: null,
         threshold: 1,
     })
+    
     const [getData, { loading, data, error, called }] = useLazyQuery(TRENDING, {
         variables: {
             mediaType: "ALL",
