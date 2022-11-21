@@ -23,8 +23,9 @@ export const resolvers = {
             }
 
             if (obj.title) {
-                return `NowPlaying`
+                return `NowPlaying`;
             }
+
             return null;
         },
     },

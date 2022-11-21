@@ -232,5 +232,5 @@ type Query {
     id: ID!
     sourceMedia: SourceMedia!
     page: Int
-  ): Recommendation
+  ): [Recommendation]
 }
