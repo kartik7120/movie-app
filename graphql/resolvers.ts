@@ -206,6 +206,16 @@ export const resolvers = {
             const query = await fetch(`${process.env.API_URL}movie/${args.id}?api_key=${process.env.API_KEY}`)
             const result = await query.json();
             return result;
+        },
+        getTvDetails: async (parent: any, args: any, context: any, info: any) => {
+
+            if (args.id === null || args.id === undefined) {
+                throw new GraphQLError("Provide id");
+            }
+
+            const query = await fetch(`${process.env.API_URL}tv/${args.id}?api_key=${process.env.API_KEY}`)
+            const result = await query.json();
+            return result;
         }
     },
 }

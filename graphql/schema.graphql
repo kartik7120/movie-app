@@ -151,6 +151,61 @@ type MovieDetails {
   vote_count: Int
 }
 
+type CreatedBy {
+  id: ID!
+  credit_id: String!
+  name: String!
+  gender: String!
+  profile_path: String!
+}
+
+type Network {
+  name: String!
+  id: ID!
+  logo_path: String!
+  origin_country: String!
+}
+
+type Season {
+  air_date: String!
+  episode_count: Int!
+  name: String!
+  overview: String!
+  poster_path: String!
+  season_number: Int
+}
+
+type TvDetails {
+  backdrop_path: String
+  created_by: CreatedBy
+  episode_run_time: [Int]
+  first_air_date: String
+  genres: [Genre]
+  homepage: String
+  id: ID!
+  in_production: Boolean!
+  languages: [String]!
+  last_air_date: String
+  name: String
+  networks: [Network]
+  number_of_episodes: Int
+  number_of_seasons: Int
+  origin_country: [String]
+  original_language: String
+  original_name: String
+  overview: String
+  popularity: Int
+  production_companies: [ProductionCompanies]
+  production_countries: [ProductionCountries]
+  seasons: [Season]
+  spoken_languages: [SpokenLanguages]
+  status: String
+  tagline: String
+  type: String
+  vote_average: Float
+  vote_count: Int
+}
+
 type Cast {
   adult: Boolean!
   gender: Int
@@ -234,4 +289,5 @@ type Query {
     page: Int
   ): [Recommendation]
   getMovieDetails(id: ID!): MovieDetails
+  getTvDetails(id: ID!): TvDetails
 }
