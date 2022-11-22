@@ -6,7 +6,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { TextInput } from "@mantine/core";
 import { BiSearchAlt } from "react-icons/bi";
 import { BsFillBookmarkPlusFill } from "react-icons/bs";
-import { Avatar } from "@mantine/core";
+import { Avatar, Modal } from "@mantine/core";
 import React from "react";
 import { FiMenu } from "react-icons/fi";
 
@@ -30,10 +30,15 @@ const useStyles = createStyles((theme, params, getRef) => ({
 export default function Navbar(): JSX.Element {
     const { classes } = useStyles();
     const [opened, setOpened] = React.useState<boolean>(false);
+    const [modelOpened, setModelOpened] = React.useState(false);
+
 
     return <> <nav className={navbar.wrapper}>
+        <Modal opened={modelOpened} fullScreen={true} transition="slide-down" exitTransitionDuration={100} onClose={() => setModelOpened(false)} title="Menu Model" >
+            <h1>Look at me I am a web developer</h1>
+        </Modal>
         <FaImdb size={50} color="#F08C00" />
-        <Button leftIcon={<AiOutlineMenu />} variant="filled" className={navbar.navMenu}>Menu</Button>
+        <Button leftIcon={<AiOutlineMenu />} variant="filled" onClick={() => setModelOpened(true)} className={navbar.navMenu}>Menu</Button>
         <TextInput placeholder="Search" icon={<BiSearchAlt />} style={{ width: "60%" }} rightSectionWidth={100}
             rightSection={<Select placeholder="Select" data={[
                 { value: "all", label: "All" }
