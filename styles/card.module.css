@@ -9,6 +9,11 @@
   max-width: 90%;
 }
 
+.card:hover {
+  background-color: #25262bb3;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   .card {
     width: 80%;
