@@ -1,9 +1,11 @@
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { Carousel } from "@mantine/carousel";
 import { LoadingOverlay } from "@mantine/core";
+import { useIntersection } from "@mantine/hooks";
 import { gql } from "apollo-server-micro";
 import CardComponent from "./CardComponent";
 import CarouselWrapper from "./CarouselComponent";
+import React from "react";
 
 const NOW_PLAYING_MOVIES = gql` #graphql
     query NowPlayingMovies {
@@ -19,7 +21,16 @@ const NOW_PLAYING_MOVIES = gql` #graphql
 `
 
 export default function NowPlayingMovies() {
-    const { loading, data, error } = useQuery(NOW_PLAYING_MOVIES);
+    const containerRef = React.useRef<HTMLDivElement>();
+    const { ref, entry } = useIntersection({
+        root: containerRef.current,
+        threshold: 1,
+    })
+    const [getData, { loading, data, error, called }] = useLazyQuery(NOW_PLAYING_MOVIES);
+
+    if (entry?.isIntersecting === true && called === false) {
+        getData();
+    }
 
     if (loading) {
         return <LoadingOverlay visible={true} overlayBlur={0} overlayOpacity={0} loaderProps={{ size: "lg", variant: "dots" }} />
@@ -33,5 +44,6 @@ export default function NowPlayingMovies() {
                 </Carousel.Slide>
             )) : ""}
         </CarouselWrapper>
+        <span ref={ref}></span>
     </>
 }
