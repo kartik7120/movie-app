@@ -6,6 +6,7 @@ import CarouselWrapper from "./CarouselComponent";
 import { Trending, MediaType, TimeWindow } from "../schemaTypes";
 import { Loader, LoadingOverlay } from "@mantine/core";
 import { useIntersection } from '@mantine/hooks';
+import React from "react";
 
 interface Props {
     timeWindow: string
@@ -23,11 +24,12 @@ const TRENDING = gql`
 
 export default function TrendingComponent(props: Props): JSX.Element {
 
+    const containerRef = React.useRef<HTMLDivElement>();
     const { ref, entry } = useIntersection({
-        root: null,
+        root: containerRef.current,
         threshold: 1,
     })
-    
+
     const [getData, { loading, data, error, called }] = useLazyQuery(TRENDING, {
         variables: {
             mediaType: "ALL",
@@ -44,14 +46,15 @@ export default function TrendingComponent(props: Props): JSX.Element {
         return <LoadingOverlay visible={true} overlayBlur={0} overlayOpacity={0} loaderProps={{ size: "lg", variant: "dots" }} />
     }
 
-    return <div ref={ref}>
+    return <>
         <CarouselWrapper>
             {data ? data.trending.map((movie: any, index: number) => (
-                <Carousel.Slide ref={ref} key={Math.random() * index * 37}>
+                <Carousel.Slide key={Math.random() * index * 37}>
                     <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
                 </Carousel.Slide>
             )) : <LoadingOverlay visible={true} />
             }
         </CarouselWrapper>
-    </div>
+        <span ref={ref}></span>
+    </>
 }

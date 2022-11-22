@@ -4,9 +4,12 @@ import { BsStar, BsFillPlayFill } from "react-icons/bs";
 import { MediaQuery } from "@mantine/core";
 import { AiFillStar, AiOutlinePlus, AiOutlineInfoCircle } from "react-icons/ai";
 import styles from "../styles/card.module.css";
+import { shimmer, toBase64 } from "../lib/util";
+import React from "react";
+
 interface CardProps {
     poster_path: string,
-    original_title: string
+    original_title: string,
 }
 
 const useStyles = createStyles((theme, params, gerRef) => ({
@@ -41,7 +44,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
     const { classes } = useStyles();
     const theme = useMantineTheme();
 
-    return <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card}>
+    return <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card} >
         <Card.Section>
             <Image
                 src={`https://image.tmdb.org/t/p/w400${props.poster_path}`}
@@ -50,6 +53,8 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 width={200}
                 height={270}
                 className={classes.imgClass}
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(200, 270))}`}
             />
         </Card.Section>
         <div className={classes.wrapper2}>
