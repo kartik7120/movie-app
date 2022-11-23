@@ -216,6 +216,19 @@ export const resolvers = {
             const query = await fetch(`${process.env.API_URL}tv/${args.id}?api_key=${process.env.API_KEY}`)
             const result = await query.json();
             return result;
+        },
+        searchMovies: async (parent: any, args: any, context: any, info: any) => {
+            if (args.query === undefined || args.query === null) {
+                throw new GraphQLError("Please provide the query to search")
+            }
+
+            const query = await fetch(`${process.env.API_URL}search/movie?api_key=${process.env.API_KEY}&page=${args.page || 1}&include_adult=${args.include_adult || true}&query=${args.query}`)
+            const result = await query.json();
+            return {
+                movies: result.results,
+                total_pages: result.total_pages,
+                total_results: result.total_results
+            };
         }
     },
 }

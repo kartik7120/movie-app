@@ -269,6 +269,12 @@ type MovieKeywords {
 
 union Recommendation = NowPlaying | NowPlayingTv
 
+type SearchResultsMovie {
+  movies: [NowPlaying]
+  total_results: Int
+  total_pages: Int
+}
+
 type Query {
   trending(mediaType: MediaType, timeWindow: TimeWindow): [Trending]
   nowPlayingMovies: NowPlayingMovies
@@ -290,4 +296,11 @@ type Query {
   ): [Recommendation]
   getMovieDetails(id: ID!): MovieDetails
   getTvDetails(id: ID!): TvDetails
+  searchMovies(
+    query: String!
+    page: Int
+    include_adult: Boolean
+    year: Int
+    region: String
+  ): SearchResultsMovie
 }
