@@ -269,10 +269,23 @@ type MovieKeywords {
 
 union Recommendation = NowPlaying | NowPlayingTv
 
-type SearchResultsMovie {
-  movies: [NowPlaying]
+type SearchResultsMovieOrTv {
+  result: [Recommendation]
   total_results: Int
   total_pages: Int
+}
+
+type Company {
+  id: ID!
+  logo_path: String
+  name: String
+}
+
+type CompanySearchResult {
+  page: Int!
+  total_pages: Int!
+  total_results: Int!
+  result: [Company]
 }
 
 type Query {
@@ -296,11 +309,13 @@ type Query {
   ): [Recommendation]
   getMovieDetails(id: ID!): MovieDetails
   getTvDetails(id: ID!): TvDetails
-  searchMovies(
+  searchMoviesOrTv(
     query: String!
+    mediaType: SourceMedia!
     page: Int
     include_adult: Boolean
     year: Int
     region: String
-  ): SearchResultsMovie
+  ): SearchResultsMovieOrTv
+  searchCompany(query: String!, page: Int): CompanySearchResult
 }
