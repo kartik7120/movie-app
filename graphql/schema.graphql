@@ -275,6 +275,22 @@ type SearchResultsMovieOrTv {
   total_pages: Int
 }
 
+type People {
+  known_for: Recommendation
+  name: String!
+  adult: Boolean!
+  popularity: Int!
+  profile_path: String
+  id: ID!
+}
+
+type PeopleResult {
+  total_results: Int
+  total_pages: Int
+  result: [People]
+  page: Int!
+}
+
 type Company {
   id: ID!
   logo_path: String
@@ -318,4 +334,10 @@ type Query {
     region: String
   ): SearchResultsMovieOrTv
   searchCompany(query: String!, page: Int): CompanySearchResult
+  searchPeople(
+    query: String!
+    page: Int
+    include_adult: Boolean
+    region: String
+  ): PeopleResult
 }

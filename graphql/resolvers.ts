@@ -249,6 +249,21 @@ export const resolvers = {
                 total_pages: result.total_pages,
                 total_results: result.total_results
             }
+        },
+        searchPeople: async (parent: any, args: any, context: any, info: any) => {
+            if (args.query === undefined || args.query === null) {
+                throw new GraphQLError("Please provide a query for searching");
+            }
+
+            const query = await fetch(`${process.env.API_URL}search/person?api_key=${process.env.API_KEY}&page=${args.page || 1}&query=${args.query}`)
+            const result = await query.json();
+
+            return {
+                total_result: result.total_result,
+                total_pages: result.total_pages,
+                result: result.results,
+                page: result.page
+            }
         }
     },
 }
