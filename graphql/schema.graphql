@@ -297,6 +297,20 @@ type Company {
   name: String
 }
 
+type Collection {
+  id: ID!
+  backdrop_path: String
+  name: String!
+  poster_path: String
+}
+
+type SearchCollection {
+  page: Int!
+  results: [Collection]
+  total_pages: Int!
+  total_results: Int!
+}
+
 type CompanySearchResult {
   page: Int!
   total_pages: Int!
@@ -340,4 +354,9 @@ type Query {
     include_adult: Boolean
     region: String
   ): PeopleResult
+  SearchCollection(
+    query: String!
+    page: Int
+    language: String
+  ): SearchCollection
 }
