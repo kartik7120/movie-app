@@ -1,4 +1,3 @@
-import { createStyles } from "@mantine/styles";
 import navbar from "../styles/navbar.module.css";
 import { FaImdb } from "react-icons/fa";
 import { ActionIcon, Button, Select, Divider, Drawer } from "@mantine/core";
@@ -12,26 +11,8 @@ import { FiMenu } from "react-icons/fi";
 import { getHotkeyHandler } from '@mantine/hooks';
 import { useRouter } from "next/router";
 
-const useStyles = createStyles((theme, params, getRef) => ({
-    wrapper: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "42%"
-    },
-    wrapper2: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        width: "30%"
-    }
-}))
-
 export default function Navbar(): JSX.Element {
     const router = useRouter();
-    const { classes } = useStyles();
     const [opened, setOpened] = React.useState<boolean>(false);
     const [modelOpened, setModelOpened] = React.useState(false);
 
