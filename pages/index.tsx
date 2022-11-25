@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import { Button, Group, SegmentedControl, Title, MediaQuery } from "@mantine/core";
+import { Button, SegmentedControl } from "@mantine/core";
 import Link from 'next/link';
 import carosel from "../styles/carosel.module.css";
 import React from 'react';
