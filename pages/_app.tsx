@@ -9,18 +9,20 @@ import Navbar from '../components/Navbar';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <ApolloProvider client={client}> <div dir="ltr">
+  return <div dir="ltr">
     <MantineProvider
       theme={{ colorScheme: "dark", dir: "ltr" }}
       withGlobalStyles
       withNormalizeCSS
     // emotionCache={rtlCache}
     >
-      <Navbar />
-      <Component {...pageProps} />
+      <ApolloProvider client={client}>
+        <Navbar />
+        <Component {...pageProps} />
+      </ApolloProvider>
     </MantineProvider>
   </div>
-  </ApolloProvider>
+
 }
 
 export default MyApp;
