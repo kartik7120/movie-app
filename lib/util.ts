@@ -16,3 +16,11 @@ export const toBase64 = (str: string) =>
   typeof window === 'undefined'
     ? Buffer.from(str).toString('base64')
     : window.btoa(str);
+
+
+export function runTimeConversion(runtime: string): string {
+  const temp = new Date(parseInt(runtime) * 1000 * 60).toISOString().substring(11, 19);
+  let part1 = temp.substring(0, 2);
+  let part2 = temp.substring(3, 5);
+  return `${parseInt(part1)}h ${part2}m`;
+}
