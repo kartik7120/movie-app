@@ -1,29 +1,41 @@
 import { gql } from "apollo-server-micro";
 import { GetServerSideProps } from "next";
 import client from "../../apollo-client";
+import styles from "../../styles/movie.module.css";
 
 type data = {
     name: string
 }
 const MOVIE_DETAILS = gql`
-    query GetTvDetails($getTvDetailsId: ID!) {
-    getTvDetails(id: $getTvDetailsId) {
+query GetMovieDetails($getMovieDetailsId: ID!) {
+  getMovieDetails(id: $getMovieDetailsId) {
+    backdrop_path
+    budget
+    title
+    release_date
+    poster_path
+    runtime
+    revenue
+    overview
+    genres {
       name
-      homepage
-      number_of_episodes
-      number_of_seasons
-      original_name
-      status
-      type
-      overview
-      episode_run_time
-      backdrop_path
+    }
+    original_language
+    homepage
+    status
+    vote_average
+    tagline
   }
 }
 `
 
-export default function Media() {
-    return <h1>I will render the details for a single movie</h1>
+export default function Media({ data, id }: { data: any, id: number }) {
+    return <div className={styles.wrapper}>
+        <div>
+            Upper part
+        </div>
+        <div>Grid div</div>
+    </div>
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -38,13 +50,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const result = await client.query({
         query: MOVIE_DETAILS,
         variables: {
-            getTvDetailsId: params ? params.id : null
+            getMovieDetailsId: params ? params.id : null
         }
     })
 
     return {
         props: {
-            data: result.data.getTvDetails,
+            data: result.data.getMovieDetails,
             id: params ? params.id : null
         },
     }
