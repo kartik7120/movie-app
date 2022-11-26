@@ -2,6 +2,7 @@ import { gql } from "apollo-server-micro";
 import { GetServerSideProps } from "next";
 import client from "../../apollo-client";
 import styles from "../../styles/movie.module.css";
+import React from "react";
 
 type data = {
     name: string
