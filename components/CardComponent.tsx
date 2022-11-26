@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Button, Card, createStyles, Group, Text, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Badge, Button, Card, createStyles, Group, Skeleton, Text, useMantineTheme } from "@mantine/core";
 import Image from "next/image";
 import { BsStar, BsFillPlayFill } from "react-icons/bs";
 import { MediaQuery } from "@mantine/core";
@@ -35,7 +35,8 @@ const useStyles = createStyles((theme, params, gerRef) => ({
     imgClass: {
         maxWidth: "100%",
         width: "auto",
-        height: "auto"
+        height: "auto",
+        maxHeight: "100%"
     }
 }))
 
@@ -44,10 +45,10 @@ export default function CardComponent(props: CardProps): JSX.Element {
     const { classes } = useStyles();
     const theme = useMantineTheme();
 
-    return <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card} >
+    return <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card}>
         <Card.Section>
             <Image
-                src={`https://image.tmdb.org/t/p/w400${props.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
                 alt={`${props.original_title} poster`}
                 priority={true}
                 width={200}
