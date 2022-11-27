@@ -24,3 +24,10 @@ export function runTimeConversion(runtime: string): string {
   let part2 = temp.substring(3, 5);
   return `${parseInt(part1)}h ${part2}m`;
 }
+
+export function covertDataFormat(date: string): string {
+  const part1 = date.substring(0, 4);
+  const part2 = date.substring(5, 7);
+  const part3 = date.substring(8);
+  return `${part3}/${part2}/${part1}`;
+}
