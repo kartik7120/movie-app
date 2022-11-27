@@ -40,12 +40,17 @@ export default function Media({ data, id }: { data: any, id: number }) {
         <div className={styles.wrapper}>
             <div>
                 <ImageCard imgUrl={data.poster_path} title={data.title} />
-                <Title order={1} size="h1">{data.title}</Title>
-                <Text variant="text" >{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
-                <Text variant="text" component="p">{covertDataFormat(data.release_date)}</Text>
+                <Title order={1} m={0} size="h1">{data.title}</Title>
+                <div className={styles.wrapper2}>
+                    <Text variant="text" component="p" ml={5}>{covertDataFormat(data.release_date)}</Text>
+                    <span>&#9679;</span>
+                    <Text variant="text" >{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
+                    <span>&#9679;</span>
+                    <Text variant="text" component="span">{runTimeConversion(data.runtime)}</Text>
+                </div>
+                <Text component="p" fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
+                <Title order={2} variant="text" >Overview</Title>
                 <Text variant="text" component="p">{data.overview}</Text>
-                <Text variant="text" component="p">{data.tagline}</Text>
-                <Text variant="text" component="span">{runTimeConversion(data.runtime)}</Text>
             </div>
             <div>Grid div</div>
         </div>
