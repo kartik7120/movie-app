@@ -4,10 +4,12 @@ import client from "../../apollo-client";
 import styles from "../../styles/movie.module.css";
 import React from "react";
 import ImageCard from "../../components/ImageCard";
-import { Text, Title } from "@mantine/core";
+import { ActionIcon, Button, Text, Title } from "@mantine/core";
 import Head from "next/head";
 import { runTimeConversion, covertDataFormat } from "../../lib/util";
 import { BackgroundImage } from "@mantine/core";
+import { AiOutlineHeart, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
+import { BsBookmark } from "react-icons/bs";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -54,6 +56,21 @@ export default function Media({ data, id }: { data: any, id: number }) {
                         <Text variant="text" >{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
                         <span>&#9679;</span>
                         <Text variant="text" component="span">{runTimeConversion(data.runtime)}</Text>
+                    </div>
+                    <div className={styles.wrapper4}>
+                        <ActionIcon size="xl" mr={5} >
+                            <AiOutlineUnorderedList />
+                        </ActionIcon>
+                        <ActionIcon size="xl" mr={5}>
+                            <AiOutlineHeart />
+                        </ActionIcon>
+                        <ActionIcon size="xl" mr={5}>
+                            <BsBookmark />
+                        </ActionIcon>
+                        <ActionIcon size="xl" mr={5}>
+                            <AiTwotoneStar />
+                        </ActionIcon>
+                        <Button variant="outline" color="blue">Play Tralier</Button>
                     </div>
                     <Text component="p" fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
                     <Title order={2} variant="text" >Overview</Title>
