@@ -1,12 +1,16 @@
 .wrapper {
-  border: 2px dotted cyan;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   margin: 0 auto;
   padding: 3em;
-  width: 95%;
+  width: 100%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(52.5, 10.5, 31.5, 1),
+    rgba(52.5, 10.5, 31.5, 0.84)
+  );
 }
 
 .wrapper2 {
@@ -26,4 +30,13 @@
   margin-left: 0;
   margin-right: 0;
   padding-left: 3em;
+}
+
+.backgroundImage {
+  /* border-bottom: 1px solid var(#ccc); */
+  background-position: right -200px top;
+  background-position-x: right -200px;
+  background-position-y: top;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
