@@ -1,5 +1,12 @@
 .wrapper {
   border: 2px dotted cyan;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0 auto;
+  padding: 3em;
+  width: 95%;
 }
 
 .wrapper2 {
@@ -12,4 +19,11 @@
 .wrapper2 > span {
   margin-left: 0.5em;
   margin-right: 0.5em;
+}
+
+.rightWrapper {
+  margin: 3em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 3em;
 }
