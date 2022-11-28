@@ -7,7 +7,7 @@ import ImageCard from "../../components/ImageCard";
 import { ActionIcon, Button, Text, Title } from "@mantine/core";
 import Head from "next/head";
 import { runTimeConversion, covertDataFormat } from "../../lib/util";
-import { BackgroundImage } from "@mantine/core";
+import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
 import { AiOutlineHeart, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
 
@@ -35,11 +35,23 @@ query GetMovieDetails($getMovieDetailsId: ID!) {
 `
 
 export default function Media({ data, id }: { data: any, id: number }) {
+
+    const [opened, setOpened] = React.useState(false);
+    const theme = useMantineTheme();
     return <>
         <Head>
             <title>{data.title}</title>
             <meta name="description" content={data.overview} />
         </Head>
+        <Modal opened={opened} centered size="auto"
+            overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
+            overlayOpacity={0.5}
+            overlayBlur={3}
+            exitTransitionDuration={100}
+            closeOnClickOutside={false}
+            onClose={() => setOpened(false)}>
+            <h1>I am a model that will render videos</h1>
+        </Modal>
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}?api_key=${process.env.API_KEY}`}
             className={styles.backgroundImage}
@@ -58,7 +70,7 @@ export default function Media({ data, id }: { data: any, id: number }) {
                         <Text variant="text" component="span">{runTimeConversion(data.runtime)}</Text>
                     </div>
                     <div className={styles.wrapper4}>
-                        <ActionIcon size="xl" mr={5} >
+                        <ActionIcon size="xl" mr={5}>
                             <AiOutlineUnorderedList />
                         </ActionIcon>
                         <ActionIcon size="xl" mr={5}>
@@ -70,7 +82,7 @@ export default function Media({ data, id }: { data: any, id: number }) {
                         <ActionIcon size="xl" mr={5}>
                             <AiTwotoneStar />
                         </ActionIcon>
-                        <Button variant="outline" color="blue">Play Tralier</Button>
+                        <Button variant="outline" onClick={() => setOpened(true)} color="blue">Play Tralier</Button>
                     </div>
                     <Text component="p" fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
                     <Title order={2} variant="text" >Overview</Title>
