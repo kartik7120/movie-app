@@ -180,9 +180,12 @@ export const resolvers = {
                 throw new GraphQLError("Provide media type");
             }
 
-            const query = await fetch(`${process.env.API_URL}${args.mediaType}/${args.id}/credits?api_key=${process.env.API_KEY}`)
+            const query = await fetch(`${process.env.API_URL}${args.mediaType}/${args.id}/credits?api_key=${process.env.API_KEY}`);
             const result = await query.json();
-            return result;
+            if (args.first === undefined || args.first === null) {
+                return result;
+            }
+            return { cast: result.cast.slice(0, args.first) };
         },
         getrecommendations: async (parent: any, args: any, context: any, info: any) => {
             if (args.id === null || args.id === undefined) {

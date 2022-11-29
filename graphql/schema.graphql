@@ -331,7 +331,7 @@ type Query {
   getPoplarTv: [NowPlayingTv]
   getSimilarMovies(id: ID!, page: Int): [NowPlaying]
   getKeywords(id: ID!, mediaType: SourceMedia!): MovieKeywords
-  getCast(id: ID!, mediaType: SourceMedia!): Credits
+  getCast(id: ID!, mediaType: SourceMedia!, first: Int): Credits
   getrecommendations(
     id: ID!
     sourceMedia: SourceMedia!
