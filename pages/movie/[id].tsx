@@ -12,6 +12,7 @@ import { AiOutlineHeart, AiOutlineUnorderedList, AiTwotoneStar } from "react-ico
 import { BsBookmark } from "react-icons/bs";
 import { useLazyQuery } from "@apollo/client";
 import ReactPlayer from "react-player/youtube";
+import Cast from "../../components/Cast";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -83,7 +84,7 @@ export default function Media({ data, id }: { data: any, id: number }) {
         >
             <div className={styles.wrapper}>
                 <div>
-                    <ImageCard imgUrl={data.poster_path} title={data.title} />
+                    <ImageCard imgUrl={data.poster_path} title={data.title} width={320} height={440} />
                 </div>
                 <div className={styles.rightWrapper}>
                     <Title order={1} m={0} size="h1">{data.title}</Title>
@@ -118,7 +119,9 @@ export default function Media({ data, id }: { data: any, id: number }) {
                 </div>
             </div>
         </BackgroundImage>
-        <div>Grid div</div>
+        <div>
+            <Cast id={id} mediaType={"MOVIE"} first={6} />
+        </div>
     </>
 }
 
