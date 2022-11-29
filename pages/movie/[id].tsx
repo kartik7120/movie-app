@@ -10,6 +10,8 @@ import { runTimeConversion, covertDataFormat } from "../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
 import { AiOutlineHeart, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
+import { useLazyQuery } from "@apollo/client";
+import ReactPlayer from "react-player/youtube";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -30,11 +32,33 @@ query GetMovieDetails($getMovieDetailsId: ID!) {
     status
     vote_average
     tagline
+    id
+  }
+}
+`
+
+const VIDEO_MEDIA = gql`
+query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
+  getVideoMedia(id: $getVideoMediaId, sourceMedia: $sourceMedia) {
+    key
+    site
+    id
+    official
+    type
   }
 }
 `
 
 export default function Media({ data, id }: { data: any, id: number }) {
+
+    const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
+        variables: {
+            getVideoMediaId: data.id,
+            sourceMedia: "MOVIE"
+        },
+        fetchPolicy: "cache-and-network",
+        nextFetchPolicy: "cache-first"
+    })
 
     const [opened, setOpened] = React.useState(false);
     const theme = useMantineTheme();
@@ -50,11 +74,12 @@ export default function Media({ data, id }: { data: any, id: number }) {
             exitTransitionDuration={100}
             closeOnClickOutside={false}
             onClose={() => setOpened(false)}>
-            <h1>I am a model that will render videos</h1>
+            {videos &&
+                <ReactPlayer controls={true} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.find((ele: any) => ele.type === "Trailer").key}`} />}
         </Modal>
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}?api_key=${process.env.API_KEY}`}
-            className={styles.backgroundImage}
+            className={styles.image}
         >
             <div className={styles.wrapper}>
                 <div>
@@ -82,7 +107,10 @@ export default function Media({ data, id }: { data: any, id: number }) {
                         <ActionIcon size="xl" mr={5}>
                             <AiTwotoneStar />
                         </ActionIcon>
-                        <Button variant="outline" onClick={() => setOpened(true)} color="blue">Play Tralier</Button>
+                        <Button variant="outline" onClick={() => {
+                            setOpened(true);
+                            getVideo();
+                        }} color="blue">Play Tralier</Button>
                     </div>
                     <Text component="p" fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
                     <Title order={2} variant="text" >Overview</Title>
