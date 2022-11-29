@@ -318,6 +318,11 @@ type CompanySearchResult {
   result: [Company]
 }
 
+type PeopleImages {
+  id: ID!
+  profiles: [Backdrop]
+}
+
 type Query {
   trending(mediaType: MediaType, timeWindow: TimeWindow): [Trending]
   nowPlayingMovies: NowPlayingMovies
@@ -359,4 +364,5 @@ type Query {
     page: Int
     language: String
   ): SearchCollection
+  getPeopleImages(id: ID!, first: Int): PeopleImages
 }

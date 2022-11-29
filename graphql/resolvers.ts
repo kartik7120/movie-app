@@ -282,6 +282,19 @@ export const resolvers = {
                 total_pages: result.total_pages,
                 total_results: result.total_results
             }
+        },
+        getPeopleImages: async (parent: any, args: any, context: any, info: any) => {
+            if (args.id === null || args.id === undefined) {
+                throw new GraphQLError("Provide id");
+            }
+
+            const query = await fetch(`${process.env.API_URL}person/${args.id}/images?api_key=${process.env.API_KEY}`);
+            const result = await query.json();
+            if (args.first === undefined || args.first === null) {
+                return result;
+            }
+
+            return { profiles: result.profiles.slice(0, args.first) }
         }
     },
 }
