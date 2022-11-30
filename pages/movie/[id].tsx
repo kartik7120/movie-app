@@ -128,7 +128,7 @@ export default function Media({ data, id }: { data: any, id: number }) {
                 </Title>
                 <Cast id={id} mediaType={"MOVIE"} first={7} />
                 <Divider variant="solid" size="md" m={2} />
-                <MediaComponent />
+                <MediaComponent id={id} sourceMedia={"MOVIE"} first={4} />
             </div>
             <div>
                 Second column
