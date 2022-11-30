@@ -39,11 +39,11 @@ export default function Cast(props: Props): JSX.Element {
   }
 
 
-  return <Carousel slideSize="5%" height={200} slideGap="md" dragFree>
+  return <Carousel slideSize="5%" height={300} slideGap="md" dragFree>
     {data && data.getCast.cast.map((ele: any, index: number) => {
       return <Carousel.Slide key={Math.random() * index * 41}>
         <ImageCard imgUrl={ele.profile_path} width={150} height={200} title={`${ele.name} image`} />
-        <Text size="md" variant="text" >{ele.name}</Text>
+        <Text fw="bold" size="md" variant="text" >{ele.name}</Text>
         <Text size="sm" variant="text" >{ele.character}</Text>
       </Carousel.Slide>
     })}
