@@ -4,7 +4,7 @@ import client from "../../apollo-client";
 import styles from "../../styles/movie.module.css";
 import React from "react";
 import ImageCard from "../../components/ImageCard";
-import { ActionIcon, Button, Text, Title } from "@mantine/core";
+import { ActionIcon, Button, Divider, Text, Title } from "@mantine/core";
 import Head from "next/head";
 import { runTimeConversion, covertDataFormat } from "../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
@@ -13,6 +13,7 @@ import { BsBookmark } from "react-icons/bs";
 import { useLazyQuery } from "@apollo/client";
 import ReactPlayer from "react-player/youtube";
 import Cast from "../../components/Cast";
+import MediaComponent from "../../components/MediaComponent";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -91,7 +92,7 @@ export default function Media({ data, id }: { data: any, id: number }) {
                     <div className={styles.wrapper2}>
                         <Text variant="text" component="p" ml={5}>{covertDataFormat(data.release_date)}</Text>
                         <span>&#9679;</span>
-                        <Text variant="text" >{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
+                        <Text variant="text">{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
                         <span>&#9679;</span>
                         <Text variant="text" component="span">{runTimeConversion(data.runtime)}</Text>
                     </div>
@@ -120,12 +121,14 @@ export default function Media({ data, id }: { data: any, id: number }) {
             </div>
         </BackgroundImage>
         <div className={styles.bottomWrapper}>
-            <div>
+            <div className={styles.bottomWrapper2}>
                 <Title order={2} size="h1" align="start"
                     style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                     Cast
                 </Title>
                 <Cast id={id} mediaType={"MOVIE"} first={7} />
+                <Divider variant="solid" size="md" m={2} />
+                <MediaComponent />
             </div>
             <div>
                 Second column

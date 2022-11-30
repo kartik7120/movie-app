@@ -49,7 +49,13 @@
 
 .bottomWrapper {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr 2fr;
   grid-auto-rows: 1fr;
   margin-top: 4em;
+  margin-left: 4em;
+  height: auto;
+}
+
+.bottomWrapper2 {
+  width: 80%;
 }
