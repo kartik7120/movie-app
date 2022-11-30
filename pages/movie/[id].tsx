@@ -120,7 +120,16 @@ export default function Media({ data, id }: { data: any, id: number }) {
             </div>
         </BackgroundImage>
         <div className={styles.bottomWrapper}>
-            <Cast id={id} mediaType={"MOVIE"} first={7} />
+            <div>
+                <Title order={2} size="h1" align="start"
+                    style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
+                    Cast
+                </Title>
+                <Cast id={id} mediaType={"MOVIE"} first={7} />
+            </div>
+            <div>
+                Second column
+            </div>
         </div>
     </>
 }

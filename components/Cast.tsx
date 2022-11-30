@@ -2,7 +2,8 @@ import { useQuery } from "@apollo/client";
 import { Carousel } from "@mantine/carousel";
 import { gql } from "@apollo/client";
 import ImageCard from "./ImageCard";
-import { Text } from "@mantine/core";
+import { Button, Text, Title } from "@mantine/core";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 const CAST = gql`
 query GetCast($getCastId: ID!, $mediaType: SourceMedia!, $first: Int) {
@@ -39,13 +40,23 @@ export default function Cast(props: Props): JSX.Element {
   }
 
 
-  return <Carousel slideSize="5%" height={300} slideGap="md" dragFree>
-    {data && data.getCast.cast.map((ele: any, index: number) => {
-      return <Carousel.Slide key={Math.random() * index * 41}>
-        <ImageCard imgUrl={ele.profile_path} width={150} height={200} title={`${ele.name} image`} />
-        <Text fw="bold" size="md" variant="text" >{ele.name}</Text>
-        <Text size="sm" variant="text" >{ele.character}</Text>
+  return <>
+    <Carousel slideSize="10%" align="start" height={300} slideGap="sm" dragFree>
+      {data && data.getCast.cast.map((ele: any, index: number) => {
+        return <Carousel.Slide key={Math.random() * index * 41}>
+          <ImageCard imgUrl={ele.profile_path} width={150} height={200} title={`${ele.name} image`} />
+          <Text fw="bold" size="md" variant="text" >{ele.name}</Text>
+          <Text size="sm" variant="text" >{ele.character}</Text>
+        </Carousel.Slide>
+      })}
+      <Carousel.Slide style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Button type="button" size="sm" component="a" href="#" rightIcon={<AiOutlineArrowRight />}>
+          View more
+        </Button>
       </Carousel.Slide>
-    })}
-  </Carousel>
+    </Carousel>
+    <Button type="button" variant="outline" size="sm" component="a" href="#">
+      Full cast and Crew
+    </Button>
+  </>
 }
