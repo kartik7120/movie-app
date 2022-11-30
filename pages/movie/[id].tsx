@@ -119,8 +119,8 @@ export default function Media({ data, id }: { data: any, id: number }) {
                 </div>
             </div>
         </BackgroundImage>
-        <div>
-            <Cast id={id} mediaType={"MOVIE"} first={6} />
+        <div className={styles.bottomWrapper}>
+            <Cast id={id} mediaType={"MOVIE"} first={7} />
         </div>
     </>
 }
