@@ -65,7 +65,4 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  overflow: auto;
-  /* overflow-x: scroll; */
-  width: 100%;
 }

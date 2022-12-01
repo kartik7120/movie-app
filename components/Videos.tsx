@@ -2,6 +2,7 @@ import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { AiOutlinePlayCircle } from "react-icons/ai";
 import ReactPlayer from "react-player/youtube";
 import styles from "../styles/movie.module.css";
+import { ScrollArea } from "@mantine/core";
 
 const VIDEOS = gql`
     query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
@@ -32,11 +33,14 @@ export default function Videos(props: Props): JSX.Element {
         return <p>Loading...</p>
     }
 
-    return (<div className={styles.videoWrapper}>
-        {data && data.getVideoMedia.map((video: any) => {
-            return <ReactPlayer key={video.id} playIcon={<AiOutlinePlayCircle />}
-                url={`https://www.${video.site.toLowerCase()}.com/watch?v=${video.key}`} />
-        })}
-    </div>
+    return (
+        <ScrollArea style={{ width: 1000 }}>
+            <div className={styles.videoWrapper}>
+                {data && data.getVideoMedia.map((video: any) => {
+                    return <ReactPlayer key={video.id} playIcon={<AiOutlinePlayCircle />}
+                        url={`https://www.${video.site.toLowerCase()}.com/watch?v=${video.key}`} />
+                })}
+            </div>
+        </ScrollArea>
     )
 }
