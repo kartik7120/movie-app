@@ -1,4 +1,5 @@
 import { Tabs } from "@mantine/core";
+import Posters from "./Posters";
 import Videos from "./Videos";
 
 interface Props {
@@ -20,7 +21,7 @@ export default function MediaComponent(props: Props): JSX.Element {
             <Tabs.Panel value="most popular">Most Popular Panel</Tabs.Panel>
             <Tabs.Panel value="videos"><Videos id={props.id} sourceMedia={props.sourceMedia} first={props.first} /></Tabs.Panel>
             <Tabs.Panel value="backdrops">Backdrops</Tabs.Panel>
-            <Tabs.Panel value="posters">Posters</Tabs.Panel>
+            <Tabs.Panel value="posters"><Posters id={props.id} sourceMedia={props.sourceMedia} first={props.first} /></Tabs.Panel>
         </Tabs>
     )
 }
