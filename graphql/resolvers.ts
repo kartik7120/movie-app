@@ -127,9 +127,11 @@ export const resolvers = {
             const result = await query.json();
             if (args.first === undefined || args.first === null)
                 return result;
-            
+
             return {
-                posters: result.posters.slice(0, args.first)
+                backdrops: result.backdrops.slice(0, args.first),
+                posters: result.posters.slice(0, args.first),
+                id: result.id
             }
         },
         getPopularMovies: async (parent: any, args: any, context: any, info: any) => {
