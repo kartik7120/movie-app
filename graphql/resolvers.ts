@@ -125,7 +125,12 @@ export const resolvers = {
 
             const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}`);
             const result = await query.json();
-            return result;
+            if (args.first === undefined || args.first === null)
+                return result;
+            
+            return {
+                posters: result.posters.slice(0, args.first)
+            }
         },
         getPopularMovies: async (parent: any, args: any, context: any, info: any) => {
 
