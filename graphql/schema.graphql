@@ -323,6 +323,23 @@ type PeopleImages {
   profiles: [Backdrop]
 }
 
+type PeopleDetails {
+  birthday: String
+  known_for_department: String!
+  deathday: String
+  id: ID!
+  name: String
+  also_known_as: [String]
+  gender: Int
+  biography: String
+  popularity: Int
+  place_of_birth: String
+  profile_path: String
+  adult: Boolean
+  homepage: String
+  imdb_id: String
+}
+
 type Query {
   trending(mediaType: MediaType, timeWindow: TimeWindow): [Trending]
   nowPlayingMovies: NowPlayingMovies
@@ -365,4 +382,5 @@ type Query {
     language: String
   ): SearchCollection
   getPeopleImages(id: ID!, first: Int): PeopleImages
+  peopleDetails(id: ID!): PeopleDetails
 }
