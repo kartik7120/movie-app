@@ -340,6 +340,14 @@ type PeopleDetails {
   imdb_id: String
 }
 
+type ExternalIds {
+  imdb_id: String
+  facebook_id: String
+  instagram_id: String
+  twitter_id: String
+  id: ID!
+}
+
 type Query {
   trending(mediaType: MediaType, timeWindow: TimeWindow): [Trending]
   nowPlayingMovies: NowPlayingMovies
@@ -383,4 +391,5 @@ type Query {
   ): SearchCollection
   getPeopleImages(id: ID!, first: Int): PeopleImages
   peopleDetails(id: ID!): PeopleDetails
+  getExternalIDs(id: ID!, sourceMedia: SourceMedia!): ExternalIds
 }
