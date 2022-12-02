@@ -73,3 +73,8 @@
   justify-content: center;
   align-items: center;
 }
+
+.paddingClass {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}

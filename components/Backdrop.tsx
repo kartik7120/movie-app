@@ -11,6 +11,7 @@ const BACKDROP = gql`
     backdrops {
       file_path
     }
+    id
   }
 }
 `

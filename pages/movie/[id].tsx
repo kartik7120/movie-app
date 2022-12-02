@@ -123,14 +123,29 @@ export default function Media({ data, id }: { data: any, id: number }) {
         </BackgroundImage>
         <div className={styles.bottomWrapper}>
             <div className={styles.bottomWrapper2}>
-                <Title order={2} size="h1" align="start"
-                    style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
-                    Cast
-                </Title>
-                <Cast id={id} mediaType={"MOVIE"} first={7} />
+                <div className={styles.paddingClass}>
+                    <Title order={2} size="h1" align="start"
+                        style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
+                        Cast
+                    </Title>
+                    <Cast id={id} mediaType={"MOVIE"} first={7} />
+                </div>
                 <Divider variant="solid" size="md" m={2} />
-                <MediaComponent id={id} sourceMedia={"MOVIE"} first={4} />
-                <Recommendation id={id} sourceMedia={"MOVIE"} />
+                <div className={styles.paddingClass}>
+                    <Title order={3} size="h1" align="start"
+                        style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
+                        Media
+                    </Title>
+                    <MediaComponent id={id} sourceMedia={"MOVIE"} first={4} />
+                </div>
+                <Divider variant="solid" size="md" m={2} />
+                <div className={styles.paddingClass}>
+                    <Title order={3} size="h1" align="start"
+                        style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
+                        Recommendations
+                    </Title>
+                    <Recommendation id={id} sourceMedia={"MOVIE"} />
+                </div>
             </div>
             <div>
                 Second column
