@@ -14,6 +14,7 @@ import { useLazyQuery } from "@apollo/client";
 import ReactPlayer from "react-player/youtube";
 import Cast from "../../components/Cast";
 import MediaComponent from "../../components/MediaComponent";
+import Recommendation from "../../components/Recommendation";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -129,6 +130,7 @@ export default function Media({ data, id }: { data: any, id: number }) {
                 <Cast id={id} mediaType={"MOVIE"} first={7} />
                 <Divider variant="solid" size="md" m={2} />
                 <MediaComponent id={id} sourceMedia={"MOVIE"} first={4} />
+                <Recommendation id={id} sourceMedia={"MOVIE"} />
             </div>
             <div>
                 Second column
