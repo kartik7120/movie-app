@@ -15,6 +15,7 @@ import ReactPlayer from "react-player/youtube";
 import Cast from "../../components/Cast";
 import MediaComponent from "../../components/MediaComponent";
 import Recommendation from "../../components/Recommendation";
+import Keywords from "../../components/Keywords";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -147,8 +148,8 @@ export default function Media({ data, id }: { data: any, id: number }) {
                     <Recommendation id={id} sourceMedia={"MOVIE"} />
                 </div>
             </div>
-            <div>
-                Second column
+            <div className={styles.bottomWrapper3}>
+                <Keywords id={id} sourceMedia={"MOVIE"} />
             </div>
         </div>
     </>
