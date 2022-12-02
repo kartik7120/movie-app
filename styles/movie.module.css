@@ -66,3 +66,10 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.horizontalWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
