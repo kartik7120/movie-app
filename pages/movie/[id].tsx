@@ -4,7 +4,7 @@ import client from "../../apollo-client";
 import styles from "../../styles/movie.module.css";
 import React from "react";
 import ImageCard from "../../components/ImageCard";
-import { ActionIcon, Button, Divider, Text, Title } from "@mantine/core";
+import { ActionIcon, Button, Divider, Text, Title, Group } from "@mantine/core";
 import Head from "next/head";
 import { runTimeConversion, covertDataFormat } from "../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
@@ -151,7 +151,7 @@ export default function Media({ data, id }: { data: any, id: number }) {
             </div>
             <div className={styles.bottomWrapper3}>
                 <Keywords id={id} sourceMedia={"MOVIE"} />
-                <div>
+                <Group position="center">
                     <ActionIcon size="xl">
                         <AiOutlineTwitter size={30} />
                     </ActionIcon>
@@ -164,7 +164,7 @@ export default function Media({ data, id }: { data: any, id: number }) {
                     <ActionIcon size="xl" component="a" href="#">
                         <BiLink size={30} />
                     </ActionIcon>
-                </div>
+                </Group>
             </div>
         </div>
     </>
