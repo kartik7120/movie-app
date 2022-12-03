@@ -55,7 +55,7 @@ query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
 }
 `
 
-export default function Media({ data, id }: { data: any, id: number }) {
+export default function Media({ data, id, acceptLang }: { data: any, id: number, acceptLang: string }) {
 
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
         variables: {
@@ -152,13 +152,21 @@ export default function Media({ data, id }: { data: any, id: number }) {
             <div className={styles.bottomWrapper3}>
                 <Social id={id} sourceMedia="MOVIE" homepage={data.homepage} />
                 <Keywords id={id} sourceMedia={"MOVIE"} />
+                <Text variant="text">Status</Text>
+                <Text variant="text">{data.status}</Text>
+                <Text variant="text">Original Language</Text>
+                <Text variant="text">{data.original_language}</Text>
+                <Text variant="text">Budget</Text>
+                <Text variant="text">{parseInt(data.budget).toLocaleString(acceptLang.substring(0, 5))}</Text>
+                <Text variant="text">Revenue</Text>
+                <Text variant="text">{parseInt(data.revenue).toLocaleString(acceptLang.substring(0, 5))}</Text>
             </div>
         </div>
     </>
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { params } = context;
+    const { params, req } = context;
 
     if (params && !params.id) {
         return {
@@ -176,7 +184,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             data: result.data.getMovieDetails,
-            id: params ? params.id : null
+            id: params ? params.id : null,
+            acceptLang: req.headers["accept-language"]
         },
     }
 }
