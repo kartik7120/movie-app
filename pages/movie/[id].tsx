@@ -17,6 +17,7 @@ import MediaComponent from "../../components/MediaComponent";
 import Recommendation from "../../components/Recommendation";
 import Keywords from "../../components/Keywords";
 import { BiLink } from "react-icons/bi";
+import Social from "../../components/Social";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -151,20 +152,7 @@ export default function Media({ data, id }: { data: any, id: number }) {
             </div>
             <div className={styles.bottomWrapper3}>
                 <Keywords id={id} sourceMedia={"MOVIE"} />
-                <Group position="center">
-                    <ActionIcon size="xl">
-                        <AiOutlineTwitter size={30} />
-                    </ActionIcon>
-                    <ActionIcon size="xl">
-                        <AiFillFacebook size={30} />
-                    </ActionIcon>
-                    <ActionIcon size="xl">
-                        <AiFillInstagram size={30} />
-                    </ActionIcon>
-                    <ActionIcon size="xl" component="a" href="#">
-                        <BiLink size={30} />
-                    </ActionIcon>
-                </Group>
+                <Social id={id} sourceMedia="MOVIE" homepage={data.homepage} />
             </div>
         </div>
     </>
