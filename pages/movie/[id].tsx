@@ -85,7 +85,6 @@ export default function Media({ data, id }: { data: any, id: number }) {
         </Modal>
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}?api_key=${process.env.API_KEY}`}
-            className={styles.image}
         >
             <div className={styles.wrapper}>
                 <div>
@@ -151,8 +150,8 @@ export default function Media({ data, id }: { data: any, id: number }) {
                 </div>
             </div>
             <div className={styles.bottomWrapper3}>
-                <Keywords id={id} sourceMedia={"MOVIE"} />
                 <Social id={id} sourceMedia="MOVIE" homepage={data.homepage} />
+                <Keywords id={id} sourceMedia={"MOVIE"} />
             </div>
         </div>
     </>
