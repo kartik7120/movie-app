@@ -8,7 +8,7 @@ import { ActionIcon, Button, Divider, Text, Title } from "@mantine/core";
 import Head from "next/head";
 import { runTimeConversion, covertDataFormat } from "../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
-import { AiOutlineHeart, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
+import { AiOutlineHeart, AiFillFacebook, AiOutlineTwitter, AiFillInstagram, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
 import { useLazyQuery } from "@apollo/client";
 import ReactPlayer from "react-player/youtube";
@@ -16,6 +16,7 @@ import Cast from "../../components/Cast";
 import MediaComponent from "../../components/MediaComponent";
 import Recommendation from "../../components/Recommendation";
 import Keywords from "../../components/Keywords";
+import { BiLink } from "react-icons/bi";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -150,6 +151,20 @@ export default function Media({ data, id }: { data: any, id: number }) {
             </div>
             <div className={styles.bottomWrapper3}>
                 <Keywords id={id} sourceMedia={"MOVIE"} />
+                <div>
+                    <ActionIcon size="xl">
+                        <AiOutlineTwitter size={30} />
+                    </ActionIcon>
+                    <ActionIcon size="xl">
+                        <AiFillFacebook size={30} />
+                    </ActionIcon>
+                    <ActionIcon size="xl">
+                        <AiFillInstagram size={30} />
+                    </ActionIcon>
+                    <ActionIcon size="xl" component="a" href="#">
+                        <BiLink size={30} />
+                    </ActionIcon>
+                </div>
             </div>
         </div>
     </>
