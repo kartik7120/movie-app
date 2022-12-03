@@ -155,9 +155,11 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                 <Text variant="text">Status</Text>
                 <Text variant="text">{data.status}</Text>
                 <Text variant="text">Original Language</Text>
-                <Text variant="text">{new Intl.DisplayNames([`${data.original_language}`], {
-                    type: "language"
-                }).of('en')}</Text>
+                <Text variant="text">
+                    {new Intl.DisplayNames([`${data.original_language}`], {
+                        type: "language"
+                    }).of('en')}
+                </Text>
                 <Text variant="text">Budget</Text>
                 <Text variant="text">{parseInt(data.budget).toLocaleString(acceptLang.substring(0, 5))}</Text>
                 <Text variant="text">Revenue</Text>
