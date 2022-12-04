@@ -152,18 +152,20 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             <div className={styles.bottomWrapper3}>
                 <Social id={id} sourceMedia="MOVIE" homepage={data.homepage} />
                 <Keywords id={id} sourceMedia={"MOVIE"} />
-                <Text fw={"bold"} variant="text">Status</Text>
-                <Text variant="text">{data.status}</Text>
-                <Text fw={"bold"} variant="text">Original Language</Text>
-                <Text variant="text">
-                    {new Intl.DisplayNames([`${data.original_language}`], {
-                        type: "language"
-                    }).of('en')}
-                </Text>
-                <Text fw={"bold"} variant="text">Budget</Text>
-                <Text variant="text">{parseInt(data.budget).toLocaleString(acceptLang.substring(0, 5))}</Text>
-                <Text fw={"bold"} variant="text">Revenue</Text>
-                <Text variant="text">{parseInt(data.revenue).toLocaleString(acceptLang.substring(0, 5))}</Text>
+                <div className={styles.centerFlex}>
+                    <Text fw={"bold"} variant="text">Status</Text>
+                    <Text variant="text">{data.status}</Text>
+                    <Text fw={"bold"} variant="text">Original Language</Text>
+                    <Text variant="text">
+                        {new Intl.DisplayNames([`${data.original_language}`], {
+                            type: "language"
+                        }).of('en')}
+                    </Text>
+                    <Text fw={"bold"} variant="text">Budget</Text>
+                    <Text variant="text">{parseInt(data.budget).toLocaleString(acceptLang.substring(0, 5))}</Text>
+                    <Text fw={"bold"} variant="text">Revenue</Text>
+                    <Text variant="text">{parseInt(data.revenue).toLocaleString(acceptLang.substring(0, 5))}</Text>
+                </div>
             </div>
         </div>
     </>
