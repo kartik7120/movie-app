@@ -48,16 +48,16 @@
 }
 
 .bottomWrapper {
-  display: grid;
-  grid-template-columns: 2fr 2fr;
-  grid-auto-rows: 1fr;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 4em;
   margin-top: 4em;
-  margin-left: 4em;
   height: auto;
 }
 
 .bottomWrapper2 {
-  width: 80%;
+  width: 70%;
 }
 
 .videoWrapper {
@@ -77,4 +77,11 @@
 .paddingClass {
   padding-top: 2em;
   padding-bottom: 2em;
+}
+
+.keywords {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
