@@ -1,4 +1,4 @@
-import { Badge } from "@mantine/core";
+import { Badge, Text, Title } from "@mantine/core";
 import { gql, useQuery } from "@apollo/client";
 import styles from "../styles/movie.module.css";
 
@@ -31,6 +31,7 @@ export default function Keywords(props: Props): JSX.Element {
     }
 
     return <div className={styles.keywords}>
+        <Title size="h3" fw="bold" order={4} style={{ paddingLeft: "2em" }}>Keywords</Title>
         <ul>
             {data && data.getKeywords.keywords.map((keyword: any) => {
                 return <Badge component="li" size="lg" variant="filled" key={keyword.id}>
