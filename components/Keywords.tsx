@@ -33,7 +33,7 @@ export default function Keywords(props: Props): JSX.Element {
     return <div className={styles.keywords}>
         <ul>
             {data && data.getKeywords.keywords.map((keyword: any) => {
-                return <Badge component="li" size="lg" href="#" variant="filled" key={keyword.id}>
+                return <Badge component="li" size="lg" variant="filled" key={keyword.id}>
                     {keyword.name}
                 </Badge>
             })}

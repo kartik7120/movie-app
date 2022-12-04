@@ -85,3 +85,11 @@
   justify-content: flex-start;
   flex-wrap: wrap;
 }
+
+.centerFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 3em;
+}
