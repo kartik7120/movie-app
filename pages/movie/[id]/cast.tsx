@@ -1,7 +1,8 @@
 import { gql, useQuery } from "@apollo/client"
-import { Text, Avatar } from "@mantine/core"
+import { Text, Avatar, Title } from "@mantine/core"
 import { useRouter } from "next/router"
 import Head from "next/head"
+import styles from "../../../styles/cast.module.css";
 
 const CREDITS = gql` #graphql
     query GetCast($getCastId: ID!, $mediaType: SourceMedia!) {
@@ -51,28 +52,33 @@ export default function Cast() {
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta name="description" content={`Cast of movie`} />
+            <title></title>
         </Head>
-        <Text size="lg">Cast</Text>
-        {data && data.getCast.cast.map((ele: any, index: number) => {
-            return <div key={ele.id * index * Math.random() * 22}>
-                <Avatar
-                    src={ele.profile_path !== null ?
-                        `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
-                    alt="profile image" />
-                <Text variant="text" fw="bold">{ele.name}</Text>
-                <Text variant="text">{ele.character}</Text>
-            </div>
-        })}
-        <Text size="lg">Cast</Text>
-        {data && data.getCast.crew.map((ele: any, index: number) => {
-            return <div key={ele.id * index * Math.random() * 11}>
-                <Avatar
-                    src={ele.profile_path !== null ?
-                        `https://image.tmdb.org/t/p/w300${ele.profile_path}` : null}
-                    alt="profile image" />
-                <Text variant="text" fw="bold">{ele.name}</Text>
-                <Text variant="text">{ele.department}</Text>
-            </div>
-        })}
+        <Title size="h2" order={3} fw="bolder">Cast</Title>
+        <ul>
+            {data && data.getCast.cast.map((ele: any, index: number) => {
+                return <li className={styles.list} key={ele.id * index * Math.random() * 22}>
+                    <Avatar
+                        src={ele.profile_path !== null ?
+                            `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
+                        alt="profile image" size="lg" />
+                    <Text variant="text" fw="bold">{ele.name}</Text>
+                    <Text variant="text">{ele.character}</Text>
+                </li>
+            })}
+        </ul>
+        <Title size="h2" order={3} fw="bolder">Crew</Title>
+        <ul>
+            {data && data.getCast.crew.map((ele: any, index: number) => {
+                return <li className={styles.list} key={ele.id * index * Math.random() * 11}>
+                    <Avatar
+                        src={ele.profile_path !== null ?
+                            `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
+                        alt="profile image" size="lg" />
+                    <Text variant="text" fw="bold">{ele.name}</Text>
+                    <Text variant="text">{ele.department}</Text>
+                </li>
+            })}
+        </ul>
     </div>
 }
