@@ -192,7 +192,7 @@ export const resolvers = {
             if (args.first === undefined || args.first === null) {
                 return result;
             }
-            return { cast: result.cast.slice(0, args.first) };
+            return { ...result, cast: result.cast.slice(0, args.first), crew: result.crew.slice(0, args.first) };
         },
         getrecommendations: async (parent: any, args: any, context: any, info: any) => {
             if (args.id === null || args.id === undefined) {

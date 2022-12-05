@@ -238,7 +238,7 @@ type Crew {
 type Credits {
   id: ID
   cast: [Cast]!
-  Crew: [Crew]!
+  crew: [Crew]!
 }
 
 type Backdrop {
