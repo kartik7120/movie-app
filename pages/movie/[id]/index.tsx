@@ -1,23 +1,23 @@
 import { gql } from "apollo-server-micro";
 import { GetServerSideProps } from "next";
-import client from "../../apollo-client";
-import styles from "../../styles/movie.module.css";
+import client from "../../../apollo-client";
+import styles from "../../../styles/movie.module.css";
 import React from "react";
-import ImageCard from "../../components/ImageCard";
+import ImageCard from "../../../components/ImageCard";
 import { ActionIcon, Button, Divider, Text, Title, Group } from "@mantine/core";
 import Head from "next/head";
-import { runTimeConversion, covertDataFormat } from "../../lib/util";
+import { runTimeConversion, covertDataFormat } from "../../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
 import { AiOutlineHeart, AiFillFacebook, AiOutlineTwitter, AiFillInstagram, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
 import { useLazyQuery } from "@apollo/client";
 import ReactPlayer from "react-player/youtube";
-import Cast from "../../components/Cast";
-import MediaComponent from "../../components/MediaComponent";
-import Recommendation from "../../components/Recommendation";
-import Keywords from "../../components/Keywords";
+import Cast from "../../../components/Cast";
+import MediaComponent from "../../../components/MediaComponent";
+import Recommendation from "../../../components/Recommendation";
+import Keywords from "../../../components/Keywords";
 import { BiLink } from "react-icons/bi";
-import Social from "../../components/Social";
+import Social from "../../../components/Social";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
