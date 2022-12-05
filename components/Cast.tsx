@@ -55,7 +55,7 @@ export default function Cast(props: Props): JSX.Element {
         </Button>
       </Carousel.Slide>
     </Carousel>
-    <Button type="button" variant="outline" size="sm" component="a" href="#">
+    <Button type="button" variant="outline" size="sm" component="a" href={`/movie/${props.id}/cast`}>
       Full cast and Crew
     </Button>
   </>
