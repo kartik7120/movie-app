@@ -3,6 +3,7 @@ import { Text, Avatar, Title } from "@mantine/core"
 import { useRouter } from "next/router"
 import Head from "next/head"
 import styles from "../../../styles/cast.module.css";
+import Link from "next/link";
 
 const CREDITS = gql` #graphql
     query GetCast($getCastId: ID!, $mediaType: SourceMedia!) {
@@ -64,7 +65,7 @@ export default function Cast() {
                                 `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
                             alt="profile image" size="lg" />
                         <div className={styles.textWrapper}>
-                            <Text variant="text" fw="bold">{ele.name}</Text>
+                            <Link href={`#`}><Text variant="text" className={styles.text} fw="bold">{ele.name}</Text></Link>
                             <Text variant="text">{ele.character}</Text>
                         </div>
                     </li>
@@ -81,7 +82,7 @@ export default function Cast() {
                                 `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
                             alt="profile image" size="lg" />
                         <div className={styles.textWrapper}>
-                            <Text variant="text" fw="bold">{ele.name}</Text>
+                            <Link href={`#`}><Text variant="text" className={styles.text} fw="bold">{ele.name}</Text></Link>
                             <Text variant="text">{ele.department}</Text>
                         </div>
                     </li>
