@@ -48,37 +48,45 @@ export default function Cast() {
     }
 
 
-    return <div>
+    return <div className={styles.wrapper}>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta name="description" content={`Cast of movie`} />
-            <title></title>
+            <title>Cast</title>
         </Head>
-        <Title size="h2" order={3} fw="bolder">Cast</Title>
-        <ul>
-            {data && data.getCast.cast.map((ele: any, index: number) => {
-                return <li className={styles.list} key={ele.id * index * Math.random() * 22}>
-                    <Avatar
-                        src={ele.profile_path !== null ?
-                            `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
-                        alt="profile image" size="lg" />
-                    <Text variant="text" fw="bold">{ele.name}</Text>
-                    <Text variant="text">{ele.character}</Text>
-                </li>
-            })}
-        </ul>
-        <Title size="h2" order={3} fw="bolder">Crew</Title>
-        <ul>
-            {data && data.getCast.crew.map((ele: any, index: number) => {
-                return <li className={styles.list} key={ele.id * index * Math.random() * 11}>
-                    <Avatar
-                        src={ele.profile_path !== null ?
-                            `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
-                        alt="profile image" size="lg" />
-                    <Text variant="text" fw="bold">{ele.name}</Text>
-                    <Text variant="text">{ele.department}</Text>
-                </li>
-            })}
-        </ul>
+        <div>
+            <Title size="h2" order={3} fw="bolder">Cast</Title>
+            <ul>
+                {data && data.getCast.cast.map((ele: any, index: number) => {
+                    return <li className={styles.list} key={ele.id * index * Math.random() * 22}>
+                        <Avatar
+                            src={ele.profile_path !== null ?
+                                `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
+                            alt="profile image" size="lg" />
+                        <div className={styles.textWrapper}>
+                            <Text variant="text" fw="bold">{ele.name}</Text>
+                            <Text variant="text">{ele.character}</Text>
+                        </div>
+                    </li>
+                })}
+            </ul>
+        </div>
+        <div>
+            <Title size="h2" order={3} fw="bolder">Crew</Title>
+            <ul>
+                {data && data.getCast.crew.map((ele: any, index: number) => {
+                    return <li className={styles.list} key={ele.id * index * Math.random() * 11}>
+                        <Avatar
+                            src={ele.profile_path !== null ?
+                                `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
+                            alt="profile image" size="lg" />
+                        <div className={styles.textWrapper}>
+                            <Text variant="text" fw="bold">{ele.name}</Text>
+                            <Text variant="text">{ele.department}</Text>
+                        </div>
+                    </li>
+                })}
+            </ul>
+        </div>
     </div>
 }

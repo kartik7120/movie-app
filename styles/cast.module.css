@@ -1,3 +1,25 @@
 .list {
   list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 100%;
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.textWrapper {
+  padding-left: 14px;
+  padding-right: 14px;
 }
