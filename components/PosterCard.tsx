@@ -1,4 +1,7 @@
 import { Card, Image, Text, Title } from "@mantine/core";
+import { convertCode } from "../lib/util";
+import { useRouter } from "next/router"
+import Link from "next/link";
 
 interface Props {
     imgURL: string,
@@ -7,16 +10,16 @@ interface Props {
 }
 
 export default function PosterCard(props: Props): JSX.Element {
+
     return <Card shadow="md" p="lg" radius="md" withBorder>
         <Card.Section withBorder>
-            <Image src={`https://image.tmdb.org/t/p/w200${props.imgURL}?api_key=${process.env.API_KEY}`} withPlaceholder
-                width={200} height={300} alt="" />
+            <Link href={`https://image.tmdb.org/t/p/original${props.imgURL}`} target="_blank">
+                <Image src={`https://image.tmdb.org/t/p/w200${props.imgURL}?api_key=${process.env.API_KEY}`} withPlaceholder
+                    width={200} height={300} alt="" title="View Original" style={{ cursor: "pointer" }} />
+            </Link>
         </Card.Section>
-        <Title order={3} size="h2">
-            Size
-        </Title>
         <Text variant="text" fw="bold">
-            Added by
+            Size
             <Text>
                 {props.size}
             </Text>
@@ -24,8 +27,8 @@ export default function PosterCard(props: Props): JSX.Element {
         <Text>
             Language
             <Text>
-                {props.language !== null ? props.language : "No Language"}
+                {props.language !== null ? convertCode(props.language) : "No Language"}
             </Text>
         </Text>
-    </Card>
+    </Card >
 }
