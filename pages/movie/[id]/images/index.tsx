@@ -3,6 +3,7 @@ import { GetStaticPaths, GetServerSideProps } from "next";
 import client from "../../../../apollo-client";
 import { Card } from "@mantine/core";
 import PosterCard from "../../../../components/PosterCard";
+import styles from "../../../../styles/poster.module.css";
 
 const POSTERS = gql`
     query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!) {
@@ -23,12 +24,12 @@ interface Props {
 }
 
 export default function Images(props: Props): JSX.Element {
-    return <>
+    return <div className={styles.wrapper}>
         {props.posters.map((poster: any, index: number) => {
             return <PosterCard imgURL={poster.file_path}
                 key={Math.random() * index * 9} size={`${poster.width} x ${poster.height}`} language={poster.iso_639_1} />
         })}
-    </>
+    </div>
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
