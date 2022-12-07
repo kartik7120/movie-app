@@ -18,6 +18,7 @@ import Recommendation from "../../../components/Recommendation";
 import Keywords from "../../../components/Keywords";
 import { BiLink } from "react-icons/bi";
 import Social from "../../../components/Social";
+import { convertCode } from "../../../lib/util";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -157,9 +158,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                     <Text variant="text">{data.status}</Text>
                     <Text fw={"bold"} variant="text">Original Language</Text>
                     <Text variant="text">
-                        {new Intl.DisplayNames([`${data.original_language}`], {
-                            type: "language"
-                        }).of('en')}
+                        {convertCode(`${data.original_language}`)}
                     </Text>
                     <Text fw={"bold"} variant="text">Budget</Text>
                     <Text variant="text">{parseInt(data.budget).toLocaleString(acceptLang.substring(0, 5))}</Text>

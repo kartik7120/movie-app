@@ -31,3 +31,9 @@ export function covertDataFormat(date: string): string {
   const part3 = date.substring(8);
   return `${part3}/${part2}/${part1}`;
 }
+
+export function convertCode(code: string) {
+  return new Intl.DisplayNames([`${code}`], {
+    type: "language"
+  }).of('en')
+}
