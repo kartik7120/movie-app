@@ -32,7 +32,9 @@ export function covertDataFormat(date: string): string {
   return `${part3}/${part2}/${part1}`;
 }
 
-export function convertCode(code: string) {
+export function convertCode(code: string | null) {
+  if (code === null)
+    return "";
   return new Intl.DisplayNames([`${code}`], {
     type: "language"
   }).of('en')
