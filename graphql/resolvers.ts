@@ -1,5 +1,6 @@
 import axios from "axios";
 import { GraphQLError } from "graphql";
+import { convertCode } from "../lib/util";
 
 export const resolvers = {
     MediaType: {
@@ -125,6 +126,15 @@ export const resolvers = {
 
             const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}`);
             const result = await query.json();
+
+            result.backdrops.forEach((res: any) => {
+                res.iso_639_1 = convertCode(res.iso_639_1);
+            });
+
+            result.posters.forEach((res: any) => {
+                res.iso_639_1 = convertCode(res.iso_639_1);
+            });
+
             if (args.first === undefined || args.first === null)
                 return result;
 
