@@ -11,7 +11,7 @@ interface Props {
 
 export default function PosterCard(props: Props): JSX.Element {
 
-    return <Card shadow="md" p="lg" radius="md" withBorder>
+    return <Card shadow="md" p="lg" radius="md" withBorder mb={"md"}>
         <Card.Section withBorder>
             <Link href={`https://image.tmdb.org/t/p/original${props.imgURL}`} target="_blank">
                 <Image src={`https://image.tmdb.org/t/p/w200${props.imgURL}?api_key=${process.env.API_KEY}`} withPlaceholder
@@ -27,7 +27,7 @@ export default function PosterCard(props: Props): JSX.Element {
         <Text>
             Language
             <Text>
-                {props.language !== null ? convertCode(props.language) : "No Language"}
+                {props.language}
             </Text>
         </Text>
     </Card >
