@@ -31,7 +31,9 @@ const Images = (props: Props) => {
     return <>
         <MoreTitle id={props.id} title={`Title`} />
         <div className={styles.wrapper}>
-            <LeftOptions title="Posters" list={props.posters} />
+            <div title="Dummy div">
+                <LeftOptions title="Posters" list={props.posters} />
+            </div>
             <div className={styles.wrapper2}>
                 {props.posters.map((poster: any, index: number) => {
                     return <PosterCard imgURL={poster.file_path}
