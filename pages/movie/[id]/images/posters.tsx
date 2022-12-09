@@ -7,6 +7,7 @@ import LeftOptions from "../../../../components/LeftOptions";
 import MoreTitle from "../../../../components/MoreTitle";
 import ImageLayout from "../../../../components/ImageLayout";
 import type { NextPageWithLayout } from '../../../_app';
+import Head from "next/head";
 
 const POSTERS = gql`
     query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!) {
@@ -33,6 +34,11 @@ interface Props {
 
 const Images = (props: Props) => {
     return <>
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+            <title>{props.title} - Posters</title>
+        </Head>
         <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div title="Dummy div">
