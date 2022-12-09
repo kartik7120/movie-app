@@ -19,17 +19,21 @@ const POSTERS = gql`
       iso_639_1
     }
   }
+  getMovieDetails(id:$getImageMediaId) {
+    title
+  }
 }
 `
 
 interface Props {
     posters: any[],
-    id: number | null
+    id: number | null,
+    title: string
 }
 
 const Images = (props: Props) => {
     return <>
-        <MoreTitle id={props.id} title={`Title`} />
+        <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div title="Dummy div">
                 <LeftOptions title="Posters" list={props.posters} />
@@ -57,7 +61,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         query: POSTERS,
         variables: {
             getImageMediaId: params ? params.id : null,
-            sourceMedia: "MOVIE"
+            sourceMedia: "MOVIE",
+            id: params ? params.id : null
         }
     })
 
@@ -70,7 +75,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             posters: data.getImageMedia.posters,
-            id: params ? params.id : null
+            id: params ? params.id : null,
+            title: data.getMovieDetails.title
         }
     }
 }
