@@ -128,11 +128,19 @@ export const resolvers = {
             const result = await query.json();
 
             result.backdrops.forEach((res: any) => {
-                res.iso_639_1 = convertCode(res.iso_639_1);
+                if (res.iso_639_1 === null || res.iso_639_1 === undefined) {
+                    res.iso_639_1 = "No Language";
+                }
+                else
+                    res.iso_639_1 = convertCode(res.iso_639_1);
             });
 
             result.posters.forEach((res: any) => {
-                res.iso_639_1 = convertCode(res.iso_639_1);
+                if (res.iso_639_1 === null || res.iso_639_1 === undefined) {
+                    res.iso_639_1 = "No Language";
+                }
+                else
+                    res.iso_639_1 = convertCode(res.iso_639_1);
             });
 
             if (args.first === undefined || args.first === null)
