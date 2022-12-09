@@ -356,7 +356,12 @@ type Query {
   topRatedMovies: [NowPlaying]
   topRatedTvShows: [NowPlayingTv]
   getVideoMedia(id: ID!, sourceMedia: SourceMedia!): [MediaVideo]
-  getImageMedia(id: ID!, sourceMedia: SourceMedia!, first: Int): MediaImages
+  getImageMedia(
+    id: ID!
+    sourceMedia: SourceMedia!
+    first: Int
+    includeLanguage: String
+  ): MediaImages
   getPopularMovies: [NowPlaying]
   getPoplarTv: [NowPlayingTv]
   getSimilarMovies(id: ID!, page: Int): [NowPlaying]

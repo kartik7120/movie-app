@@ -124,7 +124,7 @@ export const resolvers = {
                 })
             }
 
-            const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}`);
+            const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}&include_image_language=${args.includeLanguage || 'en'}`);
             const result = await query.json();
 
             result.backdrops.forEach((res: any) => {
