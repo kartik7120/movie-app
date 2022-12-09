@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function LeftOptions(props: Props): JSX.Element {
-    return <Card withBorder radius="md" p="lg" style={{ display: "inline-block" }}>
+    return <Card withBorder className={styles.card} radius="md" p="lg" style={{ display: "inline-block" }}>
         <Card.Section bg="red">
             <Text variant="text" p="1em" size="xl">{props.title}</Text>
         </Card.Section>
