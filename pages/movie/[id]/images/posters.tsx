@@ -8,10 +8,11 @@ import MoreTitle from "../../../../components/MoreTitle";
 import ImageLayout from "../../../../components/ImageLayout";
 import type { NextPageWithLayout } from '../../../_app';
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 const POSTERS = gql`
-    query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!) {
-    getImageMedia(id: $getImageMediaId, sourceMedia: $sourceMedia) {
+    query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!,$includeLanguage: String) {
+    getImageMedia(id: $getImageMediaId, sourceMedia: $sourceMedia,includeLanguage: $includeLanguage) {
     posters {
       file_path
       aspect_ratio
@@ -47,12 +48,12 @@ const Images = (props: Props) => {
         <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div title="Dummy div">
-                <LeftOptions title="Posters" list={props.languageMap} />
+                <LeftOptions id={props.id} title="Posters" list={props.languageMap} />
             </div>
             <div className={styles.wrapper2}>
                 {props.posters.map((poster: any, index: number) => {
                     return <PosterCard imgURL={poster.file_path}
-                        key={Math.random() * index * 9} size={`${poster.width} x ${poster.height}`} language={poster.iso_639_1} />
+                        key={Math.random() * index * 9} size={`${poster.width} x ${poster.height} `} language={poster.iso_639_1} />
                 })}
             </div>
         </div>
@@ -60,7 +61,7 @@ const Images = (props: Props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { params } = context;
+    const { params, query } = context;
 
     if (params && (params.id === undefined || params.id === null)) {
         return {
@@ -73,7 +74,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         variables: {
             getImageMediaId: params ? params.id : null,
             sourceMedia: "MOVIE",
-            id: params ? params.id : null
+            id: params ? params.id : null,
+            includeLanguage: query.include_language
         }
     })
 
