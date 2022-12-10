@@ -17,6 +17,7 @@
   width: 100%;
   padding-top: 3em;
   padding-bottom: 3em;
+  min-width: min-content;
 }
 
 .textWrapper {
