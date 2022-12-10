@@ -4,7 +4,7 @@ import styles from "../styles/LeftOptions.module.css";
 
 interface Props {
     title: string,
-    list: any[]
+    list: { key: string, value: string | null }[]
 }
 
 export default function LeftOptions(props: Props): JSX.Element {
@@ -13,9 +13,9 @@ export default function LeftOptions(props: Props): JSX.Element {
             <Text variant="text" p="1em" size="xl">{props.title}</Text>
         </Card.Section>
         <ul className={styles.wrapper}>
-            {Array.from(new Set(props.list.map((ele) => { return ele.iso_639_1 }))).map((lang: string, index: number) => {
+            {props.list.map((ele, index: number) => {
                 return <li className={styles.list} key={Math.random() * index * 5}>
-                    <Link href={`#`}><Text size="lg">{lang}</Text></Link>
+                    <Link href={`#`}><Text size="lg">{ele.key}</Text></Link>
                 </li>
             })}
         </ul>

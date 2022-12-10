@@ -40,7 +40,7 @@ export default function Posters(props: Props): JSX.Element {
                 return <Image key={Math.random() * index * 47} src={`https://image.tmdb.org/t/p/w200${img.file_path}?api_key=${process.env.API_KEY}`}
                     width={200} height={300} alt="Poster" />
             })}
-            <Button type="button" component="a" href={`/movie/${props.id}/images?type=posters`} rightIcon={<AiOutlineArrowRight />}>View More</Button>
+            <Button type="button" component="a" href={`/movie/${props.id}/images/posters`} rightIcon={<AiOutlineArrowRight />}>View More</Button>
         </div>
     </ScrollArea>
 }
