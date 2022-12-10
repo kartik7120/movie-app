@@ -249,12 +249,19 @@ type Backdrop {
   vote_average: Float
   vote_count: Int
   width: Int
+  language: String
+}
+
+type LangMap {
+  key: String!
+  value: String
 }
 
 type MediaImages {
   backdrops: [Backdrop]
   posters: [Backdrop]
   id: ID!
+  languageMap: [LangMap]
 }
 
 type Keyword {

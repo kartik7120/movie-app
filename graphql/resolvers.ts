@@ -124,32 +124,61 @@ export const resolvers = {
                 })
             }
 
-            const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}&include_image_language=${args.includeLanguage || 'en'}`);
+            const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}`);
             const result = await query.json();
 
+            const query2 = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}&include_image_language=${args.includeLanguage || 'en'}`)
+            const result2 = await query2.json();
+
+            let m = new Map<string, string | null>();
+            const langMap = new Array<{ key: string, value: string | null }>();
+
             result.backdrops.forEach((res: any) => {
+                let temp = convertCode(res.iso_639_1);
                 if (res.iso_639_1 === null || res.iso_639_1 === undefined) {
-                    res.iso_639_1 = "No Language";
+                    res.language = "No Language";
+                    if (m.has("No Language") === false) {
+                        m.set("No Language", null);
+                    }
                 }
-                else
-                    res.iso_639_1 = convertCode(res.iso_639_1);
+                else {
+                    if (m.has(temp!) === false) {
+                        m.set(temp!, res.iso_639_1);
+                    }
+                    res.language = temp;
+                }
             });
 
             result.posters.forEach((res: any) => {
+                let temp = convertCode(res.iso_639_1);
                 if (res.iso_639_1 === null || res.iso_639_1 === undefined) {
-                    res.iso_639_1 = "No Language";
+                    res.language = "No Language";
+                    if (m.has("No Language") === false) {
+                        m.set("No Language", null);
+                    }
                 }
-                else
-                    res.iso_639_1 = convertCode(res.iso_639_1);
+                else {
+                    if (m.has(temp!) === false) {
+                        m.set(temp!, res.iso_639_1);
+                    }
+                    res.language = temp;
+                }
             });
 
-            if (args.first === undefined || args.first === null)
+            m.forEach((value, key) => {
+                langMap.push({ key, value })
+            })
+
+            if (args.first === undefined || args.first === null) {
+                result.languageMap = langMap;
                 return result;
+            }
 
             return {
                 backdrops: result.backdrops.slice(0, args.first),
                 posters: result.posters.slice(0, args.first),
-                id: result.id
+                id: result.id,
+                languageMap: langMap
             }
         },
         getPopularMovies: async (parent: any, args: any, context: any, info: any) => {
