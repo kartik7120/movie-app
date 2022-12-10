@@ -170,8 +170,8 @@ export const resolvers = {
             })
 
             if (args.first === undefined || args.first === null) {
-                result.languageMap = langMap;
-                return result;
+                result2.languageMap = langMap;
+                return result2;
             }
 
             return {
