@@ -19,6 +19,10 @@ const POSTERS = gql`
       width
       iso_639_1
     }
+    languageMap {
+      key
+      value
+    }
   }
   getMovieDetails(id:$getImageMediaId) {
     title
@@ -29,7 +33,8 @@ const POSTERS = gql`
 interface Props {
     posters: any[],
     id: number | null,
-    title: string
+    title: string,
+    languageMap: { key: string, value: string | null }[]
 }
 
 const Images = (props: Props) => {
@@ -42,7 +47,7 @@ const Images = (props: Props) => {
         <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div title="Dummy div">
-                <LeftOptions title="Posters" list={props.posters} />
+                <LeftOptions title="Posters" list={props.languageMap} />
             </div>
             <div className={styles.wrapper2}>
                 {props.posters.map((poster: any, index: number) => {
@@ -82,7 +87,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
             posters: data.getImageMedia.posters,
             id: params ? params.id : null,
-            title: data.getMovieDetails.title
+            title: data.getMovieDetails.title,
+            languageMap: data.getImageMedia.languageMap
         }
     }
 }
