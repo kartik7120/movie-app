@@ -38,10 +38,13 @@ export default function Backdrops(props: Props): JSX.Element {
     return <ScrollArea style={{ width: 1000 }}>
         <div className={styles.videoWrapper}>
             {data && data.getImageMedia.backdrops.map((img: any, index: number) => {
-                return <Image key={Math.random() * index * 47} src={`https://image.tmdb.org/t/p/w500${img.file_path}?api_key=${process.env.API_KEY}`}
+                return <Image key={Math.random() * index * 47} src={`https://image.tmdb.org/t/p/w400${img.file_path}?api_key=${process.env.API_KEY}`}
                     width="auto" alt="Poster" />
             })}
-            <Button type="button" rightIcon={<AiOutlineArrowRight />}>View More</Button>
+            <Button type="button" component="a" href={`/movie/${props.id}/images/backdrops`}
+                rightIcon={<AiOutlineArrowRight />}>
+                View More
+            </Button>
         </div>
     </ScrollArea>
 }
