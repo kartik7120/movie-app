@@ -21,6 +21,9 @@ const CREDITS = gql` #graphql
       id
     }
   }
+    getMovieDetails(id:$getCastId) {
+        title
+    }
 }
 `
 
@@ -53,7 +56,7 @@ export default function Cast() {
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta name="description" content={`Cast of movie`} />
-            <title>Cast</title>
+            <title>{data.getMovieDetails.title} - Cast</title>
         </Head>
         <div>
             <Title size="h2" order={3} fw="bolder">Cast</Title>
