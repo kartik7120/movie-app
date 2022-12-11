@@ -127,23 +127,25 @@ export const resolvers = {
             const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}`);
             const result = await query.json();
 
-            const query2 = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}&include_image_language=${args.includeLanguage || 'en'}`)
+            const query2 = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/images?api_key=${process.env.API_KEY}&include_image_language=${args.includeLanguage || null}`)
             const result2 = await query2.json();
 
-            let m = new Map<string, string | null>();
-            const langMap = new Array<{ key: string, value: string | null }>();
+            const m = new Map<string, string | null>();
+            const m2 = new Map<string, string | null>();
+            const PosterlangMap = new Array<{ key: string, value: string | null }>();
+            const BackdroplangMap = new Array<{ key: string, value: string | null }>();
 
             result.backdrops.forEach((res: any) => {
                 let temp = convertCode(res.iso_639_1);
                 if (res.iso_639_1 === null || res.iso_639_1 === undefined) {
                     res.language = "No Language";
-                    if (m.has("No Language") === false) {
-                        m.set("No Language", null);
+                    if (m2.has("No Language") === false) {
+                        m2.set("No Language", null);
                     }
                 }
                 else {
-                    if (m.has(temp!) === false) {
-                        m.set(temp!, res.iso_639_1);
+                    if (m2.has(temp!) === false) {
+                        m2.set(temp!, res.iso_639_1);
                     }
                     res.language = temp;
                 }
@@ -166,11 +168,16 @@ export const resolvers = {
             });
 
             m.forEach((value, key) => {
-                langMap.push({ key, value })
+                PosterlangMap.push({ key, value })
+            })
+
+            m2.forEach((value, key) => {
+                BackdroplangMap.push({ key, value })
             })
 
             if (args.first === undefined || args.first === null) {
-                result2.languageMap = langMap;
+                result2.PosterlangMap = PosterlangMap;
+                result2.backdropLanguageMap = BackdroplangMap;
                 return result2;
             }
 
@@ -178,7 +185,8 @@ export const resolvers = {
                 backdrops: result.backdrops.slice(0, args.first),
                 posters: result.posters.slice(0, args.first),
                 id: result.id,
-                languageMap: langMap
+                posterLanguageMap: PosterlangMap,
+                backdropLanguageMap: BackdroplangMap
             }
         },
         getPopularMovies: async (parent: any, args: any, context: any, info: any) => {

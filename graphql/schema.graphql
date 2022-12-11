@@ -261,7 +261,8 @@ type MediaImages {
   backdrops: [Backdrop]
   posters: [Backdrop]
   id: ID!
-  languageMap: [LangMap]
+  posterLanguageMap: [LangMap]
+  backdropLanguageMap: [LangMap]
 }
 
 type Keyword {
@@ -353,6 +354,11 @@ type ExternalIds {
   instagram_id: String
   twitter_id: String
   id: ID!
+}
+
+enum ImageType {
+  POSTER
+  BACKDROP
 }
 
 type Query {
