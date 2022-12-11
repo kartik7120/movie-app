@@ -1,26 +1,22 @@
 import { gql } from "@apollo/client";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import client from "../../../../apollo-client";
-import PosterCard from "../../../../components/PosterCard";
-import styles from "../../../../styles/poster.module.css";
 import LeftOptions from "../../../../components/LeftOptions";
 import MoreTitle from "../../../../components/MoreTitle";
-import ImageLayout from "../../../../components/ImageLayout";
-import type { NextPageWithLayout } from '../../../_app';
-import Head from "next/head";
-import { useRouter } from "next/router";
+import PosterCard from "../../../../components/PosterCard";
+import styles from "../../../../styles/poster.module.css";
 
-const POSTERS = gql`
-    query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!,$includeLanguage: String) {
-    getImageMedia(id: $getImageMediaId, sourceMedia: $sourceMedia,includeLanguage: $includeLanguage) {
-    posters {
+const BACKDROPS = gql`
+    query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!, $includeLanguage: String) {
+    getImageMedia(id: $getImageMediaId, sourceMedia: $sourceMedia, includeLanguage: $includeLanguage) {
+    backdrops {
       file_path
-      aspect_ratio
-      height
-      width
       iso_639_1
+      width
+      height
     }
-    posterLanguageMap {
+    backdropLanguageMap {
       key
       value
     }
@@ -32,28 +28,28 @@ const POSTERS = gql`
 `
 
 interface Props {
-    posters: any[],
+    backdrops: any[],
     id: number | null,
     title: string,
     languageMap: { key: string, value: string | null }[]
 }
 
-const Images = (props: Props) => {
+export default function BackDrops(props: Props) {
     return <>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-            <title>{props.title} - Posters</title>
+            <title>{props.title} - Backdrops</title>
         </Head>
         <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div title="Dummy div">
-                <LeftOptions type="posters" id={props.id} title="Posters" list={props.languageMap} />
+                <LeftOptions type="backdrops" id={props.id} title="Backdrops" list={props.languageMap} />
             </div>
             <div className={styles.wrapper2}>
-                {props.posters.map((poster: any, index: number) => {
-                    return <PosterCard imgURL={poster.file_path}
-                        key={Math.random() * index * 9} size={`${poster.width} x ${poster.height} `} language={poster.iso_639_1} />
+                {props.backdrops.map((backdrop: any, index: number) => {
+                    return <PosterCard width={250} height={100} imgURL={backdrop.file_path}
+                        key={Math.random() * index * 9} size={`${backdrop.width} x ${backdrop.height} `} language={backdrop.iso_639_1} />
                 })}
             </div>
         </div>
@@ -61,6 +57,7 @@ const Images = (props: Props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+
     const { params, query } = context;
 
     if (params && (params.id === undefined || params.id === null)) {
@@ -70,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     const { data, error } = await client.query({
-        query: POSTERS,
+        query: BACKDROPS,
         variables: {
             getImageMediaId: params ? params.id : null,
             sourceMedia: "MOVIE",
@@ -87,12 +84,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
         props: {
-            posters: data.getImageMedia.posters,
+            backdrops: data.getImageMedia.backdrops,
             id: params ? params.id : null,
             title: data.getMovieDetails.title,
-            languageMap: data.getImageMedia.posterLanguageMap
+            languageMap: data.getImageMedia.backdropLanguageMap
         }
     }
 }
-
-export default Images;
