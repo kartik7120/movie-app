@@ -6,7 +6,9 @@ import Link from "next/link";
 interface Props {
     imgURL: string,
     size: string,
-    language: string | null
+    language: string | null,
+    width?: number | null,
+    height?: number | null
 }
 
 export default function PosterCard(props: Props): JSX.Element {
@@ -15,7 +17,7 @@ export default function PosterCard(props: Props): JSX.Element {
         <Card.Section withBorder>
             <Link href={`https://image.tmdb.org/t/p/original${props.imgURL}`} target="_blank">
                 <Image src={`https://image.tmdb.org/t/p/w200${props.imgURL}`} withPlaceholder
-                    width={200} height={300} alt="" title="View Original" style={{ cursor: "pointer" }} />
+                    width={props.width || 200} height={props.height || 300} alt="" title="View Original" style={{ cursor: "pointer" }} />
             </Link>
         </Card.Section>
         <Text variant="text" fw="bold">
