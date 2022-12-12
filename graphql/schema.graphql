@@ -467,4 +467,5 @@ type Query {
   getPeopleImages(id: ID!, first: Int): PeopleImages
   peopleDetails(id: ID!): PeopleDetails
   getExternalIDs(id: ID!, sourceMedia: SourceMedia!): ExternalIds
+  getPeopleCredit(id: ID!): CombinedCredits
 }
