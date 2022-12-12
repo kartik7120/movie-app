@@ -1,7 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 }
 
@@ -10,8 +10,8 @@
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
-  width: 70%;
-  height:min-content;
+  width: 80%;
+  height: min-content;
 }
 
 .titleWrapper {
@@ -27,4 +27,27 @@
 
 .card {
   max-height: 50%;
+}
+
+.wrapper3 {
+  width: max-content;
+}
+
+@media screen and (max-width: 530px) {
+  .wrapper2 {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 870px) {
+  .titleWrapper {
+    padding-left: 3em;
+  }
+}
+
+@media screen and (max-width: 786px) {
+  .wrapper2 {
+    width: 100%;
+    align-self: center;
+  }
 }

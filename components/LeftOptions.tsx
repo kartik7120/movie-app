@@ -10,10 +10,8 @@ interface Props {
 }
 
 export default function LeftOptions(props: Props): JSX.Element {
-    return <Card withBorder className={styles.card} radius="md" p="lg" style={{ display: "inline-block" }}>
-        <Card.Section bg="red">
-            <Text variant="text" p="1em" size="xl">{props.title}</Text>
-        </Card.Section>
+    return <div className={styles.wrapper2}>
+        <Text variant="text" p="1em" size="xl" style={{ backgroundColor: "red", borderRadius: "10px" }}>{props.title}</Text>
         <ul className={styles.wrapper}>
             <li className={styles.list}>
                 <Link href={`/movie/${props.id}/images/${props.type}?include_language=${'en'}`}><Text size="lg">{`Default`}</Text></Link>
@@ -24,5 +22,5 @@ export default function LeftOptions(props: Props): JSX.Element {
                 </li>
             })}
         </ul>
-    </Card>
+    </div>
 }

@@ -6,6 +6,7 @@ import LeftOptions from "../../../../components/LeftOptions";
 import MoreTitle from "../../../../components/MoreTitle";
 import PosterCard from "../../../../components/PosterCard";
 import styles from "../../../../styles/poster.module.css";
+import { useMediaQuery } from "@mantine/hooks";
 
 const BACKDROPS = gql`
     query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!, $includeLanguage: String) {
@@ -35,6 +36,7 @@ interface Props {
 }
 
 export default function BackDrops(props: Props) {
+    const matches = useMediaQuery('(max-width:530px)');
     return <>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,12 +45,12 @@ export default function BackDrops(props: Props) {
         </Head>
         <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
-            <div title="Dummy div">
+            <div className={styles.wrapper3}>
                 <LeftOptions type="backdrops" id={props.id} title="Backdrops" list={props.languageMap} />
             </div>
             <div className={styles.wrapper2}>
                 {props.backdrops.map((backdrop: any, index: number) => {
-                    return <PosterCard width={250} height={100} imgURL={backdrop.file_path}
+                    return <PosterCard width={matches === false ? 250 : 400} height={matches === false ? 100 : 150} imgURL={backdrop.file_path}
                         key={Math.random() * index * 9} size={`${backdrop.width} x ${backdrop.height} `} language={backdrop.iso_639_1} />
                 })}
             </div>
