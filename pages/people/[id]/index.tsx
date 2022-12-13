@@ -4,6 +4,12 @@ import client from "../../../apollo-client";
 import { PeopleDetails, ExternalIds } from "../../../schemaTypes";
 import Head from "next/head";
 import ImageCard from "../../../components/ImageCard";
+import { BsTwitter } from "react-icons/bs";
+import { ActionIcon } from "@mantine/core";
+import { GrFacebook } from "react-icons/gr";
+import { AiFillInstagram } from "react-icons/ai";
+import styles from "../../../styles/people.module.css";
+
 const PEOPLE_DETAILS = gql`
     query PeopleDetails($peopleDetailsId: ID!) {
     peopleDetails(id: $peopleDetailsId) {
@@ -19,7 +25,6 @@ const PEOPLE_DETAILS = gql`
     homepage
   }
   getPeopleExternalIDs(id: $peopleDetailsId) {
-    imdb_id
     instagram_id
     twitter_id
     facebook_id
@@ -42,6 +47,17 @@ export default function People(props: Props): JSX.Element {
         <div>
             <div>
                 <ImageCard width={300} height={500} imgUrl={props.people.profile_path!} />
+                <div className={styles.iconWrapper}>
+                    <ActionIcon variant="outline" size="lg" component="a" target="_blank" href={`https://www.twitter.com/${props.externalIds.twitter_id}`}>
+                        <BsTwitter size={30} />
+                    </ActionIcon>
+                    <ActionIcon variant="outline" size="lg" component="a" target="_blank" href={`https://www.facebook.com/${props.externalIds.facebook_id}`}>
+                        <GrFacebook size={30} />
+                    </ActionIcon>
+                    <ActionIcon variant="outline" size="lg" component="a" target="_blank" href={`https://www.instagram.com/${props.externalIds.instagram_id}`}>
+                        <AiFillInstagram size={30} />
+                    </ActionIcon>
+                </div>
             </div>
             <div>
                 Second Section
