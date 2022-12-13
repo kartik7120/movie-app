@@ -380,6 +380,15 @@ export const resolvers = {
             const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/external_ids?api_key=${process.env.API_KEY}`);
             const result = await query.json();
             return result;
+        },
+        getPeopleCredit: async (parent: any, args: any, context: any, info: any) => {
+            if (args.id === null || args.id === undefined) {
+                throw new GraphQLError("Provide id");
+            }
+
+            const query = await fetch(`${process.env.API_URL}person/${args.id}/combined_credits?api_key=${process.env.API_KEY}`);
+            const result = await query.json();
+            return result;
         }
     },
 }
