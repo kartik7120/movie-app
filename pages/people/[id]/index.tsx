@@ -2,6 +2,8 @@ import { gql } from "@apollo/client";
 import { GetServerSideProps } from "next"
 import client from "../../../apollo-client";
 import { PeopleDetails } from "../../../schemaTypes";
+import Head from "next/head";
+
 const PEOPLE_DETAILS = gql`
     query PeopleDetails($peopleDetailsId: ID!) {
     peopleDetails(id: $peopleDetailsId) {
@@ -23,9 +25,14 @@ interface Props {
     people: PeopleDetails
 }
 
-export default function People(props: PeopleDetails): JSX.Element {
+export default function People(props: Props): JSX.Element {
 
     return <>
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+            <title>{props.people.name}</title>
+        </Head>
         <h1>I will render people&apos;s information</h1>
     </>
 }
