@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { GetServerSideProps } from "next"
 import client from "../../../apollo-client";
-import { PeopleDetails } from "../../../schemaTypes";
+import { PeopleDetails, ExternalIds } from "../../../schemaTypes";
 import Head from "next/head";
 import ImageCard from "../../../components/ImageCard";
 const PEOPLE_DETAILS = gql`
@@ -18,11 +18,18 @@ const PEOPLE_DETAILS = gql`
     profile_path
     homepage
   }
+  getPeopleExternalIDs(id: $peopleDetailsId) {
+    imdb_id
+    instagram_id
+    twitter_id
+    facebook_id
+  }
 }
 `
 
 interface Props {
-    people: PeopleDetails
+    people: PeopleDetails,
+    externalIds: ExternalIds
 }
 
 export default function People(props: Props): JSX.Element {
@@ -30,7 +37,6 @@ export default function People(props: Props): JSX.Element {
     return <>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
             <title>{props.people.name}</title>
         </Head>
         <div>
@@ -68,7 +74,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
         props: {
-            people: data.peopleDetails
+            people: data.peopleDetails,
+            externalIds: data.getPeopleExternalIDs
         }
     }
 }
