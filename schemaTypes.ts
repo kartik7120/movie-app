@@ -377,6 +377,7 @@ export type Query = {
   getKeywords?: Maybe<MovieKeywords>;
   getMovieDetails?: Maybe<MovieDetails>;
   getPeopleCredit?: Maybe<CombinedCredits>;
+  getPeopleExternalIDs?: Maybe<ExternalIds>;
   getPeopleImages?: Maybe<PeopleImages>;
   getPoplarTv?: Maybe<Array<Maybe<NowPlayingTv>>>;
   getPopularMovies?: Maybe<Array<Maybe<NowPlaying>>>;
@@ -437,6 +438,11 @@ export type QueryGetMovieDetailsArgs = {
 
 
 export type QueryGetPeopleCreditArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryGetPeopleExternalIDsArgs = {
   id: Scalars['ID'];
 };
 
@@ -1122,6 +1128,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getKeywords?: Resolver<Maybe<ResolversTypes['MovieKeywords']>, ParentType, ContextType, RequireFields<QueryGetKeywordsArgs, 'id' | 'mediaType'>>;
   getMovieDetails?: Resolver<Maybe<ResolversTypes['MovieDetails']>, ParentType, ContextType, RequireFields<QueryGetMovieDetailsArgs, 'id'>>;
   getPeopleCredit?: Resolver<Maybe<ResolversTypes['CombinedCredits']>, ParentType, ContextType, RequireFields<QueryGetPeopleCreditArgs, 'id'>>;
+  getPeopleExternalIDs?: Resolver<Maybe<ResolversTypes['ExternalIds']>, ParentType, ContextType, RequireFields<QueryGetPeopleExternalIDsArgs, 'id'>>;
   getPeopleImages?: Resolver<Maybe<ResolversTypes['PeopleImages']>, ParentType, ContextType, RequireFields<QueryGetPeopleImagesArgs, 'id'>>;
   getPoplarTv?: Resolver<Maybe<Array<Maybe<ResolversTypes['NowPlayingTv']>>>, ParentType, ContextType>;
   getPopularMovies?: Resolver<Maybe<Array<Maybe<ResolversTypes['NowPlaying']>>>, ParentType, ContextType>;
