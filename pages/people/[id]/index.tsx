@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next"
 import client from "../../../apollo-client";
 import { PeopleDetails } from "../../../schemaTypes";
 import Head from "next/head";
-
+import ImageCard from "../../../components/ImageCard";
 const PEOPLE_DETAILS = gql`
     query PeopleDetails($peopleDetailsId: ID!) {
     peopleDetails(id: $peopleDetailsId) {
@@ -33,7 +33,14 @@ export default function People(props: Props): JSX.Element {
             <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
             <title>{props.people.name}</title>
         </Head>
-        <h1>I will render people&apos;s information</h1>
+        <div>
+            <div>
+                <ImageCard width={300} height={500} imgUrl={props.people.profile_path!} />
+            </div>
+            <div>
+                Second Section
+            </div>
+        </div>
     </>
 }
 
