@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "codegen": "graphql-codegen --config codegen.ts",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml",
+    "test": "vitest"
   },
   "dependencies": {
     "@apollo/client": "^3.7.1",
@@ -46,6 +47,7 @@
     "@types/node": "18.11.7",
     "@types/react": "18.0.24",
     "eslint": "8.26.0",
-    "eslint-config-next": "13.0.0"
+    "eslint-config-next": "13.0.0",
+    "vitest": "^0.25.8"
   }
 }
