@@ -5,10 +5,11 @@ import { PeopleDetails, ExternalIds } from "../../../schemaTypes";
 import Head from "next/head";
 import ImageCard from "../../../components/ImageCard";
 import { BsTwitter } from "react-icons/bs";
-import { ActionIcon } from "@mantine/core";
+import { ActionIcon, Text } from "@mantine/core";
 import { GrFacebook } from "react-icons/gr";
 import { AiFillInstagram } from "react-icons/ai";
 import styles from "../../../styles/people.module.css";
+import { getAge } from "../../../lib/util";
 
 const PEOPLE_DETAILS = gql`
     query PeopleDetails($peopleDetailsId: ID!) {
@@ -23,6 +24,7 @@ const PEOPLE_DETAILS = gql`
     place_of_birth
     profile_path
     homepage
+    known_for_department
   }
   getPeopleExternalIDs(id: $peopleDetailsId) {
     instagram_id
@@ -48,15 +50,37 @@ export default function People(props: Props): JSX.Element {
             <div>
                 <ImageCard width={300} height={500} imgUrl={props.people.profile_path!} />
                 <div className={styles.iconWrapper}>
-                    <ActionIcon variant="outline" size="lg" component="a" target="_blank" href={`https://www.twitter.com/${props.externalIds.twitter_id}`}>
+                    <ActionIcon variant="outline" size="lg" component="a" target="_blank"
+                        href={`https://www.twitter.com/${props.externalIds.twitter_id}`}>
                         <BsTwitter size={30} />
                     </ActionIcon>
-                    <ActionIcon variant="outline" size="lg" component="a" target="_blank" href={`https://www.facebook.com/${props.externalIds.facebook_id}`}>
+                    <ActionIcon variant="outline" size="lg" component="a" target="_blank"
+                        href={`https://www.facebook.com/${props.externalIds.facebook_id}`}>
                         <GrFacebook size={30} />
                     </ActionIcon>
-                    <ActionIcon variant="outline" size="lg" component="a" target="_blank" href={`https://www.instagram.com/${props.externalIds.instagram_id}`}>
+                    <ActionIcon variant="outline" size="lg" component="a" target="_blank"
+                        href={`https://www.instagram.com/${props.externalIds.instagram_id}`}>
                         <AiFillInstagram size={30} />
                     </ActionIcon>
+                </div>
+                <div>
+                    <Text variant="text" fw="bold" size="xl">Personal Info</Text>
+                    <Text variant="text" fw="bold" size="md">Known For</Text>
+                    <Text variant="text" size="md">{props.people.known_for_department}</Text>
+                    <Text variant="text" fw="bold" size="md">Gender</Text>
+                    <Text variant="text" size="md">{props.people.gender}</Text>
+                    <Text variant="text" fw="bold" size="md">Birthday</Text>
+                    <Text variant="text" size="md">{props.people.birthday} ({getAge(props.people.birthday)} years old)</Text>
+                    <Text variant="text" fw="bold" size="md">Place of Birth</Text>
+                    <Text variant="text" size="md">{props.people.place_of_birth}</Text>
+                    <Text variant="text" fw="bold" size="md">Also Known As</Text>
+                    <ul className={styles.listWrapper}>
+                        {props.people.also_known_as?.map((ele: typeof props.people.also_known_as[0], index: number) => {
+                            return <li className={styles.list} key={Math.random() * index * 69}>
+                                {ele}
+                            </li>
+                        })}
+                    </ul>
                 </div>
             </div>
             <div>
