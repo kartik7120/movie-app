@@ -50,15 +50,15 @@ export default function People(props: Props): JSX.Element {
             <div>
                 <ImageCard width={300} height={500} imgUrl={props.people.profile_path!} />
                 <div className={styles.iconWrapper}>
-                    <ActionIcon variant="outline" size="lg" component="a" target="_blank"
+                    <ActionIcon variant="outline" size="lg" m={10} component="a" target="_blank"
                         href={`https://www.twitter.com/${props.externalIds.twitter_id}`}>
                         <BsTwitter size={30} />
                     </ActionIcon>
-                    <ActionIcon variant="outline" size="lg" component="a" target="_blank"
+                    <ActionIcon variant="outline" size="lg" m={10} component="a" target="_blank"
                         href={`https://www.facebook.com/${props.externalIds.facebook_id}`}>
                         <GrFacebook size={30} />
                     </ActionIcon>
-                    <ActionIcon variant="outline" size="lg" component="a" target="_blank"
+                    <ActionIcon variant="outline" size="lg" m={10} component="a" target="_blank"
                         href={`https://www.instagram.com/${props.externalIds.instagram_id}`}>
                         <AiFillInstagram size={30} />
                     </ActionIcon>
