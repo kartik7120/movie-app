@@ -12,3 +12,15 @@
 .listWrapper {
   padding-left: 0;
 }
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.textWrapper {
+  display: block;
+  margin-bottom: 20px;
+}
