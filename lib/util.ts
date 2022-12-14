@@ -39,3 +39,20 @@ export function convertCode(code: string | null) {
     type: "language"
   }).of('en')
 }
+
+export function getAge(dateString: string | null | undefined): number | null {
+
+  if (dateString === null || dateString === undefined) {
+    return null;
+  }
+  const date = new Date();
+  const birthDate = new Date(dateString);
+  let age = date.getFullYear() - birthDate.getFullYear();
+  const m = date.getMonth() - birthDate.getMonth();
+
+  if (m < 0 || (m === 0 && date.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+}
