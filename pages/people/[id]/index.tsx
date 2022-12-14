@@ -5,7 +5,7 @@ import { PeopleDetails, ExternalIds } from "../../../schemaTypes";
 import Head from "next/head";
 import ImageCard from "../../../components/ImageCard";
 import { BsTwitter } from "react-icons/bs";
-import { ActionIcon, Group, Stack, Text } from "@mantine/core";
+import { ActionIcon, Group, Stack, Text, Title } from "@mantine/core";
 import { GrFacebook } from "react-icons/gr";
 import { AiFillInstagram } from "react-icons/ai";
 import styles from "../../../styles/people.module.css";
@@ -93,6 +93,9 @@ export default function People(props: Props): JSX.Element {
             </div>
             <div>
                 Second Section
+                <Title order={2} size="h1">{props.people.name}</Title>
+                <Title order={3} size="h3">Biography</Title>
+                <Text variant="text" size="md" style={{ whiteSpace: "pre-line" }}>{props.people.biography}</Text>
             </div>
         </div>
     </>
