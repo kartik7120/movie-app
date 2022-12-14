@@ -10,6 +10,7 @@ import { GrFacebook } from "react-icons/gr";
 import { AiFillInstagram } from "react-icons/ai";
 import styles from "../../../styles/people.module.css";
 import { getAge } from "../../../lib/util";
+import React from "react";
 
 const PEOPLE_DETAILS = gql`
     query PeopleDetails($peopleDetailsId: ID!) {
