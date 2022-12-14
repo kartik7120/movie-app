@@ -91,8 +91,7 @@ export default function People(props: Props): JSX.Element {
                     </ul>
                 </div>
             </div>
-            <div>
-                Second Section
+            <div className={styles.rightWrapper}>
                 <Title order={2} size="h1">{props.people.name}</Title>
                 <Title order={3} size="h3">Biography</Title>
                 <Spoiler maxHeight={140} showLabel="Read More" hideLabel="Hide">
