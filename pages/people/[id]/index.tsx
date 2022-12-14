@@ -5,7 +5,7 @@ import { PeopleDetails, ExternalIds } from "../../../schemaTypes";
 import Head from "next/head";
 import ImageCard from "../../../components/ImageCard";
 import { BsTwitter } from "react-icons/bs";
-import { ActionIcon, Text } from "@mantine/core";
+import { ActionIcon, Group, Stack, Text } from "@mantine/core";
 import { GrFacebook } from "react-icons/gr";
 import { AiFillInstagram } from "react-icons/ai";
 import styles from "../../../styles/people.module.css";
@@ -46,7 +46,7 @@ export default function People(props: Props): JSX.Element {
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>{props.people.name}</title>
         </Head>
-        <div>
+        <div className={styles.wrapper}>
             <div>
                 <ImageCard width={300} height={500} imgUrl={props.people.profile_path!} />
                 <div className={styles.iconWrapper}>
@@ -65,14 +65,22 @@ export default function People(props: Props): JSX.Element {
                 </div>
                 <div>
                     <Text variant="text" fw="bold" size="xl">Personal Info</Text>
-                    <Text variant="text" fw="bold" size="md">Known For</Text>
-                    <Text variant="text" size="md">{props.people.known_for_department}</Text>
-                    <Text variant="text" fw="bold" size="md">Gender</Text>
-                    <Text variant="text" size="md">{props.people.gender}</Text>
-                    <Text variant="text" fw="bold" size="md">Birthday</Text>
-                    <Text variant="text" size="md">{props.people.birthday} ({getAge(props.people.birthday)} years old)</Text>
-                    <Text variant="text" fw="bold" size="md">Place of Birth</Text>
-                    <Text variant="text" size="md">{props.people.place_of_birth}</Text>
+                    <span className={styles.textWrapper}>
+                        <Text variant="text" fw="bold" size="md">Known For</Text>
+                        <Text variant="text" size="md">{props.people.known_for_department}</Text>
+                    </span>
+                    <span className={styles.textWrapper}>
+                        <Text variant="text" fw="bold" size="md">Gender</Text>
+                        <Text variant="text" size="md">{props.people.gender}</Text>
+                    </span>
+                    <span className={styles.textWrapper}>
+                        <Text variant="text" fw="bold" size="md">Birthday</Text>
+                        <Text variant="text" size="md">{props.people.birthday} ({getAge(props.people.birthday)} years old)</Text>
+                    </span>
+                    <span className={styles.textWrapper}>
+                        <Text variant="text" fw="bold" size="md">Place of Birth</Text>
+                        <Text variant="text" size="md">{props.people.place_of_birth}</Text>
+                    </span>
                     <Text variant="text" fw="bold" size="md">Also Known As</Text>
                     <ul className={styles.listWrapper}>
                         {props.people.also_known_as?.map((ele: typeof props.people.also_known_as[0], index: number) => {
