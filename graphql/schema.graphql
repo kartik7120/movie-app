@@ -418,6 +418,25 @@ type CombinedCredits {
   id: ID!
 }
 
+type DepartmentMap {
+  key: String
+  value: [PeopleCrew]
+}
+
+type CastMap {
+  key: String
+  value: [PeopleCast]
+}
+
+type FormattedCombinedCredits {
+  crew: [DepartmentMap]
+  cast: [CastMap]
+  id: ID!
+  format: Boolean
+}
+
+union CreditsUnion = CombinedCredits | FormattedCombinedCredits
+
 type Query {
   trending(mediaType: MediaType, timeWindow: TimeWindow): [Trending]
   nowPlayingMovies: NowPlayingMovies
@@ -467,6 +486,6 @@ type Query {
   getPeopleImages(id: ID!, first: Int): PeopleImages
   peopleDetails(id: ID!): PeopleDetails
   getExternalIDs(id: ID!, sourceMedia: SourceMedia!): ExternalIds
-  getPeopleCredit(id: ID!): CombinedCredits
+  getPeopleCredit(id: ID!, format: Boolean!): CreditsUnion
   getPeopleExternalIDs(id: ID!): ExternalIds
 }

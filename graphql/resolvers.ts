@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GraphQLError } from "graphql";
 import { convertCode } from "../lib/util";
+import { PeopleCrew, CombinedCredits, Maybe, PeopleCast } from "../schemaTypes";
 
 export const resolvers = {
     MediaType: {
@@ -37,6 +38,19 @@ export const resolvers = {
 
             return null;
         },
+    },
+    CreditsUnion: {
+        __resolveType: (obj: any, context: any, info: any) => {
+            if (obj.format === null || obj.format === undefined) {
+                return 'CombinedCredits';
+            }
+
+            if (obj.format === true) {
+                return 'FormattedCombinedCredits';
+            }
+
+            return null;
+        }
     },
     Query: {
         trending: async (parent: any, args: any, context: any, info: any) => {
@@ -387,8 +401,81 @@ export const resolvers = {
             }
 
             const query = await fetch(`${process.env.API_URL}person/${args.id}/combined_credits?api_key=${process.env.API_KEY}`);
-            const result = await query.json();
-            return result;
+            const result: CombinedCredits = await query.json();
+
+            if (args.format === false)
+                return result;
+
+            let m = new Map<string, Maybe<PeopleCrew>[]>();
+
+            result.crew?.forEach((ele) => {
+                if (m.has(ele?.department!) === false) {
+                    m.set(ele?.department!, [ele]);
+                }
+                else {
+                    m.set(ele?.department!, [...m.get(ele?.department!)!, ele])
+                }
+            });
+
+            let departmentMap = new Array<{ key: string, value: Maybe<PeopleCrew>[] }>(0);
+
+            m.forEach((ele, key) => {
+                ele.sort((a, b) => {
+                    let date1 = a?.release_date || a?.first_air_date;
+                    let date2 = b?.release_date || b?.first_air_date;
+                    if (date1 === undefined) {
+                        return +1;
+                    }
+                    else
+                        if (date2 === undefined) {
+                            return -1;
+                        }
+                    if (parseInt(date1?.substring(0, 4)!) < parseInt(date2?.substring(0, 4)!)) {
+                        return -1;
+                    }
+                    return 0;
+                })
+                departmentMap.push({ key, value: ele });
+            });
+
+            let m1 = new Map<string, PeopleCast[]>();
+
+            result.cast?.forEach((ele) => {
+                if (m1.has("acting") === false) {
+                    m1.set("acting", [ele as PeopleCast]);
+                }
+                else {
+                    m1.set("acting", [...m1.get("acting")!, ele as PeopleCast])
+                }
+            });
+
+            let castMap = new Array<{ key: string, value: PeopleCast[] }>(0);
+
+            m1.forEach((ele, key) => {
+                ele.sort((a, b) => {
+                    let date1 = a?.release_date || a?.first_air_date;
+                    let date2 = b?.release_date || b?.first_air_date;
+                    if (date1 === undefined) {
+                        return +1;
+                    }
+                    else
+                        if (date2 === undefined) {
+                            return -1;
+                        }
+                    if (parseInt(date1?.substring(0, 4)!) < parseInt(date2?.substring(0, 4)!)) {
+                        return -1;
+                    }
+                    return 0;
+                })
+                castMap.push({ key, value: ele })
+            });
+
+            return {
+                crew: departmentMap,
+                cast: castMap,
+                id: result.id,
+                format: true
+            };
         },
         getPeopleExternalIDs: async (parent: any, args: any, context: any, info: any) => {
             if (args.id === null || args.id === undefined) {
