@@ -44,6 +44,12 @@ export type Cast = {
   profile_path?: Maybe<Scalars['String']>;
 };
 
+export type CastMap = {
+  __typename?: 'CastMap';
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Array<Maybe<PeopleCast>>>;
+};
+
 export type Collection = {
   __typename?: 'Collection';
   backdrop_path?: Maybe<Scalars['String']>;
@@ -90,6 +96,8 @@ export type Credits = {
   id?: Maybe<Scalars['ID']>;
 };
 
+export type CreditsUnion = CombinedCredits | FormattedCombinedCredits;
+
 export type Crew = {
   __typename?: 'Crew';
   adult: Scalars['Boolean'];
@@ -112,6 +120,12 @@ export type Dates = {
   minimum?: Maybe<Scalars['String']>;
 };
 
+export type DepartmentMap = {
+  __typename?: 'DepartmentMap';
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Array<Maybe<PeopleCrew>>>;
+};
+
 export type ExternalIds = {
   __typename?: 'ExternalIds';
   facebook_id?: Maybe<Scalars['String']>;
@@ -119,6 +133,14 @@ export type ExternalIds = {
   imdb_id?: Maybe<Scalars['String']>;
   instagram_id?: Maybe<Scalars['String']>;
   twitter_id?: Maybe<Scalars['String']>;
+};
+
+export type FormattedCombinedCredits = {
+  __typename?: 'FormattedCombinedCredits';
+  cast?: Maybe<Array<Maybe<CastMap>>>;
+  crew?: Maybe<Array<Maybe<DepartmentMap>>>;
+  format?: Maybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
 };
 
 export type Genre = {
@@ -376,7 +398,7 @@ export type Query = {
   getImageMedia?: Maybe<MediaImages>;
   getKeywords?: Maybe<MovieKeywords>;
   getMovieDetails?: Maybe<MovieDetails>;
-  getPeopleCredit?: Maybe<CombinedCredits>;
+  getPeopleCredit?: Maybe<CreditsUnion>;
   getPeopleExternalIDs?: Maybe<ExternalIds>;
   getPeopleImages?: Maybe<PeopleImages>;
   getPoplarTv?: Maybe<Array<Maybe<NowPlayingTv>>>;
@@ -438,6 +460,7 @@ export type QueryGetMovieDetailsArgs = {
 
 
 export type QueryGetPeopleCreditArgs = {
+  format: Scalars['Boolean'];
   id: Scalars['ID'];
 };
 
@@ -689,16 +712,20 @@ export type ResolversTypes = {
   Backdrop: ResolverTypeWrapper<Backdrop>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Cast: ResolverTypeWrapper<Cast>;
+  CastMap: ResolverTypeWrapper<CastMap>;
   Collection: ResolverTypeWrapper<Collection>;
   CombinedCredits: ResolverTypeWrapper<CombinedCredits>;
   Company: ResolverTypeWrapper<Company>;
   CompanySearchResult: ResolverTypeWrapper<CompanySearchResult>;
   CreatedBy: ResolverTypeWrapper<CreatedBy>;
   Credits: ResolverTypeWrapper<Credits>;
+  CreditsUnion: ResolversTypes['CombinedCredits'] | ResolversTypes['FormattedCombinedCredits'];
   Crew: ResolverTypeWrapper<Crew>;
   Dates: ResolverTypeWrapper<Dates>;
+  DepartmentMap: ResolverTypeWrapper<DepartmentMap>;
   ExternalIds: ResolverTypeWrapper<ExternalIds>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
+  FormattedCombinedCredits: ResolverTypeWrapper<FormattedCombinedCredits>;
   Genre: ResolverTypeWrapper<Genre>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   ImageType: ImageType;
@@ -741,16 +768,20 @@ export type ResolversParentTypes = {
   Backdrop: Backdrop;
   Boolean: Scalars['Boolean'];
   Cast: Cast;
+  CastMap: CastMap;
   Collection: Collection;
   CombinedCredits: CombinedCredits;
   Company: Company;
   CompanySearchResult: CompanySearchResult;
   CreatedBy: CreatedBy;
   Credits: Credits;
+  CreditsUnion: ResolversParentTypes['CombinedCredits'] | ResolversParentTypes['FormattedCombinedCredits'];
   Crew: Crew;
   Dates: Dates;
+  DepartmentMap: DepartmentMap;
   ExternalIds: ExternalIds;
   Float: Scalars['Float'];
+  FormattedCombinedCredits: FormattedCombinedCredits;
   Genre: Genre;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
@@ -811,6 +842,12 @@ export type CastResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CastMapResolvers<ContextType = any, ParentType extends ResolversParentTypes['CastMap'] = ResolversParentTypes['CastMap']> = {
+  key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<Array<Maybe<ResolversTypes['PeopleCast']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type CollectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Collection'] = ResolversParentTypes['Collection']> = {
   backdrop_path?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -857,6 +894,10 @@ export type CreditsResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CreditsUnionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreditsUnion'] = ResolversParentTypes['CreditsUnion']> = {
+  __resolveType: TypeResolveFn<'CombinedCredits' | 'FormattedCombinedCredits', ParentType, ContextType>;
+};
+
 export type CrewResolvers<ContextType = any, ParentType extends ResolversParentTypes['Crew'] = ResolversParentTypes['Crew']> = {
   adult?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   credit_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -878,12 +919,26 @@ export type DatesResolvers<ContextType = any, ParentType extends ResolversParent
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type DepartmentMapResolvers<ContextType = any, ParentType extends ResolversParentTypes['DepartmentMap'] = ResolversParentTypes['DepartmentMap']> = {
+  key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<Array<Maybe<ResolversTypes['PeopleCrew']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ExternalIdsResolvers<ContextType = any, ParentType extends ResolversParentTypes['ExternalIds'] = ResolversParentTypes['ExternalIds']> = {
   facebook_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   imdb_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   instagram_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   twitter_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FormattedCombinedCreditsResolvers<ContextType = any, ParentType extends ResolversParentTypes['FormattedCombinedCredits'] = ResolversParentTypes['FormattedCombinedCredits']> = {
+  cast?: Resolver<Maybe<Array<Maybe<ResolversTypes['CastMap']>>>, ParentType, ContextType>;
+  crew?: Resolver<Maybe<Array<Maybe<ResolversTypes['DepartmentMap']>>>, ParentType, ContextType>;
+  format?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1127,7 +1182,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getImageMedia?: Resolver<Maybe<ResolversTypes['MediaImages']>, ParentType, ContextType, RequireFields<QueryGetImageMediaArgs, 'id' | 'sourceMedia'>>;
   getKeywords?: Resolver<Maybe<ResolversTypes['MovieKeywords']>, ParentType, ContextType, RequireFields<QueryGetKeywordsArgs, 'id' | 'mediaType'>>;
   getMovieDetails?: Resolver<Maybe<ResolversTypes['MovieDetails']>, ParentType, ContextType, RequireFields<QueryGetMovieDetailsArgs, 'id'>>;
-  getPeopleCredit?: Resolver<Maybe<ResolversTypes['CombinedCredits']>, ParentType, ContextType, RequireFields<QueryGetPeopleCreditArgs, 'id'>>;
+  getPeopleCredit?: Resolver<Maybe<ResolversTypes['CreditsUnion']>, ParentType, ContextType, RequireFields<QueryGetPeopleCreditArgs, 'format' | 'id'>>;
   getPeopleExternalIDs?: Resolver<Maybe<ResolversTypes['ExternalIds']>, ParentType, ContextType, RequireFields<QueryGetPeopleExternalIDsArgs, 'id'>>;
   getPeopleImages?: Resolver<Maybe<ResolversTypes['PeopleImages']>, ParentType, ContextType, RequireFields<QueryGetPeopleImagesArgs, 'id'>>;
   getPoplarTv?: Resolver<Maybe<Array<Maybe<ResolversTypes['NowPlayingTv']>>>, ParentType, ContextType>;
@@ -1238,15 +1293,19 @@ export type TvDetailsResolvers<ContextType = any, ParentType extends ResolversPa
 export type Resolvers<ContextType = any> = {
   Backdrop?: BackdropResolvers<ContextType>;
   Cast?: CastResolvers<ContextType>;
+  CastMap?: CastMapResolvers<ContextType>;
   Collection?: CollectionResolvers<ContextType>;
   CombinedCredits?: CombinedCreditsResolvers<ContextType>;
   Company?: CompanyResolvers<ContextType>;
   CompanySearchResult?: CompanySearchResultResolvers<ContextType>;
   CreatedBy?: CreatedByResolvers<ContextType>;
   Credits?: CreditsResolvers<ContextType>;
+  CreditsUnion?: CreditsUnionResolvers<ContextType>;
   Crew?: CrewResolvers<ContextType>;
   Dates?: DatesResolvers<ContextType>;
+  DepartmentMap?: DepartmentMapResolvers<ContextType>;
   ExternalIds?: ExternalIdsResolvers<ContextType>;
+  FormattedCombinedCredits?: FormattedCombinedCreditsResolvers<ContextType>;
   Genre?: GenreResolvers<ContextType>;
   Keyword?: KeywordResolvers<ContextType>;
   LangMap?: LangMapResolvers<ContextType>;
