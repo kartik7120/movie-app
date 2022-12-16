@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { GetServerSideProps } from "next"
 import client from "../../../apollo-client";
-import { PeopleDetails, ExternalIds } from "../../../schemaTypes";
+import { PeopleDetails, ExternalIds, FormattedCombinedCredits } from "../../../schemaTypes";
 import Head from "next/head";
 import ImageCard from "../../../components/ImageCard";
 import { BsTwitter } from "react-icons/bs";
@@ -11,9 +11,12 @@ import { AiFillInstagram } from "react-icons/ai";
 import styles from "../../../styles/people.module.css";
 import { getAge } from "../../../lib/util";
 import React from "react";
+import { Timeline } from '@mantine/core';
+import { BiRadioCircleMarked } from "react-icons/bi";
+import Link from "next/link";
 
 const PEOPLE_DETAILS = gql`
-    query PeopleDetails($peopleDetailsId: ID!) {
+    query PeopleDetails($peopleDetailsId: ID!,$format:Boolean!) {
     peopleDetails(id: $peopleDetailsId) {
     biography
     also_known_as
@@ -32,12 +35,38 @@ const PEOPLE_DETAILS = gql`
     twitter_id
     facebook_id
   }
+  getPeopleCredit(id: $peopleDetailsId, format: $format) {
+    ... on FormattedCombinedCredits {
+      crew {
+        key
+        value {
+          job
+          release_date
+          title
+          name
+          first_air_date
+        }
+      }
+      cast {
+        key
+        value {
+          id
+          first_air_date
+          name
+          title
+          character
+          release_date
+        }
+      }
+    }
+  }
 }
 `
 
 interface Props {
     people: PeopleDetails,
-    externalIds: ExternalIds
+    externalIds: ExternalIds,
+    credit: FormattedCombinedCredits
 }
 
 export default function People(props: Props): JSX.Element {
@@ -98,6 +127,21 @@ export default function People(props: Props): JSX.Element {
                 <Spoiler maxHeight={140} showLabel="Read More" hideLabel="Hide">
                     <Text variant="text" size="md" style={{ whiteSpace: "pre-line" }}>{props.people.biography}</Text>
                 </Spoiler>
+                {props.credit.cast?.map((ele, index: number) => {
+                    return (<> <Title order={3} size="h2">{ele?.key?.toUpperCase()}</Title>
+                        <Timeline active={ele?.value?.length} bulletSize={24} lineWidth={2}>
+                            {ele?.value?.map((movie, index: number) => {
+                                return <Timeline.Item
+                                    lineActive={JSON.stringify(movie?.release_date).length === 2 && JSON.stringify(movie?.first_air_date).length === 4 ? false : true}
+                                    key={Math.random() * 55 * index}
+                                    bullet={<BiRadioCircleMarked size={12} />}
+                                    title={<><Link href={`/movie/${movie?.id}`}><Text variant="text">{movie?.title || movie?.name}
+                                    </Text></Link> <Text color="dimmed" component="span" inline>as {movie?.character} ({movie?.first_air_date?.substring(0, 4) || movie?.release_date?.substring(0, 4)})</Text></>}>
+                                </Timeline.Item>
+                            })}
+                        </Timeline>
+                    </>)
+                })}
             </div>
         </div>
     </>
@@ -115,7 +159,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { data, error } = await client.query({
         query: PEOPLE_DETAILS,
         variables: {
-            peopleDetailsId: params && params.id ? params.id : null
+            peopleDetailsId: params && params.id ? params.id : null,
+            format: true
         }
     })
 
@@ -128,7 +173,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             people: data.peopleDetails,
-            externalIds: data.getPeopleExternalIDs
+            externalIds: data.getPeopleExternalIDs,
+            credit: data.getPeopleCredit
         }
     }
 }
