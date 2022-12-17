@@ -35,7 +35,7 @@ export default function Backdrops(props: Props): JSX.Element {
     if (loading)
         return <p>Loading...</p>
 
-    return <ScrollArea style={{ width: 1000 }}>
+    return <ScrollArea style={{ width: "100%", height: "100%" }}>
         <div className={styles.videoWrapper}>
             {data && data.getImageMedia.backdrops.map((img: any, index: number) => {
                 return <Image key={Math.random() * index * 47} src={`https://image.tmdb.org/t/p/w400${img.file_path}?api_key=${process.env.API_KEY}`}
