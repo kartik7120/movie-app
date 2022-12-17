@@ -106,4 +106,17 @@
     justify-content: space-evenly;
     align-items: flex-start;
   }
+  .bottomWrapper2 {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 766px) {
+  .wrapper {
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 100%;
+    width: 100%;
+  }
 }
