@@ -99,3 +99,11 @@
     padding: 2em;
   }
 }
+@media screen and (max-width: 1024px) {
+  .bottomWrapper {
+    padding: 1em;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
+}

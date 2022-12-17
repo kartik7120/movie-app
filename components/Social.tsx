@@ -37,7 +37,7 @@ export default function Social(props: Props): JSX.Element {
         return <p>Error occured: {`${error}`}</p>
     }
 
-    return <Group position="center">
+    return <Group position="left" pl={30}>
         <Tooltip label="Visit Twitter" color="blue" withArrow>
             <ActionIcon size="xl" component="a" target="_blank" href={`https://twitter.com/${data.getExternalIDs.twitter_id}`}>
                 <AiOutlineTwitter size={30} />
