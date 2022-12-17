@@ -37,3 +37,17 @@
 .timeline {
   margin-top: 20px;
 }
+
+@media screen and (max-width: 578px) {
+  .wrapper {
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .wrapper {
+    padding: 80px;
+  }
+}
