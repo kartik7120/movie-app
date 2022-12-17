@@ -43,6 +43,10 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    font-size: larger;
+  }
+  .textWrapper {
+    font-size: larger;
   }
 }
 
