@@ -129,8 +129,9 @@ export default function People(props: Props): JSX.Element {
                     <Text variant="text" size="md" style={{ whiteSpace: "pre-line" }}>{props.people.biography}</Text>
                 </Spoiler>
                 {props.credit.cast?.map((ele, index: number) => {
-                    return (<> <Title order={3} size="h2">{ele?.key?.toUpperCase()}</Title>
-                        <Timeline active={ele?.value?.length} bulletSize={24} lineWidth={2}>
+                    return (<div className={styles.timeline} key={Math.random() * index * 5}>
+                        <Title order={3} size="h2">{ele?.key?.toUpperCase()}</Title>
+                        <Timeline mt={20} active={ele?.value?.length} bulletSize={24} lineWidth={2}>
                             {ele?.value?.map((movie, index: number) => {
                                 return <Timeline.Item
                                     lineActive={JSON.stringify(movie?.release_date).length === 2 && JSON.stringify(movie?.first_air_date).length === 4 ? false : true}
@@ -141,12 +142,12 @@ export default function People(props: Props): JSX.Element {
                                 </Timeline.Item>
                             })}
                         </Timeline>
-                    </>)
+                    </div>)
                 })}
                 {props.credit.crew?.map((ele, index: number) => {
-                    return <div key={Math.random() * index * 7}>
+                    return <div className={styles.timeline} key={Math.random() * index * 7}>
                         <Title order={3} size="h2">{ele?.key?.toUpperCase()}</Title>
-                        <Timeline active={ele?.value?.length} bulletSize={24} lineWidth={2}>
+                        <Timeline mt={20} active={ele?.value?.length} bulletSize={24} lineWidth={2}>
                             {ele?.value?.map((crew, index: number) => {
                                 return <Timeline.Item
                                     lineActive={JSON.stringify(crew?.release_date).length === 2 && JSON.stringify(crew?.first_air_date).length === 4 ? false : true}
