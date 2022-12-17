@@ -36,7 +36,7 @@ export default function Recommendation(props: Props): JSX.Element {
         return <p>Loading...</p>
     }
 
-    return <ScrollArea style={{ width: 1000 }}>
+    return <ScrollArea style={{ width: "100%", height: "100%" }}>
         <div className={styles.videoWrapper}>
             {data && data.getrecommendations.map((ele: any) => {
                 return <Link key={ele.id} href={`/movie/${ele.id}`} title={`${ele.title}`}>
