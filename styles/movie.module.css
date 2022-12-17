@@ -93,3 +93,9 @@
   align-items: flex-start;
   padding-left: 3em;
 }
+
+@media screen and (max-width: 1118px) {
+  .bottomWrapper {
+    padding: 2em;
+  }
+}
