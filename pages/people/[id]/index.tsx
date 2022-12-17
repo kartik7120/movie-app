@@ -42,6 +42,7 @@ const PEOPLE_DETAILS = gql`
         value {
           job
           release_date
+          id
           title
           name
           first_air_date
@@ -141,6 +142,22 @@ export default function People(props: Props): JSX.Element {
                             })}
                         </Timeline>
                     </>)
+                })}
+                {props.credit.crew?.map((ele, index: number) => {
+                    return <div key={Math.random() * index * 7}>
+                        <Title order={3} size="h2">{ele?.key?.toUpperCase()}</Title>
+                        <Timeline active={ele?.value?.length} bulletSize={24} lineWidth={2}>
+                            {ele?.value?.map((crew, index: number) => {
+                                return <Timeline.Item
+                                    lineActive={JSON.stringify(crew?.release_date).length === 2 && JSON.stringify(crew?.first_air_date).length === 4 ? false : true}
+                                    key={Math.random() * 55 * index}
+                                    bullet={<BiRadioCircleMarked size={12} />}
+                                    title={<><Link href={`/movie/${crew?.id}`}><Text variant="text">{crew?.title || crew?.name}
+                                    </Text></Link> <Text color="dimmed" component="span" inline>as {crew?.department} ({crew?.first_air_date?.substring(0, 4) || crew?.release_date?.substring(0, 4)})</Text></>}>
+                                </Timeline.Item>
+                            })}
+                        </Timeline>
+                    </div>
                 })}
             </div>
         </div>
