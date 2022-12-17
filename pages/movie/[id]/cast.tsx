@@ -68,7 +68,7 @@ export default function Cast() {
                                 `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
                             alt="profile image" size="lg" />
                         <div className={styles.textWrapper}>
-                            <Link href={`#`}><Text variant="text" className={styles.text} fw="bold">{ele.name}</Text></Link>
+                            <Link href={`/people/${ele.id}`}><Text variant="text" className={styles.text} fw="bold">{ele.name}</Text></Link>
                             <Text variant="text">{ele.character}</Text>
                         </div>
                     </li>
@@ -85,7 +85,7 @@ export default function Cast() {
                                 `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
                             alt="profile image" size="lg" />
                         <div className={styles.textWrapper}>
-                            <Link href={`#`}><Text variant="text" className={styles.text} fw="bold">{ele.name}</Text></Link>
+                            <Link href={`/people/${ele.id}`}><Text variant="text" className={styles.text} fw="bold">{ele.name}</Text></Link>
                             <Text variant="text">{ele.department}</Text>
                         </div>
                     </li>
