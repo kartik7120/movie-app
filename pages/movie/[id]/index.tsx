@@ -69,6 +69,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
     });
 
     const isMobile = useMediaQuery('(max-width: 694px)');
+    const isMobile2 = useMediaQuery('(max-width: 490px)');
 
     const [opened, setOpened] = React.useState(false);
     const theme = useMantineTheme();
@@ -95,13 +96,13 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                     <ImageCard imgUrl={data.poster_path} title={data.title} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
                 </div>
                 <div className={styles.rightWrapper}>
-                    <Title order={1} m={0} size="h1">{data.title}</Title>
+                    <Title order={1} m={0} size={isMobile2 ? "h6" : "h2"}>{data.title}</Title>
                     <div className={styles.wrapper2}>
-                        <Text variant="text" component="p" ml={5}>{covertDataFormat(data.release_date)}</Text>
+                        <Text variant="text" size={isMobile2 ? "sm" : undefined} component="p" ml={5}>{covertDataFormat(data.release_date)}</Text>
                         <span>&#9679;</span>
-                        <Text variant="text">{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
+                        <Text variant="text" size={isMobile2 ? "sm" : undefined}>{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
                         <span>&#9679;</span>
-                        <Text variant="text" component="span">{runTimeConversion(data.runtime)}</Text>
+                        <Text variant="text" component="span" size={isMobile2 ? "sm" : undefined}>{runTimeConversion(data.runtime)}</Text>
                     </div>
                     <div className={styles.wrapper4}>
                         <ActionIcon size="xl" mr={5}>
@@ -130,7 +131,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
         <div className={styles.bottomWrapper}>
             <div className={styles.bottomWrapper2}>
                 <div className={styles.paddingClass}>
-                    <Title order={2} size="h1" align="start"
+                    <Title order={2} size={isMobile2 ? "h4" : "h2"} align="start"
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                         Cast
                     </Title>
@@ -138,7 +139,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
-                    <Title order={3} size="h1" align="start"
+                    <Title order={3} size={isMobile2 ? "h4" : "h2"} align="start"
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                         Media
                     </Title>
@@ -146,7 +147,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
-                    <Title order={3} size="h1" align="start"
+                    <Title order={3} size={isMobile2 ? "h4" : "h2"} align="start"
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                         Recommendations
                     </Title>

@@ -24,6 +24,8 @@ interface Props {
 }
 
 export default function Recommendation(props: Props): JSX.Element {
+
+    
     const { loading, error, data } = useQuery(RECOMMENDATIONS, {
         variables: {
             getrecommendationsId: props.id,
