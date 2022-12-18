@@ -92,7 +92,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
         >
             <div className={styles.wrapper}>
                 <div>
-                    <ImageCard imgUrl={data.poster_path} title={data.title} width={320} height={440} />
+                    <ImageCard imgUrl={data.poster_path} title={data.title} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
                 </div>
                 <div className={styles.rightWrapper}>
                     <Title order={1} m={0} size="h1">{data.title}</Title>
