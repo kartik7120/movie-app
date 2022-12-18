@@ -11,6 +11,7 @@ const IMAGES = gql`
     posters {
       file_path
     }
+    id
   }
 }
 `

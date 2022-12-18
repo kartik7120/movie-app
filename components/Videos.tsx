@@ -37,7 +37,7 @@ export default function Videos(props: Props): JSX.Element {
         <ScrollArea style={{ width: "100%", height: "100%" }}>
             <div className={styles.videoWrapper}>
                 {data && data.getVideoMedia.map((video: any) => {
-                    return <ReactPlayer key={video.id} controls={true} light={true} playIcon={<AiOutlinePlayCircle size={40} />}
+                    return <ReactPlayer key={video.id} width={350} height={200} controls={true} light={true} playIcon={<AiOutlinePlayCircle size={40} />}
                         url={`https://www.${video.site.toLowerCase()}.com/watch?v=${video.key}`} />
                 })}
             </div>

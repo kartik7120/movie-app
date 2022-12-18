@@ -89,7 +89,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                 <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.find((ele: any) => ele.type === "Trailer").key}`} />}
         </Modal>
         <BackgroundImage
-            src={`https://image.tmdb.org/t/p/original${data.backdrop_path}?api_key=${process.env.API_KEY}`}
+            src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
         >
             <div className={styles.wrapper}>
                 <div>
