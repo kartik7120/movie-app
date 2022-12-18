@@ -19,6 +19,7 @@ import Keywords from "../../../components/Keywords";
 import { BiLink } from "react-icons/bi";
 import Social from "../../../components/Social";
 import { convertCode } from "../../../lib/util";
+import { useMediaQuery } from "@mantine/hooks";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -65,7 +66,9 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
         },
         fetchPolicy: "cache-and-network",
         nextFetchPolicy: "cache-first"
-    })
+    });
+
+    const isMobile = useMediaQuery('(max-width: 694px)');
 
     const [opened, setOpened] = React.useState(false);
     const theme = useMantineTheme();
@@ -74,7 +77,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             <title>{data.title}</title>
             <meta name="description" content={data.overview} />
         </Head>
-        <Modal opened={opened} centered size="auto"
+        <Modal opened={opened} centered size="auto" fullScreen={isMobile}
             overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
             overlayOpacity={0.5}
             overlayBlur={3}
@@ -82,7 +85,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             closeOnClickOutside={false}
             onClose={() => setOpened(false)}>
             {videos &&
-                <ReactPlayer controls={true} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.find((ele: any) => ele.type === "Trailer").key}`} />}
+                <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.find((ele: any) => ele.type === "Trailer").key}`} />}
         </Modal>
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}?api_key=${process.env.API_KEY}`}
