@@ -3,6 +3,7 @@ import { AiOutlineArrowRight, AiOutlinePlayCircle } from "react-icons/ai";
 import ReactPlayer from "react-player/youtube";
 import styles from "../styles/movie.module.css";
 import { Button, ScrollArea } from "@mantine/core";
+import Link from "next/link";
 
 const VIDEOS = gql`
     query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
@@ -43,8 +44,7 @@ export default function Videos(props: Props): JSX.Element {
                     return <ReactPlayer key={video.id} width={350} height={200} controls={true} light={true} playIcon={<AiOutlinePlayCircle size={40} />}
                         url={`https://www.${video.site.toLowerCase()}.com/watch?v=${video.key}`} />
                 })}
-                <Button type="button" component="a" href={`/movie/${props.id}/images/videos`} ml={10} rightIcon={<AiOutlineArrowRight />}>View More</Button>
-
+                <Link href={`/movie/${props.id}/images/videos`}><Button type="button" ml={10} rightIcon={<AiOutlineArrowRight />}>View More</Button></Link>
             </div>
         </ScrollArea>
     )
