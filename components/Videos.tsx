@@ -6,11 +6,18 @@ import { Button, ScrollArea } from "@mantine/core";
 import Link from "next/link";
 
 const VIDEOS = gql`
-    query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
-    getVideoMedia(id: $getVideoMediaId, sourceMedia: $sourceMedia) {
+query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
+  getVideoMedia(id: $getVideoMediaId, sourceMedia: $sourceMedia) {
+    ... on videoMedia {
+      typeMap
+      mediaVideo {
+        type
+        id
+        name
         key
         site
-        id
+      }
+    }
   }
 }
 `
@@ -37,10 +44,10 @@ export default function Videos(props: Props): JSX.Element {
     return (
         <ScrollArea style={{ width: "100%", height: "100%" }}>
             <div className={styles.videoWrapper}>
-                {data && data.getVideoMedia.length <= 3 ? data.getVideoMedia.map((video: any) => {
+                {data && data.getVideoMedia.length <= 3 ? data.getVideoMedia.mediaVideo.map((video: any) => {
                     return <ReactPlayer key={video.id} width={350} height={200} controls={true} light={true} playIcon={<AiOutlinePlayCircle size={40} />}
                         url={`https://www.${video.site.toLowerCase()}.com/watch?v=${video.key}`} />
-                }) : data.getVideoMedia.slice(0, 3).map((video: any) => {
+                }) : data.getVideoMedia.mediaVideo.slice(0, 3).map((video: any) => {
                     return <ReactPlayer key={video.id} width={350} height={200} controls={true} light={true} playIcon={<AiOutlinePlayCircle size={40} />}
                         url={`https://www.${video.site.toLowerCase()}.com/watch?v=${video.key}`} />
                 })}
