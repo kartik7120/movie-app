@@ -48,11 +48,15 @@ query GetMovieDetails($getMovieDetailsId: ID!) {
 const VIDEO_MEDIA = gql`
 query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
   getVideoMedia(id: $getVideoMediaId, sourceMedia: $sourceMedia) {
-    key
-    site
-    id
-    official
-    type
+    ... on videoMedia {
+      typeMap
+      mediaVideo {
+        type
+        id
+        name
+        key
+      }
+    }
   }
 }
 `
@@ -86,7 +90,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             closeOnClickOutside={false}
             onClose={() => setOpened(false)}>
             {videos &&
-                <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.find((ele: any) => ele.type === "Trailer").key}`} />}
+                <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key}`} />}
         </Modal>
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
