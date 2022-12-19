@@ -101,6 +101,17 @@ type MediaVideo {
   id: String
 }
 
+type MediaMap {
+  key: String
+  value: [MediaVideo]
+}
+
+type SpecificMedia {
+  mediaMap: [MediaMap]
+  typeMedia: [String]
+  format: Boolean
+}
+
 type Genre {
   id: ID!
   name: String!
@@ -435,7 +446,14 @@ type FormattedCombinedCredits {
   format: Boolean
 }
 
+type videoMedia {
+  mediaVideo: [MediaVideo]
+  typeMap: [String]
+}
+
 union CreditsUnion = CombinedCredits | FormattedCombinedCredits
+
+union MediaTypeUnion = videoMedia | SpecificMedia
 
 type Query {
   trending(mediaType: MediaType, timeWindow: TimeWindow): [Trending]
@@ -444,7 +462,11 @@ type Query {
   nowPlayingTv: [NowPlayingTv]
   topRatedMovies: [NowPlaying]
   topRatedTvShows: [NowPlayingTv]
-  getVideoMedia(id: ID!, sourceMedia: SourceMedia!): [MediaVideo]
+  getVideoMedia(
+    id: ID!
+    sourceMedia: SourceMedia!
+    include_type: String
+  ): MediaTypeUnion
   getImageMedia(
     id: ID!
     sourceMedia: SourceMedia!

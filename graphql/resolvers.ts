@@ -52,6 +52,19 @@ export const resolvers = {
             return null;
         }
     },
+    MediaTypeUnion: {
+        __resolveType: (obj: any, context: any, info: any) => {
+            if (obj.format === null || obj.format === undefined) {
+                return 'videoMedia';
+            }
+
+            if (obj.format === true) {
+                return 'SpecificMedia';
+            }
+
+            return null;
+        }
+    },
     Query: {
         trending: async (parent: any, args: any, context: any, info: any) => {
             if (args.mediaType === undefined || args.mediaType === null) {
@@ -116,7 +129,55 @@ export const resolvers = {
 
             const query = await fetch(`${process.env.API_URL}${args.sourceMedia}/${args.id}/videos?api_key=${process.env.API_KEY}`);
             const result = await query.json();
-            return result.results;
+            if (args.include_type === undefined || args.include_type === null) {
+                const m = new Map<string, number>();
+
+                result.results.map((ele: any) => {
+                    if (m.has(ele.type) === false) {
+                        m.set(ele.type, 1)
+                    }
+                })
+
+                const arr: string[] = new Array<string>(0);
+                m.forEach((value, key) => {
+                    arr.push(key);
+                })
+
+                return {
+                    mediaVideo: result.results,
+                    typeMap: arr
+                };
+            }
+
+            const arr: string[] = new Array(0);
+
+            const m = new Map<string, any[]>();
+
+            result.results.map((ele: any) => {
+                if (m.has(ele.type) === false) {
+                    m.set(ele.type, [ele])
+                }
+                else {
+                    m.set(ele.type, [...m.get(ele.type)!, ele])
+                }
+            });
+
+            const res = new Array<{ key: string, value: any[] }>(0);
+
+            m.forEach((value, key) => {
+                if (key === args.include_type)
+                    res.push({
+                        key,
+                        value
+                    })
+                arr.push(key);
+            });
+
+            return {
+                mediaMap: res,
+                typeMedia: arr,
+                format: true
+            }
         },
         getImageMedia: async (parent: any, args: any, context: any, info: any) => {
 
