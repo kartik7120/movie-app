@@ -45,24 +45,30 @@ const VIDEOS = gql`
       typeMap
     }
   }
+  getMovieDetails(id:$getVideoMediaId) {
+    title
+    id
+  }
 }
 `
 
 interface Props {
     data: any[],
-    typeMedia: string[]
+    typeMedia: string[],
+    title: string,
+    id: number
 }
 
 export default function Videos(props: Props) {
     const matches = useMediaQuery('(max-width:530px)');
     return <>
-        {/* <Head>
+        <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-            <title>{props.title} - Backdrops</title>
+            <title>{props.title} - Videos</title>
         </Head>
         <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
-        <div className={styles.wrapper}>
+        {/* <div className={styles.wrapper}>
             <div className={styles.wrapper3}>
                 <LeftOptions type="backdrops" id={props.id} title="Backdrops" list={props.languageMap} />
             </div>
@@ -116,7 +122,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             typeMedia: data.getVideoMedia.typeMedia,
-            data: data.getVideoMedia.mediaMap
+            data: data.getVideoMedia.mediaMap,
+            title: data.getMovieDetails.title,
+            id: data.getMovieDetails.id
         }
     }
 
