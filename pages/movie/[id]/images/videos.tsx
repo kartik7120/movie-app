@@ -6,11 +6,13 @@ import PosterCard from "../../../../components/PosterCard";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { AiOutlineArrowRight, AiOutlinePlayCircle } from "react-icons/ai";
 import ReactPlayer from "react-player/youtube";
-import styles from "../styles/movie.module.css";
-import { Button, ScrollArea } from "@mantine/core";
+import styles from "../../../../styles/movie.module.css";
+import { Button, Card, ScrollArea, Text } from "@mantine/core";
 import Link from "next/link";
 import { GetServerSideProps } from "next";
 import client from "../../../../apollo-client";
+import React from "react";
+import videoStyles from "../../../../styles/videos.module.css";
 
 const VIDEOS = gql`
     query GetVideoMedia(
@@ -32,6 +34,7 @@ const VIDEOS = gql`
           id
           name
           key
+          site
         }
       }
     }
@@ -68,17 +71,28 @@ export default function Videos(props: Props) {
             <title>{props.title} - Videos</title>
         </Head>
         <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
-        {/* <div className={styles.wrapper}>
+        <div className={styles.wrapper}>
             <div className={styles.wrapper3}>
-                <LeftOptions type="backdrops" id={props.id} title="Backdrops" list={props.languageMap} />
+                <LeftOptions type="videos" id={props.id} title="Videos" videoList={props.typeMedia} />
             </div>
             <div className={styles.wrapper2}>
-                {props.backdrops.map((backdrop: any, index: number) => {
-                    return <PosterCard width={matches === false ? 250 : 400} height={matches === false ? 100 : 150} imgURL={backdrop.file_path}
-                        key={Math.random() * index * 9} size={`${backdrop.width} x ${backdrop.height} `} language={backdrop.iso_639_1} />
+                {props.data.map((ele: { key: string, value: any[] }, index: number) => {
+                    return <div key={Math.random() * index * 7} className={videoStyles.wrapper3}>
+                        {ele.value.map((ele, index: number) => {
+                            return <Card key={Math.random() * index * 69} w={1000} m={10} radius="lg">
+                                <div className={videoStyles.wrapper}>
+                                    <ReactPlayer light={true} width={400} height={200} url={`https://www.youtube.com/watch?v=${ele.key}`} />
+                                    <div className={videoStyles.wrapper2}>
+                                        <Text variant="text" fw="bold" size="lg">{ele.name}</Text>
+                                        <Text variant="text" fw="bold" size="lg">{ele.site}</Text>
+                                    </div>
+                                </div>
+                            </Card>
+                        })}
+                    </div>
                 })}
             </div>
-        </div> */}
+        </div>
     </>
 }
 
