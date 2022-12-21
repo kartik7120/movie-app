@@ -65,6 +65,12 @@ interface Props {
 
 export default function Videos(props: Props) {
     const matches = useMediaQuery('(max-width:530px)');
+    const isMobile = useMediaQuery('(max-width: 650px)');
+    const matches1 = useMediaQuery('(max-width:1210px)');
+    const matches2 = useMediaQuery("(max-width:1012px)");
+    const matches3 = useMediaQuery("(max-width:1097px)");
+    const matches4 = useMediaQuery("(max-width:492px)");
+
     const [opened, setOpened] = React.useState(false);
     const [url, setUrl] = React.useState<string | undefined>(undefined);
 
@@ -81,30 +87,36 @@ export default function Videos(props: Props) {
                 <LeftOptions type="videos" id={props.id} title="Videos" videoList={props.typeMedia} />
             </div>
             <div className={styles.wrapper2}>
-                <span id="playerModel"></span>
-                <Modal size="auto" closeOnClickOutside={false} centered opened={opened} onClose={() => {
+                <Modal size="auto" fullScreen={isMobile} closeOnClickOutside={false} centered opened={opened} onClose={() => {
                     setOpened(false);
                     setUrl(undefined);
                 }}>
-                    <ReactPlayer playing stopOnUnmount width={1000} height={500}
+                    <ReactPlayer playing stopOnUnmount width={isMobile ? 500 : matches3 ? undefined : 1000}
+                        height={isMobile ? 300 : matches3 ? undefined : 500}
                         controls={true} url={url} />
                 </Modal>
                 {props.data.map((ele: { key: string, value: any[] }, index: number) => {
                     return <div key={Math.random() * index * 7} className={videoStyles.wrapper3}>
                         {ele.value.map((ele, index: number) => {
-                            return <Card key={Math.random() * index * 69} w={1000} m={10} radius="lg">
+                            return <Card key={Math.random() * index * 69} w={matches2 ? undefined : matches1 ? 800 : 1000} m={10} radius="lg">
                                 <div className={videoStyles.wrapper}>
                                     <div>
                                         <div className={videoStyles.playerWrapper}>
-                                            <ReactPlayer light={true} width={400} height={200} previewTabIndex={1}
+                                            <ReactPlayer light={true} width={matches ? 300 : 400}
+                                                height={matches ? 150 : 200} previewTabIndex={1}
                                                 controls={false} url={`https://www.youtube.com/watch?v=${ele.key}`} />
                                             <div className={videoStyles.playerOverley}>
                                                 <ActionIcon size="xl"
                                                     opacity={1} onClick={() => {
-                                                        setUrl(`https://www.youtube.com/watch?v=${ele.key}`);
-                                                        setOpened(true);
+                                                        if (matches === false) {
+                                                            setUrl(`https://www.youtube.com/watch?v=${ele.key}`);
+                                                            setOpened(true);
+                                                        }
                                                     }}>
-                                                    <BsFillPlayCircleFill color="black" size={50} />
+                                                    {matches ? <Link target="_blank" href={`https://www.youtube.com/watch?v=${ele.key}`}>
+                                                        <BsFillPlayCircleFill color="black" size={50} />
+                                                    </Link> :
+                                                        <BsFillPlayCircleFill color="black" size={50} />}
                                                 </ActionIcon>
                                             </div>
                                         </div>
