@@ -150,7 +150,7 @@ export default function Tv({ data, id, acceptLang }: { data: any, id: number, ac
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                         Cast
                     </Title>
-                    {/* <Cast id={id} mediaType={"MOVIE"} first={7} /> */}
+                    <Cast id={id} mediaType={"TV"} first={7} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
@@ -158,7 +158,7 @@ export default function Tv({ data, id, acceptLang }: { data: any, id: number, ac
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                         Media
                     </Title>
-                    {/* <MediaComponent id={id} sourceMedia={"MOVIE"} first={4} /> */}
+                    <MediaComponent id={id} sourceMedia={"TV"} first={4} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
@@ -166,7 +166,7 @@ export default function Tv({ data, id, acceptLang }: { data: any, id: number, ac
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                         Recommendations
                     </Title>
-                    {/* <Recommendation id={id} sourceMedia={"MOVIE"} /> */}
+                    {/* <Recommendation id={id} sourceMedia={"TV"} /> */}
                 </div>
             </div>
             <div className={styles.bottomWrapper3}>
