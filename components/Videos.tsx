@@ -51,7 +51,7 @@ export default function Videos(props: Props): JSX.Element {
                     return <ReactPlayer key={video.id} width={350} height={200} controls={true} light={true} playIcon={<AiOutlinePlayCircle size={40} />}
                         url={`https://www.${video.site.toLowerCase()}.com/watch?v=${video.key}`} />
                 })}
-                <Link href={`/movie/${props.id}/images/videos?includeType=${data.getVideoMedia.typeMap[0]}`}><Button type="button" ml={10} rightIcon={<AiOutlineArrowRight />}>View More</Button></Link>
+                <Link href={`/${props.sourceMedia.toLowerCase()}/${props.id}/images/videos?includeType=${data.getVideoMedia.typeMap[0]}`}><Button type="button" ml={10} rightIcon={<AiOutlineArrowRight />}>View More</Button></Link>
             </div>
         </ScrollArea>
     )

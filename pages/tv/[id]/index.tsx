@@ -147,7 +147,6 @@ export default function Tv({ data, id, acceptLang }: { data: any, id: number, ac
                         <span>&#9679;</span>
                         <Text variant="text" size={isMobile2 ? "sm" : undefined}>{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
                         <span>&#9679;</span>
-                        {/* <Text variant="text" component="span" size={isMobile2 ? "sm" : undefined}>{runTimeConversion(data.runtime)}</Text> */}
                     </div>
                     <div className={styles.wrapper4}>
                         <ActionIcon size="xl" mr={5}>

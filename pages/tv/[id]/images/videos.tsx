@@ -49,10 +49,10 @@ const VIDEOS = gql`
       typeMap
     }
   }
-  getMovieDetails(id:$getVideoMediaId) {
-    title
-    id
-  }
+#   getTvDetails(id:$getVideoMediaId) {
+#     title
+#     id
+#   }
 }
 `
 
@@ -84,7 +84,7 @@ export default function Videos(props: Props) {
         <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div className={styles.wrapper3}>
-                <LeftOptions sourceMedia="MOVIE" type="videos" id={props.id} title="Videos" videoList={props.typeMedia} />
+                <LeftOptions sourceMedia="TV" type="videos" id={props.id} title="Videos" videoList={props.typeMedia} />
             </div>
             <div className={styles.wrapper2}>
                 <Modal size="auto" fullScreen={isMobile} closeOnClickOutside={false} centered opened={opened} onClose={() => {
@@ -154,7 +154,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         query: VIDEOS,
         variables: {
             getVideoMediaId: params ? params.id : null,
-            sourceMedia: "MOVIE",
+            sourceMedia: "TV",
             includeType: query.includeType ? query.includeType : null
         },
         fetchPolicy: "cache-first",
@@ -176,9 +176,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
             typeMedia: data.getVideoMedia.typeMedia,
             data: data.getVideoMedia.mediaMap,
-            title: data.getMovieDetails.title,
-            id: data.getMovieDetails.id
+            title: '',
+            id: params && params.id
         }
     }
-
 }
