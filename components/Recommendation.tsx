@@ -14,6 +14,12 @@ const RECOMMENDATIONS = gql`
       id
       release_date
     }
+    ... on NowPlayingTv {
+      first_air_date
+      name
+      backdrop_path
+      id
+    }
   }
 }
 `
@@ -25,7 +31,7 @@ interface Props {
 
 export default function Recommendation(props: Props): JSX.Element {
 
-    
+
     const { loading, error, data } = useQuery(RECOMMENDATIONS, {
         variables: {
             getrecommendationsId: props.id,
@@ -41,10 +47,10 @@ export default function Recommendation(props: Props): JSX.Element {
     return <ScrollArea style={{ width: "100%", height: "100%" }}>
         <div className={styles.videoWrapper}>
             {data && data.getrecommendations.map((ele: any) => {
-                return <Link key={ele.id} href={`/movie/${ele.id}`} title={`${ele.title}`}>
+                return <Link key={ele.id} href={props.sourceMedia === "MOVIE" ? `/movie/${ele.id}` : `/tv/${ele.id}`} title={`${ele.title}`}>
                     <ImageCard width={300} height={150} imgUrl={ele.backdrop_path} />
-                    <Text variant="text">{ele.title}</Text>
-                    <Text variant="text">{ele.release_date}</Text>
+                    <Text variant="text">{props.sourceMedia === "MOVIE" ? ele.title : ele.name}</Text>
+                    <Text variant="text">{props.sourceMedia === "MOVIE" ? ele.release_date : ele.first_air_date}</Text>
                 </Link>
             })}
         </div>
