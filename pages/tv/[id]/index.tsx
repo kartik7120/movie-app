@@ -1,5 +1,5 @@
 import { gql, useLazyQuery } from "@apollo/client";
-import { ActionIcon, BackgroundImage, Button, Divider, Modal, Text, Title, useMantineTheme } from "@mantine/core";
+import { ActionIcon, BackgroundImage, Button, Divider, Image, List, Modal, Text, Title, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -17,6 +17,10 @@ import Social from "../../../components/Social";
 import { convertCode, covertDataFormat, runTimeConversion } from "../../../lib/util";
 import styles from "../../../styles/movie.module.css";
 import { TvDetails } from "../../../schemaTypes";
+import { SourceMedia } from "../../../schemaTypes";
+import { Network } from "../../../schemaTypes";
+import Link from "next/link";
+// 
 
 const TV_DETAILS = gql`
     query GetTvDetails($getTvDetailsId: ID!) {
@@ -51,9 +55,28 @@ const TV_DETAILS = gql`
     seasons {
       poster_path
     }
+    status
+  }
+#   getImageMedia(id: $getImageMediaId, sourceMedia: $sourceMedia, first: $first) {
+#     posters {
+#       file_path
+#     }
+#     id
+#   }
+}
+`
+
+const IMAGES = gql`
+    query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!, $first: Int) {
+  getImageMedia(id: $getImageMediaId, sourceMedia: $sourceMedia, first: $first) {
+    posters {
+      file_path
+    }
+    id
   }
 }
 `
+
 const VIDEO_MEDIA = gql`
 query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
   getVideoMedia(id: $getVideoMediaId, sourceMedia: $sourceMedia) {
@@ -76,6 +99,13 @@ export default function Tv({ data, id, acceptLang }: { data: any, id: number, ac
 
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');
+
+    // const { data: poster } = client.readQuery({
+    //     query: IMAGES,
+    //     variables: {
+    //         id
+    //     }
+    // });
 
 
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
@@ -108,7 +138,7 @@ export default function Tv({ data, id, acceptLang }: { data: any, id: number, ac
         >
             <div className={styles.wrapper}>
                 <div>
-                    <ImageCard imgUrl={data.seasons[0].poster_path || null} title={data.name} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
+                    <ImageCard imgUrl={null} title={data.name} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
                 </div>
                 <div className={styles.rightWrapper}>
                     <Title order={1} m={0} size={isMobile2 ? "h6" : "h2"}>{data.name}</Title>
@@ -166,23 +196,35 @@ export default function Tv({ data, id, acceptLang }: { data: any, id: number, ac
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                         Recommendations
                     </Title>
-                    {/* <Recommendation id={id} sourceMedia={"TV"} /> */}
+                    <Recommendation id={id} sourceMedia={"TV"} />
                 </div>
             </div>
             <div className={styles.bottomWrapper3}>
-                <Social id={id} sourceMedia="MOVIE" homepage={data.homepage} />
-                <Keywords id={id} sourceMedia={"MOVIE"} />
+                <Social id={id} sourceMedia="TV" homepage={data.homepage} />
+                <Keywords id={id} sourceMedia={"TV"} />
                 <div className={styles.centerFlex}>
                     <Text fw={"bold"} variant="text">Status</Text>
                     <Text variant="text">{data.status}</Text>
                     <Text fw={"bold"} variant="text">Original Language</Text>
                     <Text variant="text">
-                        {/* {convertCode(`${data.original_language}`)} */}
+                        {convertCode(`${data.original_language}`)}
                     </Text>
-                    <Text fw={"bold"} variant="text">Budget</Text>
-                    <Text variant="text">{parseInt(data.budget).toLocaleString(acceptLang.substring(0, 5))}</Text>
-                    <Text fw={"bold"} variant="text">Revenue</Text>
-                    <Text variant="text">{parseInt(data.revenue).toLocaleString(acceptLang.substring(0, 5))}</Text>
+                    <Text fw={"bold"} variant="text">Type</Text>
+                    <Text variant="text">{data.type}</Text>
+                    <Text fw={"bold"} variant="text">Status</Text>
+                    <Text variant="text">{data.status}</Text>
+                    <Text fw={"bold"} variant="text">Networks</Text>
+                    <List style={{ listStyleType: "none" }}>
+                        {data.networks.map((ele: Network) => {
+                            return <List.Item key={ele.id}>
+                                <Link href={'#'}>
+                                    <ActionIcon size={100}>
+                                        <Image src={`https://image.tmdb.org/t/p/w500${ele.logo_path}`} alt={`${ele.name} logo`} />
+                                    </ActionIcon>
+                                </Link>
+                            </List.Item>
+                        })}
+                    </List>
                 </div>
             </div>
         </div>
@@ -201,7 +243,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { data, error } = await client.query({
         query: TV_DETAILS,
         variables: {
-            getTvDetailsId: params && params.id ? params.id : null
+            getTvDetailsId: params && params.id ? params.id : null,
+            sourceMedia: "TV",
+            first: 1
         }
     });
 
