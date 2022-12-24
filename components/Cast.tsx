@@ -22,7 +22,8 @@ query GetCast($getCastId: ID!, $mediaType: SourceMedia!, $first: Int) {
 interface Props {
   id: number
   mediaType: string
-  first?: number
+  first?: number,
+  sourceMedia: "MOVIE" | "TV"
 }
 
 export default function Cast(props: Props): JSX.Element {
@@ -58,7 +59,7 @@ export default function Cast(props: Props): JSX.Element {
         </Button>
       </Carousel.Slide>
     </Carousel>
-    <Button type="button" variant="outline" size="sm" component="a" href={`/movie/${props.id}/cast`}>
+    <Button type="button" variant="outline" size="sm" component="a" href={`/${props.sourceMedia.toLowerCase()}/${props.id}/cast`}>
       Full cast and Crew
     </Button>
   </>

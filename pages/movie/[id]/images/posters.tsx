@@ -43,7 +43,7 @@ const Images = (props: Props) => {
             <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
             <title>{props.title} - Posters</title>
         </Head>
-        <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
+        <MoreTitle sourceMedia="MOVIE" id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div title="Dummy div">
                 <LeftOptions sourceMedia="MOVIE" type="posters" id={props.id} title="Posters" list={props.languageMap} />

@@ -179,7 +179,7 @@ export default function Tv({ data, id, acceptLang }: { data: any, id: number, ac
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                         Cast
                     </Title>
-                    <Cast id={id} mediaType={"TV"} first={7} />
+                    <Cast sourceMedia="TV" id={id} mediaType={"TV"} first={7} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
