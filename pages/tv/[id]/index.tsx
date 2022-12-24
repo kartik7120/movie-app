@@ -23,7 +23,7 @@ import Link from "next/link";
 // 
 
 const TV_DETAILS = gql`
-    query GetTvDetails($getTvDetailsId: ID!) {
+    query TvGetTvDetails($getTvDetailsId: ID!) {
     getTvDetails(id: $getTvDetailsId) {
     first_air_date
     backdrop_path
@@ -57,12 +57,6 @@ const TV_DETAILS = gql`
     }
     status
   }
-#   getImageMedia(id: $getImageMediaId, sourceMedia: $sourceMedia, first: $first) {
-#     posters {
-#       file_path
-#     }
-#     id
-#   }
 }
 `
 
@@ -92,7 +86,7 @@ query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
   }
 }`
 
-export default function Tv({ data, id, acceptLang }: { data: any, id: number, acceptLang: string }) {
+export default function Tv({ data, id, acceptLang, posters }: { data: any, id: number, acceptLang: string, posters: any[] }) {
 
     const [opened, setOpened] = React.useState(false);
     const theme = useMantineTheme();
@@ -138,7 +132,8 @@ export default function Tv({ data, id, acceptLang }: { data: any, id: number, ac
         >
             <div className={styles.wrapper}>
                 <div>
-                    <ImageCard imgUrl={null} title={data.name} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
+                    {/* data.seasons[0].poster_path || */}
+                    <ImageCard imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
                 </div>
                 <div className={styles.rightWrapper}>
                     <Title order={1} m={0} size={isMobile2 ? "h6" : "h2"}>{data.name}</Title>
@@ -243,10 +238,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         query: TV_DETAILS,
         variables: {
             getTvDetailsId: params && params.id ? params.id : null,
+            mediaType: "TV",
+        }
+    });
+
+    const { data: posters } = await client.query({
+        query: IMAGES,
+        variables: {
+            getImageMediaId: params && params.id ? params.id : null,
             sourceMedia: "TV",
             first: 1
         }
-    });
+    })
 
     if (error) {
         return {
@@ -264,7 +267,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
             data: data.getTvDetails as TvDetails,
             id: params ? params.id : null,
-            acceptLang: req.headers["accept-language"]
+            acceptLang: req.headers["accept-language"],
+            posters: posters.getImageMedia.posters
         }
     }
 }
