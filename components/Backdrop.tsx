@@ -41,7 +41,7 @@ export default function Backdrops(props: Props): JSX.Element {
                 return <Image key={Math.random() * index * 47} src={`https://image.tmdb.org/t/p/w400${img.file_path}?api_key=${process.env.API_KEY}`}
                     width="auto" alt="Poster" />
             })}
-            <Button type="button" component="a" href={`/movie/${props.id}/images/backdrops`}
+            <Button type="button" component="a" href={`/${props.sourceMedia.toLowerCase()}/${props.id}/images/backdrops`}
                 rightIcon={<AiOutlineArrowRight />}>
                 View More
             </Button>

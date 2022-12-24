@@ -15,8 +15,8 @@ import React from "react";
 import videoStyles from "../../../../styles/videos.module.css";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 
-const VIDEOS = gql`
-    query GetVideoMedia(
+const VIDEOS_TV = gql`
+    query GetVideoMediaTv(
   $getVideoMediaId: ID!
   $sourceMedia: SourceMedia!
   $includeType: String
@@ -151,13 +151,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     const { data, error } = await client.query({
-        query: VIDEOS,
+        query: VIDEOS_TV,
         variables: {
             getVideoMediaId: params ? params.id : null,
             sourceMedia: "TV",
             includeType: query.includeType ? query.includeType : null
         },
-        fetchPolicy: "cache-first",
     });
 
     if (data.getVideoMedia.typeMedia.includes(query.includeType) === false) {

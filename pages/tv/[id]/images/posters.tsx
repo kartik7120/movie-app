@@ -9,7 +9,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 const POSTERS = gql`
-    query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!,$includeLanguage: String) {
+    query TvGetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!,$includeLanguage: String) {
     getImageMedia(id: $getImageMediaId, sourceMedia: $sourceMedia,includeLanguage: $includeLanguage) {
     posters {
       file_path
@@ -23,8 +23,8 @@ const POSTERS = gql`
       value
     }
   }
-  getMovieDetails(id:$getImageMediaId) {
-    title
+  getTvDetails(id:$getImageMediaId) {
+    name
   }
 }
 `
@@ -33,7 +33,7 @@ interface Props {
     posters: any[],
     id: number | null,
     title: string,
-    languageMap: { key: string, value: string | null }[]
+    languageMap: { key: string, value: string | null }[],
 }
 
 const Images = (props: Props) => {
@@ -43,10 +43,10 @@ const Images = (props: Props) => {
             <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
             <title>{props.title} - Posters</title>
         </Head>
-        <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
+        <MoreTitle sourceMedia="TV" id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div title="Dummy div">
-                <LeftOptions sourceMedia="MOVIE" type="posters" id={props.id} title="Posters" list={props.languageMap} />
+                <LeftOptions sourceMedia="TV" type="posters" id={props.id} title="Posters" list={props.languageMap} />
             </div>
             <div className={styles.wrapper2}>
                 {props.posters.map((poster: any, index: number) => {
@@ -71,10 +71,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         query: POSTERS,
         variables: {
             getImageMediaId: params ? params.id : null,
-            sourceMedia: "MOVIE",
+            sourceMedia: "TV",
             id: params ? params.id : null,
             includeLanguage: query.include_language
-        }
+        },
+        fetchPolicy:"network-only"
     })
 
     if (error) {
@@ -87,10 +88,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
             posters: data.getImageMedia.posters,
             id: params ? params.id : null,
-            title: data.getMovieDetails.title,
+            title: data.getTvDetails.name,
             languageMap: data.getImageMedia.posterLanguageMap
         }
     }
 }
 
-export default Images;
+export default Images; 

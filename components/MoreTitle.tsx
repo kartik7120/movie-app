@@ -6,7 +6,8 @@ import React from "react";
 
 interface Props {
     title: string,
-    id: number | null
+    id: number | null,
+    sourceMedia: "MOVIE" | "TV"
 }
 
 export default function MoreTitle(props: Props): JSX.Element {
@@ -19,7 +20,7 @@ export default function MoreTitle(props: Props): JSX.Element {
     return <div className={styles.titleWrapper}>
         <div>
             <Title order={2} size='h2'>{props.title}</Title>
-            <Button type="button" onClick={() => router.push(`/movie/${props.id}`)} variant="outline" size="sm" color="cyan" leftIcon={<BsArrowLeft />}>
+            <Button type="button" onClick={() => router.push(`/${props.sourceMedia.toLowerCase()}/${props.id}`)} variant="outline" size="sm" color="cyan" leftIcon={<BsArrowLeft />}>
                 Back to main
             </Button>
         </div>

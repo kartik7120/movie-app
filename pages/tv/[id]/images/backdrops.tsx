@@ -9,7 +9,7 @@ import styles from "../../../../styles/poster.module.css";
 import { useMediaQuery } from "@mantine/hooks";
 
 const BACKDROPS = gql`
-    query GetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!, $includeLanguage: String) {
+    query TvGetImageMedia($getImageMediaId: ID!, $sourceMedia: SourceMedia!, $includeLanguage: String) {
     getImageMedia(id: $getImageMediaId, sourceMedia: $sourceMedia, includeLanguage: $includeLanguage) {
     backdrops {
       file_path
@@ -22,8 +22,8 @@ const BACKDROPS = gql`
       value
     }
   }
-  getMovieDetails(id:$getImageMediaId) {
-    title
+  getTvDetails(id:$getImageMediaId) {
+    name
   }
 }
 `
@@ -43,10 +43,10 @@ export default function BackDrops(props: Props) {
             <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
             <title>{props.title} - Backdrops</title>
         </Head>
-        <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
+        <MoreTitle sourceMedia="TV" id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div className={styles.wrapper3}>
-                <LeftOptions sourceMedia="MOVIE" type="backdrops" id={props.id} title="Backdrops" list={props.languageMap} />
+                <LeftOptions sourceMedia="TV" type="backdrops" id={props.id} title="Backdrops" list={props.languageMap} />
             </div>
             <div className={styles.wrapper2}>
                 {props.backdrops.map((backdrop: any, index: number) => {
@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         query: BACKDROPS,
         variables: {
             getImageMediaId: params ? params.id : null,
-            sourceMedia: "MOVIE",
+            sourceMedia: "TV",
             id: params ? params.id : null,
             includeLanguage: query.include_language
         }
@@ -88,7 +88,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
             backdrops: data.getImageMedia.backdrops,
             id: params ? params.id : null,
-            title: data.getMovieDetails.title,
+            title: data.getTvDetails.name,
             languageMap: data.getImageMedia.backdropLanguageMap
         }
     }

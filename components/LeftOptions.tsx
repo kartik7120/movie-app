@@ -5,7 +5,7 @@ import styles from "../styles/LeftOptions.module.css";
 interface Props {
     title: string,
     list?: { key: string, value: string | null }[],
-    videoList: string[],
+    videoList?: string[],
     id: number | null,
     type: "posters" | "backdrops" | "videos",
     sourceMedia: "MOVIE" | "TV"
@@ -23,7 +23,7 @@ export default function LeftOptions(props: Props): JSX.Element {
                     <Link href={`/${props.sourceMedia.toLowerCase()}/${props.id}/images/${props.type}?include_language=${ele.value}`}><Text size="lg">{ele.key}</Text></Link>
                 </li>
             })}
-            {props.type === "videos" && props.videoList.map((ele, index: number) => {
+            {props.type === "videos" && props.videoList && props.videoList.map((ele, index: number) => {
                 return <li className={styles.list} key={Math.random() * index * 5}>
                     <Link href={`/${props.sourceMedia.toLowerCase()}/${props.id}/images/videos/?includeType=${ele}`}><Text size="lg">{ele}</Text></Link>
                 </li>
