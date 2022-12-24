@@ -94,14 +94,6 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');
 
-    // const { data: poster } = client.readQuery({
-    //     query: IMAGES,
-    //     variables: {
-    //         id
-    //     }
-    // });
-
-
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
         variables: {
             getVideoMediaId: data.id,
