@@ -451,6 +451,15 @@ type videoMedia {
   typeMap: [String]
 }
 
+union SearchResult = NowPlaying | NowPlayingTv | People
+
+type Search {
+  results: [SearchResult]
+  page: Int!
+  total_results: Int!
+  total_pages: Int!
+}
+
 union CreditsUnion = CombinedCredits | FormattedCombinedCredits
 
 union MediaTypeUnion = videoMedia | SpecificMedia
