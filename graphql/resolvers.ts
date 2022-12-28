@@ -65,6 +65,24 @@ export const resolvers = {
             return null;
         }
     },
+    SearchResult: {
+        __resolveType: (obj: any, context: any, info: any) => {
+
+            if (obj.title !== undefined && obj.title !== null) {
+                return 'NowPlaying';
+            }
+
+            if (obj.profile_path !== undefined && obj.profile_path !== null) {
+                return 'People';
+            }
+
+            if (obj.name !== undefined && obj.name !== null) {
+                return 'NowPlayingTv';
+            }
+
+            return null;
+        }
+    },
     Query: {
         trending: async (parent: any, args: any, context: any, info: any) => {
             if (args.mediaType === undefined || args.mediaType === null) {
@@ -546,6 +564,20 @@ export const resolvers = {
             const query = await fetch(`${process.env.API_URL}person/${args.id}/external_ids?api_key=${process.env.API_KEY}`);
             const result = await query.json();
             return result;
+        },
+        Search: async (parent: any, args: any, context: any, info: any) => {
+            try {
+                if (args.query === undefined || args.query === null) {
+                    throw new GraphQLError("Please provide query for searching\n");
+                }
+
+                const query = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.API_KEY}&query=${args.query}${args.page ? `&page=${args.page}` : ""}`);
+                const result = await query.json();
+                return result;
+
+            } catch (error) {
+                throw new GraphQLError("Some error occured while querying for results");
+            }
         }
     },
 }

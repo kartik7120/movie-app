@@ -519,4 +519,5 @@ type Query {
   getExternalIDs(id: ID!, sourceMedia: SourceMedia!): ExternalIds
   getPeopleCredit(id: ID!, format: Boolean!): CreditsUnion
   getPeopleExternalIDs(id: ID!): ExternalIds
+  Search(query: String!, page: Int, language: String): Search
 }
