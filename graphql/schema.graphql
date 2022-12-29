@@ -56,6 +56,7 @@ type NowPlaying {
   release_date: String
   genre_ids: [Int]!
   id: ID!
+  media_type: String
   original_title: String
   original_language: String
   title: String
@@ -71,6 +72,7 @@ type NowPlayingTv {
   popularity: Int
   id: ID!
   backdrop_path: String
+  media_type: String
   vote_average: Float
   overview: String
   first_air_date: String
@@ -292,6 +294,7 @@ type SearchResultsMovieOrTv {
   result: [Recommendation]
   total_results: Int
   total_pages: Int
+  page: Int
 }
 
 type People {
@@ -299,6 +302,7 @@ type People {
   name: String!
   adult: Boolean!
   popularity: Int!
+  media_type: String
   profile_path: String
   id: ID!
 }
