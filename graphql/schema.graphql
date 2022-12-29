@@ -459,9 +459,9 @@ union SearchResult = NowPlaying | NowPlayingTv | People
 
 type Search {
   results: [SearchResult]
-  page: Int!
-  total_results: Int!
-  total_pages: Int!
+  page: Int
+  total_results: Int
+  total_pages: Int
 }
 
 union CreditsUnion = CombinedCredits | FormattedCombinedCredits
@@ -523,5 +523,5 @@ type Query {
   getExternalIDs(id: ID!, sourceMedia: SourceMedia!): ExternalIds
   getPeopleCredit(id: ID!, format: Boolean!): CreditsUnion
   getPeopleExternalIDs(id: ID!): ExternalIds
-  Search(query: String!, page: Int, language: String): Search
+  Search(query: String, page: Int, language: String): Search
 }

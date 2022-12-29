@@ -15,9 +15,10 @@ export default function Navbar(): JSX.Element {
     const router = useRouter();
     const [opened, setOpened] = React.useState<boolean>(false);
     const [modelOpened, setModelOpened] = React.useState(false);
+    const [value, setValue] = React.useState("");
 
     function handleSubmit(e: React.KeyboardEvent<HTMLElement> | KeyboardEvent) {
-        router.push("/search");
+        router.push(`/search?query=${value}`);
     }
 
     return <> <nav className={navbar.wrapper}>
@@ -28,7 +29,9 @@ export default function Navbar(): JSX.Element {
         <FaImdb size={50} color="#F08C00" className={navbar.cursor} onClick={() => router.push("/")} />
         <Button leftIcon={<AiOutlineMenu />} variant="filled" onClick={() => setModelOpened(true)}
             className={navbar.navMenu}>Menu</Button>
-        <TextInput type="text" placeholder="Search" icon={<BiSearchAlt />} style={{ width: "60%" }} rightSectionWidth={100}
+        <TextInput value={value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setValue(e.target.value);
+        }} type="text" placeholder="Search" icon={<BiSearchAlt />} style={{ width: "60%" }} rightSectionWidth={100}
             rightSection={<Select placeholder="Select" data={[
                 { value: "all", label: "All" }
             ]} />} onKeyDown={getHotkeyHandler([

@@ -81,7 +81,7 @@ export default function Videos(props: Props) {
             <title>{props.title} - Videos</title>
         </Head>
 
-        <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
+        <MoreTitle sourceMedia="MOVIE" id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div className={styles.wrapper3}>
                 <LeftOptions sourceMedia="MOVIE" type="videos" id={props.id} title="Videos" videoList={props.typeMedia} />

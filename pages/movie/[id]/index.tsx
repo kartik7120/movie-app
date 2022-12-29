@@ -139,7 +139,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
                         Cast
                     </Title>
-                    <Cast id={id} mediaType={"MOVIE"} first={7} />
+                    <Cast sourceMedia="MOVIE" id={id} mediaType={"MOVIE"} first={7} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
