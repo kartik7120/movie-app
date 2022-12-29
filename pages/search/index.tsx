@@ -20,6 +20,7 @@ const SEARCH = gql`
       }
       ... on NowPlayingTv {
         media_type
+        showname
         original_string
         poster_path
       }
@@ -55,7 +56,7 @@ const Search: NextPageWithLayout<Props> = (props: Props) => {
                         <Text variant="text" fw="bold">
                             {result.__typename === "NowPlaying" ?
                                 result.title : result.__typename === "NowPlayingTv" ?
-                                    result.name : result.__typename === "People" ? result.name : ""}
+                                    result.showname : result.__typename === "People" ? result.name : ""}
                         </Text>
                         <Text variant="text">
                             {result.__typename === "NowPlaying" ?

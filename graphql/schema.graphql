@@ -82,6 +82,7 @@ type NowPlayingTv {
   vote_count: Float
   name: String
   original_string: String
+  showname: String
 }
 
 type NowPlayingMovies {

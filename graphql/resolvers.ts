@@ -1,7 +1,7 @@
 import axios from "axios";
 import { GraphQLError } from "graphql";
 import { convertCode } from "../lib/util";
-import { PeopleCrew, CombinedCredits, Maybe, PeopleCast } from "../schemaTypes";
+import { PeopleCrew, CombinedCredits, Maybe, PeopleCast, SearchResult } from "../schemaTypes";
 
 export const resolvers = {
     MediaType: {
@@ -573,6 +573,11 @@ export const resolvers = {
 
                 const query = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.API_KEY}&query=${args.query}${args.page ? `&page=${args.page}` : ""}`);
                 const result = await query.json();
+                result.results.map((ele: any) => {
+                    if (ele.first_air_date) {
+                        ele.showname = ele.name
+                    }
+                })
                 return result;
 
             } catch (error) {

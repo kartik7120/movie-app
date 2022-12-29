@@ -287,6 +287,7 @@ export type NowPlayingTv = {
   overview?: Maybe<Scalars['String']>;
   popularity?: Maybe<Scalars['Int']>;
   poster_path?: Maybe<Scalars['String']>;
+  showname?: Maybe<Scalars['String']>;
   vote_average?: Maybe<Scalars['Float']>;
   vote_count?: Maybe<Scalars['Float']>;
 };
@@ -435,7 +436,7 @@ export type Query = {
 export type QuerySearchArgs = {
   language?: InputMaybe<Scalars['String']>;
   page?: InputMaybe<Scalars['Int']>;
-  query: Scalars['String'];
+  query?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -558,10 +559,10 @@ export type Recommendation = NowPlaying | NowPlayingTv;
 
 export type Search = {
   __typename?: 'Search';
-  page: Scalars['Int'];
+  page?: Maybe<Scalars['Int']>;
   results?: Maybe<Array<Maybe<SearchResult>>>;
-  total_pages: Scalars['Int'];
-  total_results: Scalars['Int'];
+  total_pages?: Maybe<Scalars['Int']>;
+  total_results?: Maybe<Scalars['Int']>;
 };
 
 export type SearchCollection = {
@@ -576,6 +577,7 @@ export type SearchResult = NowPlaying | NowPlayingTv | People;
 
 export type SearchResultsMovieOrTv = {
   __typename?: 'SearchResultsMovieOrTv';
+  page?: Maybe<Scalars['Int']>;
   result?: Maybe<Array<Maybe<Recommendation>>>;
   total_pages?: Maybe<Scalars['Int']>;
   total_results?: Maybe<Scalars['Int']>;
@@ -1128,6 +1130,7 @@ export type NowPlayingTvResolvers<ContextType = any, ParentType extends Resolver
   overview?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   popularity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   poster_path?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  showname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   vote_average?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   vote_count?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1244,7 +1247,7 @@ export type ProductionCountriesResolvers<ContextType = any, ParentType extends R
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  Search?: Resolver<Maybe<ResolversTypes['Search']>, ParentType, ContextType, RequireFields<QuerySearchArgs, 'query'>>;
+  Search?: Resolver<Maybe<ResolversTypes['Search']>, ParentType, ContextType, Partial<QuerySearchArgs>>;
   SearchCollection?: Resolver<Maybe<ResolversTypes['SearchCollection']>, ParentType, ContextType, RequireFields<QuerySearchCollectionArgs, 'query'>>;
   getCast?: Resolver<Maybe<ResolversTypes['Credits']>, ParentType, ContextType, RequireFields<QueryGetCastArgs, 'id' | 'mediaType'>>;
   getExternalIDs?: Resolver<Maybe<ResolversTypes['ExternalIds']>, ParentType, ContextType, RequireFields<QueryGetExternalIDsArgs, 'id' | 'sourceMedia'>>;
@@ -1277,10 +1280,10 @@ export type RecommendationResolvers<ContextType = any, ParentType extends Resolv
 };
 
 export type SearchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Search'] = ResolversParentTypes['Search']> = {
-  page?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  page?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   results?: Resolver<Maybe<Array<Maybe<ResolversTypes['SearchResult']>>>, ParentType, ContextType>;
-  total_pages?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  total_results?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  total_pages?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  total_results?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1297,6 +1300,7 @@ export type SearchResultResolvers<ContextType = any, ParentType extends Resolver
 };
 
 export type SearchResultsMovieOrTvResolvers<ContextType = any, ParentType extends ResolversParentTypes['SearchResultsMovieOrTv'] = ResolversParentTypes['SearchResultsMovieOrTv']> = {
+  page?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   result?: Resolver<Maybe<Array<Maybe<ResolversTypes['Recommendation']>>>, ParentType, ContextType>;
   total_pages?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   total_results?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
