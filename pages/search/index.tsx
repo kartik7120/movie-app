@@ -7,6 +7,7 @@ import SearchLayout from "../../components/SearchLayout";
 import { SearchResult } from "../../schemaTypes";
 import type { NextPageWithLayout } from '../_app';
 import styles from "../../styles/search.module.css";
+import Link from "next/link";
 
 const SEARCH = gql`
     query Search($query: String!, $page: Int) {
@@ -15,11 +16,13 @@ const SEARCH = gql`
     results {
       ... on NowPlaying {
         title
+        id
         media_type
         poster_path
       }
       ... on NowPlayingTv {
         media_type
+        id
         showname
         original_string
         poster_path
@@ -45,27 +48,29 @@ interface Props {
 const Search: NextPageWithLayout<Props> = (props: Props) => {
     return <>
         {props.data.map((result, index: number) => {
-            return <Card key={Math.random() * parseInt(result.id)} shadow="sm" p="lg" radius="md" withBorder>
-                <div className={styles.wrapper}>
-                    <div>
+            return <div className={styles.wrapper} key={Math.random() * parseInt(result.id)}>
+                <div>
+                    <Link href={`/${result.media_type}/${result.id}`}>
                         <ImageCard w="w200" width={100} height={150}
                             imgUrl={result.__typename === "NowPlaying" || result.__typename === "NowPlayingTv" ?
                                 result.poster_path : result.__typename === "People" ? result.profile_path : null} />
-                    </div>
-                    <div className={styles.wrapper2}>
+                    </Link>
+                </div>
+                <div className={styles.wrapper2}>
+                    <Link href={`/${result.media_type}/${result.id}`}>
                         <Text variant="text" fw="bold">
                             {result.__typename === "NowPlaying" ?
                                 result.title : result.__typename === "NowPlayingTv" ?
                                     result.showname : result.__typename === "People" ? result.name : ""}
                         </Text>
-                        <Text variant="text">
-                            {result.__typename === "NowPlaying" ?
-                                result.overview : result.__typename === "NowPlayingTv" ?
-                                    result.overview : ""}
-                        </Text>
-                    </div>
+                    </Link>
+                    <Text variant="text">
+                        {result.__typename === "NowPlaying" ?
+                            result.overview : result.__typename === "NowPlayingTv" ?
+                                result.overview : ""}
+                    </Text>
                 </div>
-            </Card>
+            </div>
         })}
     </>
 }
