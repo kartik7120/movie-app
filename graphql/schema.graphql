@@ -502,7 +502,7 @@ type Query {
   searchMoviesOrTv(
     query: String!
     mediaType: SourceMedia!
-    page: Int
+    page: String
     include_adult: Boolean
     year: Int
     region: String

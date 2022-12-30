@@ -384,6 +384,12 @@ export const resolvers = {
                 throw new GraphQLError("Please provide the query to search");
             }
 
+            if (args.page !== undefined && args.page !== null) {
+                if (isNaN(args.page) || isNaN(parseFloat(args.page))) {
+                    throw new GraphQLError("Please provide valid page number for searching\n");
+                }
+            }
+
             const query = await fetch(`${process.env.API_URL}search/${args.mediaType}?api_key=${process.env.API_KEY}&page=${args.page || 1}&include_adult=${args.include_adult || true}&query=${args.query}`)
             const result = await query.json();
             return {
