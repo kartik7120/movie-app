@@ -12,7 +12,6 @@ import Link from "next/link";
 import { Pagination } from "@mantine/core";
 import React from "react";
 import { useRouter } from "next/router";
-import { SourceMedia } from "../../schemaTypes";
 
 const MOVIE_RESULTS = gql`
     query SearchMoviesOrTv($query: String!, $mediaType: SourceMedia!, $page: String) {
