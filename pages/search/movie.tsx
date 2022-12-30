@@ -60,14 +60,14 @@ const Search: NextPageWithLayout<Props> = (props: Props) => {
         {props.data.map((result, index: number) => {
             return <div className={styles.wrapper} key={Math.random() * parseInt(result.id)}>
                 <div>
-                    <Link href={`/${result.media_type}/${result.id}`}>
+                    <Link href={`/movie/${result.id}`}>
                         <ImageCard w="w200" width={100} height={150}
                             imgUrl={result.__typename === "NowPlaying" || result.__typename === "NowPlayingTv" ?
                                 result.poster_path : result.__typename === "People" ? result.profile_path : null} />
                     </Link>
                 </div>
                 <div className={styles.wrapper2}>
-                    <Link href={`/${result.media_type}/${result.id}`}>
+                    <Link href={`/movie/${result.id}`}>
                         <Text variant="text" fw="bold">
                             {result.__typename === "NowPlaying" ?
                                 result.title : result.__typename === "NowPlayingTv" ?
