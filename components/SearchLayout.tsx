@@ -14,15 +14,10 @@ export default function SearchLayout({ children }: { children: React.ReactElemen
 
     const router = useRouter();
 
-    return <div className={styles.wrapper}>
-        <div >
+    return <div className={styles.wrapper3}>
+        <div>
             <Text variant="text" p="1em" size="xl" style={{ backgroundColor: "red", borderRadius: "10px" }}>Search Results</Text>
             <ul className={styles.category}>
-                {/* {props.list.map((ele, index: number) => {
-                    return <Link href={`#`} key={Math.random() * index * 7}>
-                        <Text size="md">{ele}</Text>
-                    </Link>
-                })} */}
                 <li><Link href={`/search/movie?query=${router.query.query}`}>Movies</Link></li>
                 <li><Link href={`/search/tv?query=${router.query.query}`}>Tv</Link></li>
                 <li><Link href={`/search/people?query=${router.query.query}`}>People</Link></li>
@@ -30,7 +25,7 @@ export default function SearchLayout({ children }: { children: React.ReactElemen
                 <li><Link href={`/search/keywords?query=${router.query.query}`}>Keywords</Link></li>
             </ul>
         </div>
-        <div>
+        <div className={styles.wrapper4}>
             {children}
         </div>
     </div>

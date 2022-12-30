@@ -19,6 +19,7 @@ const SEARCH = gql`
     results {
       ... on NowPlaying {
         title
+        overview
         id
         media_type
         poster_path
@@ -26,6 +27,7 @@ const SEARCH = gql`
       ... on NowPlayingTv {
         media_type
         id
+        overview
         showname
         original_string
         poster_path
@@ -76,7 +78,7 @@ const Search: NextPageWithLayout<Props> = (props: Props) => {
                                     result.showname : result.__typename === "People" ? result.name : ""}
                         </Text>
                     </Link>
-                    <Text variant="text">
+                    <Text lineClamp={2} variant="text">
                         {result.__typename === "NowPlaying" ?
                             result.overview : result.__typename === "NowPlayingTv" ?
                                 result.overview : ""}
