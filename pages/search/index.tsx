@@ -11,7 +11,6 @@ import Link from "next/link";
 import { Pagination } from "@mantine/core";
 import React from "react";
 import { useRouter } from "next/router";
-import { usePagination } from "@mantine/hooks";
 
 const SEARCH = gql`
     query Search($query: String!, $page: String) {
