@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { ApolloError, gql } from "@apollo/client";
 import { Card, Text } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import client from "../../apollo-client";
@@ -8,9 +8,13 @@ import { SearchResult } from "../../schemaTypes";
 import type { NextPageWithLayout } from '../_app';
 import styles from "../../styles/search.module.css";
 import Link from "next/link";
+import { Pagination } from "@mantine/core";
+import React from "react";
+import { useRouter } from "next/router";
+import { usePagination } from "@mantine/hooks";
 
 const SEARCH = gql`
-    query Search($query: String!, $page: Int) {
+    query Search($query: String!, $page: String) {
   Search(query: $query, page: $page) {
     page
     results {
@@ -46,6 +50,18 @@ interface Props {
 }
 
 const Search: NextPageWithLayout<Props> = (props: Props) => {
+
+    const router = useRouter();
+    const [page, setPage] = React.useState(props.page);
+
+    const pagination = usePagination({ total: props.total_pages, page, initialPage: 1, onChange: setPage });
+
+    function handleChange(pag: number) {
+        console.log('onchange function ran')
+        let oldpage = page;
+        setPage(pag);
+    }
+
     return <>
         {props.data.map((result, index: number) => {
             return <div className={styles.wrapper} key={Math.random() * parseInt(result.id)}>
@@ -72,6 +88,7 @@ const Search: NextPageWithLayout<Props> = (props: Props) => {
                 </div>
             </div>
         })}
+        <Pagination total={props.total_pages} page={page} onChange={handleChange} position="center" />
     </>
 }
 
@@ -80,36 +97,41 @@ Search.getLayout = function getLayout(page: React.ReactElement) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { query } = context;
+    try {
+        const { query } = context;
 
-    if (query && query.query === "") {
+        if (query && query.query === "") {
+            return {
+                notFound: true
+            }
+        }
+
+        const { data, error } = await client.query({
+            query: SEARCH,
+            variables: {
+                query: query.query || "",
+                page: query.page
+            }
+        })
+
+        if (error) {
+            return {
+                notFound: true
+            }
+        }
         return {
-            notFound: true
+            props: {
+                data: data.Search.results,
+                total_pages: data.Search.total_pages,
+                page: data.Search.page
+            }
         }
+    } catch (e: any) {
+        console.log(e.networkError.result.errors)
     }
-
-    const { data, error } = await client.query({
-        query: SEARCH,
-        variables: {
-            query: query.query || "",
-            page: query.page || null
-        }
-    })
-
-    if (error) {
-        return {
-            notFound: true
-        }
-    }
-
-    // console.log(`data returned = ${JSON.stringify(data)}`);
 
     return {
-        props: {
-            data: data.Search.results,
-            total_pages: data.Search.total_pages,
-            page: data.Search.page
-        }
+        notFound: true
     }
 }
 

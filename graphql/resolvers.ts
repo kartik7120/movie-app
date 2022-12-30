@@ -571,6 +571,12 @@ export const resolvers = {
                     throw new GraphQLError("Please provide query for searching\n");
                 }
 
+                if (args.page !== undefined && args.page !== null) {
+                    if (isNaN(args.page) || isNaN(parseFloat(args.page))) {
+                        throw new GraphQLError("Please provide valid page number for searching\n");
+                    }
+                }
+
                 const query = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.API_KEY}&query=${args.query}${args.page ? `&page=${args.page}` : ""}`);
                 const result = await query.json();
                 result.results.map((ele: any) => {
