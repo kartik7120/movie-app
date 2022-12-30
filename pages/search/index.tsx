@@ -47,7 +47,7 @@ interface Props {
     page: number,
     total_pages: number,
 }
-// ${page ? `&page=${page}` : ""}
+
 const Search: NextPageWithLayout<Props> = (props: Props) => {
 
     const router = useRouter();
