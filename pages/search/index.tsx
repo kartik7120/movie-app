@@ -48,17 +48,14 @@ interface Props {
     page: number,
     total_pages: number,
 }
-
+// ${page ? `&page=${page}` : ""}
 const Search: NextPageWithLayout<Props> = (props: Props) => {
 
     const router = useRouter();
     const [page, setPage] = React.useState(props.page);
 
-    const pagination = usePagination({ total: props.total_pages, page, initialPage: 1, onChange: setPage });
-
     function handleChange(pag: number) {
-        console.log('onchange function ran')
-        let oldpage = page;
+        router.push(`/search?query=${router.query.query}&page=${pag}`);
         setPage(pag);
     }
 
