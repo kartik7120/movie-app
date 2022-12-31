@@ -595,6 +595,26 @@ export const resolvers = {
             } catch (error) {
                 throw new GraphQLError("Some error occured while querying for results");
             }
+        },
+        SearchKeywords: async (parent: any, args: any, context: any, info: any) => {
+            try {
+                if (args.query === undefined || args.query === null) {
+                    throw new GraphQLError("Please provide query for searching\n");
+                }
+
+                if (args.page !== undefined && args.page !== null) {
+                    if (isNaN(args.page) || isNaN(parseFloat(args.page))) {
+                        throw new GraphQLError("Please provide valid page number for searching\n");
+                    }
+                }
+
+                const query = await fetch(`https://api.themoviedb.org/3/search/keyword?api_key=${process.env.API_KEY}&query=${args.query}${args.page ? `&page=${args.page}` : ""}`);
+                const result = await query.json();
+                return result;
+
+            } catch (error) {
+                throw new GraphQLError("Some error occured while querying for results");
+            }
         }
     },
 }

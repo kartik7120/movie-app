@@ -465,6 +465,13 @@ type Search {
   total_pages: Int
 }
 
+type SearchKeyword {
+  page: Int
+  results: [Keyword]
+  total_pages: Int
+  total_results: Int
+}
+
 union CreditsUnion = CombinedCredits | FormattedCombinedCredits
 
 union MediaTypeUnion = videoMedia | SpecificMedia
@@ -525,4 +532,5 @@ type Query {
   getPeopleCredit(id: ID!, format: Boolean!): CreditsUnion
   getPeopleExternalIDs(id: ID!): ExternalIds
   Search(query: String, page: String, language: String): Search
+  SearchKeywords(query: String!, page: Int): SearchKeyword
 }
