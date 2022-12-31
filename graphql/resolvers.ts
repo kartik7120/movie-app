@@ -419,7 +419,7 @@ export const resolvers = {
                 throw new GraphQLError("Please provide a query for searching");
             }
 
-            const query = await fetch(`${process.env.API_URL}search/people?api_key=${process.env.API_KEY}&page=${args.page || 1}&query=${args.query}`)
+            const query = await fetch(`${process.env.API_URL}search/person?api_key=${process.env.API_KEY}&page=${args.page || 1}&query=${args.query}`)
             const result = await query.json();
 
             return {

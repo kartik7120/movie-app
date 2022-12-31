@@ -312,7 +312,7 @@ type PeopleResult {
   total_results: Int
   total_pages: Int
   result: [People]
-  page: Int!
+  page: Int
 }
 
 type Company {
