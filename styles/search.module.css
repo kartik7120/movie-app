@@ -21,9 +21,16 @@
 }
 
 .wrapper4 {
-    width: 70%;
+  width: 70%;
 }
 
 .category {
   list-style-type: none;
+}
+
+@media screen and (max-width: 541px) {
+  .wrapper3 {
+    flex-direction: column;
+    align-items: center;
+  }
 }
