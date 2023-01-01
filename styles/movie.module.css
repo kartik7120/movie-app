@@ -6,11 +6,6 @@
   margin: 0 auto;
   padding: 3em;
   width: 100%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(52.5, 10.5, 31.5, 1),
-    rgba(52.5, 10.5, 31.5, 0.84)
-  );
 }
 
 .wrapper2 {

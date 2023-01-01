@@ -6,7 +6,7 @@ import React from "react";
 import ImageCard from "../../../components/ImageCard";
 import { ActionIcon, Button, Divider, Text, Title, Group } from "@mantine/core";
 import Head from "next/head";
-import { runTimeConversion, covertDataFormat } from "../../../lib/util";
+import { runTimeConversion, covertDataFormat, getImageColor } from "../../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
 import { AiOutlineHeart, AiFillFacebook, AiOutlineTwitter, AiFillInstagram, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
@@ -62,6 +62,7 @@ query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
 `
 
 export default function Media({ data, id, acceptLang }: { data: any, id: number, acceptLang: string }) {
+    const [color, setColor] = React.useState("");
 
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
         variables: {
@@ -71,6 +72,15 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
         fetchPolicy: "cache-and-network",
         nextFetchPolicy: "cache-first"
     });
+
+    React.useEffect(() => {
+        const col = getImageColor(`https://image.tmdb.org/t/p/original${data.poster_path}`);
+        const gradient = `linear-gradient(
+            to bottom right,
+            rgba(${col.r}, ${col.g}, ${col.b}, 1),
+            rgba(${col.r}, ${col.g}, ${col.b}, 0.84)`;
+        setColor(gradient);
+    }, [])
 
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');
@@ -95,7 +105,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
         >
-            <div className={styles.wrapper}>
+            <div className={styles.wrapper} style={{ background: color }}>
                 <div>
                     <ImageCard imgUrl={data.poster_path} title={data.title} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
                 </div>
