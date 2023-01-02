@@ -74,12 +74,16 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
     });
 
     React.useEffect(() => {
-        const col = getImageColor(`https://image.tmdb.org/t/p/original${data.poster_path}`);
-        const gradient = `linear-gradient(
-            to bottom right,
-            rgba(${col.r}, ${col.g}, ${col.b}, 1),
-            rgba(${col.r}, ${col.g}, ${col.b}, 0.84)`;
-        setColor(gradient);
+        const color = async () => {
+            const col = await getImageColor(`https://image.tmdb.org/t/p/original${data.poster_path}`);
+            console.log(`rgb in useEffect = ${JSON.stringify(col)}`);
+            const gradient = `linear-gradient(
+                to bottom right,
+                rgba(${col.r}, ${col.g}, ${col.b}, 1),
+                rgba(${col.r}, ${col.g}, ${col.b}, 0.84)`;
+            setColor(gradient);
+        }
+        color();
     }, [data.poster_path])
 
     const isMobile = useMediaQuery('(max-width: 694px)');
