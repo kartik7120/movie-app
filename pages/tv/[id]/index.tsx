@@ -14,7 +14,7 @@ import Keywords from "../../../components/Keywords";
 import MediaComponent from "../../../components/MediaComponent";
 import Recommendation from "../../../components/Recommendation";
 import Social from "../../../components/Social";
-import { convertCode, covertDataFormat, runTimeConversion } from "../../../lib/util";
+import { convertCode, covertDataFormat, getImageColor, runTimeConversion } from "../../../lib/util";
 import styles from "../../../styles/movie.module.css";
 import { TvDetails } from "../../../schemaTypes";
 import { SourceMedia } from "../../../schemaTypes";
@@ -87,7 +87,7 @@ query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
 }`
 
 export default function Tv({ data, id, acceptLang, posters }: { data: any, id: number, acceptLang: string, posters: any[] }) {
-
+    const [color, setColor] = React.useState("");
     const [opened, setOpened] = React.useState(false);
     const theme = useMantineTheme();
 
@@ -102,6 +102,18 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
         fetchPolicy: "cache-and-network",
         nextFetchPolicy: "cache-first"
     });
+
+    React.useEffect(() => {
+        const color = async () => {
+            const col = await getImageColor(`https://image.tmdb.org/t/p/original${posters && posters[0] && posters[0].file_path ? posters[0].file_path : null}`);
+            const gradient = `linear-gradient(
+                to bottom right,
+                rgba(${col.r}, ${col.g}, ${col.b}, 1),
+                rgba(${col.r}, ${col.g}, ${col.b}, 0.84)`;
+            setColor(gradient);
+        }
+        color();
+    })
 
 
     return <>
@@ -122,7 +134,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
         >
-            <div className={styles.wrapper}>
+            <div className={styles.wrapper} style={{ background: color }}>
                 <div>
                     {/* data.seasons[0].poster_path || */}
                     <ImageCard imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />

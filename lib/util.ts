@@ -137,7 +137,6 @@ export function getImageColor(img: string) {
     image.onload = async () => {
       try {
         const rgb = await getAverageRGB(image);
-        console.log(`rgb = ${JSON.stringify(rgb)}`);
         return resolve(rgb);
       } catch (error) {
         return reject({
