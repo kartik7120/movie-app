@@ -2,8 +2,10 @@ import axios from "axios";
 import { GraphQLError } from "graphql";
 import { convertCode } from "../lib/util";
 import { PeopleCrew, CombinedCredits, Maybe, PeopleCast, SearchResult } from "../schemaTypes";
+import { BigStringIntScaler } from "./customScalers";
 
 export const resolvers = {
+    BigStringInt: BigStringIntScaler,
     MediaType: {
         ALL: "all",
         MOVIE: "movie",
@@ -363,6 +365,8 @@ export const resolvers = {
 
             const query = await fetch(`${process.env.API_URL}movie/${args.id}?api_key=${process.env.API_KEY}`)
             const result = await query.json();
+            result.revenue = `${result.revenue}`;
+            result.budget = `${result.revenue}`;
             return result;
         },
         getTvDetails: async (parent: any, args: any, context: any, info: any) => {

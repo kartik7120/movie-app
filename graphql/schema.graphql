@@ -24,6 +24,8 @@ enum Status {
   CANCELED
 }
 
+scalar BigStringInt
+
 "Get the daily or weekly trending items"
 type Trending {
   page: Int! @deprecated(reason: "Not being used")
@@ -137,11 +139,12 @@ type SpokenLanguages {
   name: String
 }
 
+
 type MovieDetails {
   adult: Boolean!
   backdrop_path: String
   # belongs_to_collection:
-  budget: Int!
+  budget: BigStringInt!
   genres: [Genre]
   homepage: String
   id: ID!
@@ -154,7 +157,7 @@ type MovieDetails {
   production_companies: [ProductionCompanies]
   production_countries: [ProductionCountries]
   release_date: String
-  revenue: Int
+  revenue: BigStringInt
   runtime: Int
   spoken_languages: [SpokenLanguages]
   status: Status
