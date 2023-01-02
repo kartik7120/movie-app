@@ -80,7 +80,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             rgba(${col.r}, ${col.g}, ${col.b}, 1),
             rgba(${col.r}, ${col.g}, ${col.b}, 0.84)`;
         setColor(gradient);
-    }, [])
+    }, [data.poster_path])
 
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');

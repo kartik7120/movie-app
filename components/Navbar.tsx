@@ -4,14 +4,18 @@ import { ActionIcon, Button, Select, Divider, Drawer } from "@mantine/core";
 import { AiOutlineMenu } from "react-icons/ai";
 import { TextInput } from "@mantine/core";
 import { BiSearchAlt } from "react-icons/bi";
-import { BsFillBookmarkPlusFill } from "react-icons/bs";
+import { BsFillBookmarkPlusFill, BsMoon, BsSun } from "react-icons/bs";
 import { Avatar, Modal } from "@mantine/core";
 import React from "react";
 import { FiMenu } from "react-icons/fi";
 import { getHotkeyHandler } from '@mantine/hooks';
 import { useRouter } from "next/router";
+import { useMantineColorScheme } from "@mantine/core";
 
 export default function Navbar(): JSX.Element {
+    const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+    const dark = colorScheme === 'dark';
+
     const router = useRouter();
     const [opened, setOpened] = React.useState<boolean>(false);
     const [modelOpened, setModelOpened] = React.useState(false);
@@ -47,6 +51,15 @@ export default function Navbar(): JSX.Element {
         <Divider orientation="vertical" size="md" m={0} className={navbar.divider} />
         <Button leftIcon={<BsFillBookmarkPlusFill />} variant="filled" className={navbar.watchlist}>Watchlist</Button>
         <Button leftIcon={<Avatar src={null} radius="md" />} className={navbar.profileBtn} variant="subtle">Profile</Button>
+        <ActionIcon
+            variant="outline"
+            color={dark ? 'yellow' : 'blue'}
+            onClick={() => toggleColorScheme()}
+            title="Toggle color scheme"
+        >
+            {dark ? <BsSun size={18} /> : <BsMoon size={18} />}
+        </ActionIcon>
+
     </nav>
         <nav className={navbar.wrapper2}>
             <div className={navbar.wrapper2Div}>

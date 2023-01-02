@@ -1,7 +1,7 @@
 import '../styles/globals.css'
-import React from "react";
+import React, { useState } from "react";
 import { AppProps } from 'next/app';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { ApolloProvider } from '@apollo/client';
 import client from '../apollo-client';
 import Navbar from '../components/Navbar';
@@ -19,19 +19,25 @@ type AppPropsWithLayout = AppProps & {
 
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
 
   const getLayout = Component.getLayout || ((page) => page);
 
   return <ApolloProvider client={client}> <div dir="ltr">
-    <MantineProvider
-      theme={{ colorScheme: "dark", dir: "ltr" }}
-      withGlobalStyles
-      withNormalizeCSS
-    // emotionCache={rtlCache}
-    >
-      <Navbar />
-      {getLayout(<Component {...pageProps} />)}
-    </MantineProvider>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider
+        theme={{ colorScheme }}
+        withGlobalStyles
+        withNormalizeCSS
+      // emotionCache={rtlCache}
+      >
+        <Navbar />
+        {getLayout(<Component {...pageProps} />)}
+      </MantineProvider>
+    </ColorSchemeProvider>
   </div>
   </ApolloProvider>
 }
