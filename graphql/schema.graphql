@@ -183,11 +183,11 @@ type Network {
 }
 
 type Season {
-  air_date: String!
-  episode_count: Int!
-  name: String!
-  overview: String!
-  poster_path: String!
+  air_date: String
+  episode_count: Int
+  name: String
+  overview: String
+  poster_path: String
   season_number: Int
 }
 

@@ -88,6 +88,8 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
 
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');
+    const isMobile3 = useMediaQuery('(max-width: 650px)');
+    const matches3 = useMediaQuery("(max-width:1097px)");
 
     const [opened, setOpened] = React.useState(false);
     const theme = useMantineTheme();
@@ -104,7 +106,12 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             closeOnClickOutside={false}
             onClose={() => setOpened(false)}>
             {videos &&
-                <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key}`} />}
+                // <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key || null}`} />}
+                <ReactPlayer playing stopOnUnmount width={isMobile3 ? 500 : matches3 ? undefined : 1000}
+                    height={isMobile3 ? 300 : matches3 ? undefined : 500}
+                    controls={true} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key || null}`} />
+            }
+
         </Modal>
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}

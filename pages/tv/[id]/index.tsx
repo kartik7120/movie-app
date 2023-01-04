@@ -93,6 +93,9 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
 
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');
+    const isMobile3 = useMediaQuery('(max-width: 650px)');
+    const matches3 = useMediaQuery("(max-width:1097px)");
+
 
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
         variables: {
@@ -129,14 +132,18 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
             closeOnClickOutside={false}
             onClose={() => setOpened(false)}>
             {videos &&
-                <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key}`} />}
+                // <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key}`} />}
+                <ReactPlayer playing stopOnUnmount width={isMobile3 ? 500 : matches3 ? undefined : 1000}
+                    height={isMobile3 ? 300 : matches3 ? undefined : 500}
+                    controls={true} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key}`} />
+            }
+
         </Modal>
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
         >
             <div className={styles.wrapper} style={{ background: color }}>
                 <div>
-                    {/* data.seasons[0].poster_path || */}
                     <ImageCard imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
                 </div>
                 <div className={styles.rightWrapper}>
@@ -260,12 +267,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             notFound: true
         }
     }
-
-    // data.getTvDetails.seasons.forEach((ele: any, index: number) => {
-    //     if (index === 0) {
-    //         data.poster_path = ele.poster_path
-    //     }
-    // })
 
     return {
         props: {
