@@ -139,7 +139,6 @@ type SpokenLanguages {
   name: String
 }
 
-
 type MovieDetails {
   adult: Boolean!
   backdrop_path: String
@@ -475,6 +474,30 @@ type SearchKeyword {
   total_results: Int
 }
 
+type ProviderInfo {
+  display_priority: Int
+  logo_path: String
+  provider_id: Int
+  provider_name: String
+}
+
+type WatchProviderResult {
+  link: String
+  flatrate: [ProviderInfo]
+  buy: [ProviderInfo]
+  rent: [ProviderInfo]
+}
+
+type WatchProvidersMap {
+  key: String
+  value: WatchProviderResult
+}
+
+type WatchProviders {
+  id: Int
+  results: [WatchProvidersMap]
+}
+
 union CreditsUnion = CombinedCredits | FormattedCombinedCredits
 
 union MediaTypeUnion = videoMedia | SpecificMedia
@@ -536,4 +559,9 @@ type Query {
   getPeopleExternalIDs(id: ID!): ExternalIds
   Search(query: String, page: String, language: String): Search
   SearchKeywords(query: String!, page: Int): SearchKeyword
+  WatchProvidersQuery(
+    id: Int!
+    region: String
+    media_type: MediaType!
+  ): WatchProviders
 }

@@ -619,6 +619,43 @@ export const resolvers = {
             } catch (error) {
                 throw new GraphQLError("Some error occured while querying for results");
             }
+        },
+        WatchProvidersQuery: async (parent: any, args: any, context: any, info: any) => {
+            try {
+
+                if (args.id === null || args.id === undefined) {
+                    throw new GraphQLError("Provide id");
+                }
+
+                if (args.media_type === null || args.media_type === undefined) {
+                    throw new GraphQLError("Provide media type");
+                }
+
+                if (args.region !== undefined && args.region !== null) {
+                    if (isNaN(args.region) || isNaN(parseFloat(args.region))) {
+                        throw new GraphQLError("Please provide valid page number for searching\n");
+                    }
+                }
+
+                const query = await fetch(`https://api.themoviedb.org/3/${args.media_type}/${args.id}/watch/providers?api_key=${process.env.API_KEY}`);
+                const result = await query.json();
+
+                let arr = new Array<{ key: string, value: any }>(0);
+
+                for (const key in result.results) {
+                    arr.push({ key, value: result.results[key] });
+                }
+
+                // console.log(arr)
+
+                return {
+                    id: result.id,
+                    results: arr
+                };
+
+            } catch (error) {
+                throw new GraphQLError("Some error occured while querying for watch providers");
+            }
         }
     },
 }
