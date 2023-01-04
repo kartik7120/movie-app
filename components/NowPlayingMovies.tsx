@@ -6,6 +6,7 @@ import { gql } from "apollo-server-micro";
 import CardComponent from "./CardComponent";
 import CarouselWrapper from "./CarouselComponent";
 import React from "react";
+import Link from "next/link";
 
 const NOW_PLAYING_MOVIES = gql` #graphql
     query NowPlayingMovies {
@@ -40,7 +41,11 @@ export default function NowPlayingMovies() {
         <CarouselWrapper>
             {data ? data.nowPlayingMovies.nowPlaying.map((movie: any, index: number) => (
                 <Carousel.Slide key={movie.id}>
-                    <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
+
+                    <Link href={`/movie/${movie.id}`}>
+                        <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
+                    </Link>
+
                 </Carousel.Slide>
             )) : ""}
         </CarouselWrapper>

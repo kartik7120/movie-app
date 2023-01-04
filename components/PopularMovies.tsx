@@ -5,12 +5,13 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import CarouselWrapper from "./CarouselComponent";
 import { LoadingOverlay } from "@mantine/core";
+import Link from "next/link";
 
 const NOW_PLAYING = gql`
   query nowPlaying {
     getPopularMovies {
-    # id
-    # original_title
+    id
+    original_title
     # vote_count
     # vote_average
     poster_path
@@ -31,7 +32,9 @@ export default function PopularMovies(): JSX.Element {
   return <CarouselWrapper>
     {data ? data.getPopularMovies.map((movie: any, index: number) => (
       <Carousel.Slide key={Math.random() * index * 45}>
-        <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
+        <Link href={`/movie/${movie.id}`}>
+          <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
+        </Link>
       </Carousel.Slide>
     )) : <Carousel.Slide>2</Carousel.Slide>
     }

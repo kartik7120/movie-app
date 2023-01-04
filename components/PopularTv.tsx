@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { Carousel } from "@mantine/carousel";
 import { LoadingOverlay } from "@mantine/core";
 import { gql } from "apollo-server-micro";
+import Link from "next/link";
 import CardComponent from "./CardComponent";
 import CarouselWrapper from "./CarouselComponent";
 
@@ -27,7 +28,11 @@ export default function PopularTv() {
         <CarouselWrapper>
             {data ? data.getPoplarTv.map((tv: any, index: number) => (
                 <Carousel.Slide key={Math.random() * index * 40}>
-                    <CardComponent key={Math.random() * index * 41} original_title={tv.name} poster_path={tv.poster_path} />
+
+                    <Link href={`/tv/${tv.id}`}>
+                        <CardComponent key={Math.random() * index * 41} original_title={tv.name} poster_path={tv.poster_path} />
+                    </Link>
+
                 </Carousel.Slide>
             )) : ""}
         </CarouselWrapper>

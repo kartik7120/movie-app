@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { Carousel } from "@mantine/carousel";
 import { LoadingOverlay } from "@mantine/core";
 import { gql } from "apollo-server-micro";
+import Link from "next/link";
 import CardComponent from "./CardComponent";
 import CarouselWrapper from "./CarouselComponent";
 
@@ -22,12 +23,14 @@ export default function NowPlayingTv() {
     if (loading) {
         return <LoadingOverlay visible={true} overlayBlur={0} overlayOpacity={0} loaderProps={{ size: "lg", variant: "dots" }} />
     }
-    
+
     return <>
         <CarouselWrapper>
             {data ? data.nowPlayingTv.map((tv: any, index: number) => (
                 <Carousel.Slide key={tv.id}>
-                    <CardComponent original_title={tv.name} poster_path={tv.poster_path} />
+                    <Link href={`/tv/${tv.id}`}>
+                        <CardComponent original_title={tv.name} poster_path={tv.poster_path} />
+                    </Link>
                 </Carousel.Slide>
             )) : ""}
         </CarouselWrapper>
