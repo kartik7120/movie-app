@@ -4,7 +4,7 @@ import { gql } from "apollo-server-micro";
 import CardComponent from "./CardComponent";
 import CarouselWrapper from "./CarouselComponent";
 import { Trending, MediaType, TimeWindow } from "../schemaTypes";
-import { Loader, LoadingOverlay, Select } from "@mantine/core";
+import { Loader, LoadingOverlay, SegmentedControl, Select } from "@mantine/core";
 import { useIntersection } from '@mantine/hooks';
 import React from "react";
 import Link from "next/link";
@@ -50,15 +50,16 @@ export default function TrendingComponent(props: Props): JSX.Element {
     }
 
     return <>
-        <Select value={value} onChange={(value: string) => {
-            setValue(value);
-            getData({
-                variables: {
-                    mediaType: value,
-                    timeWindow: props.timeWindow
-                }
-            })
-        }} label="Select type"
+        <SegmentedControl
+            value={value!} onChange={(value: string) => {
+                setValue(value);
+                getData({
+                    variables: {
+                        mediaType: value,
+                        timeWindow: props.timeWindow
+                    }
+                })
+            }}
             data={
                 [
                     {
@@ -67,7 +68,8 @@ export default function TrendingComponent(props: Props): JSX.Element {
                         value: "TV", label: "Tv"
                     }
                 ]
-            } size="lg" />
+            } size="lg" color="yellow" />
+
         <CarouselWrapper>
             {data ? data.trending.map((movie: any, index: number) => (
                 <Carousel.Slide key={Math.random() * index * 37}>
