@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import { Button, SegmentedControl } from "@mantine/core";
+import { Button, SegmentedControl, Text, Title } from "@mantine/core";
 import Link from 'next/link';
 import carosel from "../styles/carosel.module.css";
 import React from 'react';
@@ -30,6 +30,10 @@ export default function Home() {
       </Head>
 
       <main>
+        <div className={styles.upper}>
+          <Title size="h1" order={2}>Welcome</Title>
+          <Title size="h2" order={2}>Millions of movies, TV shows and people to discover. Explore now.</Title>
+        </div>
         <div className={carosel.wrapper}>
           <CaroselHeading heading="What's Popular">
             <SegmentedControl
