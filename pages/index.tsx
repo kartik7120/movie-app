@@ -77,9 +77,6 @@ export default function Home() {
           {trending === "DAY" ? <TrendingComponent key={Math.random() * 12} timeWindow={trending} />
             : <TrendingComponent key={Math.random() * 71} timeWindow={trending!} />}
         </div>
-        <Link href="/api/graphql" passHref legacyBehavior>
-          <Button component='a'>GraphQL</Button>
-        </Link>
       </main>
 
       <footer className={styles.footer}>
