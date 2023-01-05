@@ -73,9 +73,7 @@ export default function TrendingComponent(props: Props): JSX.Element {
         <CarouselWrapper>
             {data ? data.trending.map((movie: any, index: number) => (
                 <Carousel.Slide key={Math.random() * index * 37}>
-                    <Link href={`/${value?.toLowerCase()}/${movie.id}`}>
-                        <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
-                    </Link>
+                    <CardComponent media_type={value?.toLowerCase() as "movie" | "tv"} id={movie.id} original_title={movie.title} poster_path={movie.poster_path} />
                 </Carousel.Slide>
             )) : <LoadingOverlay visible={true} />
             }

@@ -28,9 +28,7 @@ export default function NowPlayingTv() {
         <CarouselWrapper>
             {data ? data.nowPlayingTv.map((tv: any, index: number) => (
                 <Carousel.Slide key={tv.id}>
-                    <Link href={`/tv/${tv.id}`}>
-                        <CardComponent original_title={tv.name} poster_path={tv.poster_path} />
-                    </Link>
+                    <CardComponent media_type="tv" id={tv.id} original_title={tv.name} poster_path={tv.poster_path} />
                 </Carousel.Slide>
             )) : ""}
         </CarouselWrapper>

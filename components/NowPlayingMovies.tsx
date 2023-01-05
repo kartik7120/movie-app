@@ -41,11 +41,7 @@ export default function NowPlayingMovies() {
         <CarouselWrapper>
             {data ? data.nowPlayingMovies.nowPlaying.map((movie: any, index: number) => (
                 <Carousel.Slide key={movie.id}>
-
-                    <Link href={`/movie/${movie.id}`}>
-                        <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
-                    </Link>
-
+                    <CardComponent media_type="movie" id={movie.id} original_title={movie.title} poster_path={movie.poster_path} />
                 </Carousel.Slide>
             )) : ""}
         </CarouselWrapper>

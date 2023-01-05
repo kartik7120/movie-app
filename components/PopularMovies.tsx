@@ -32,9 +32,7 @@ export default function PopularMovies(): JSX.Element {
   return <CarouselWrapper>
     {data ? data.getPopularMovies.map((movie: any, index: number) => (
       <Carousel.Slide key={Math.random() * index * 45}>
-        <Link href={`/movie/${movie.id}`}>
-          <CardComponent original_title={movie.title} poster_path={movie.poster_path} />
-        </Link>
+          <CardComponent media_type="movie" id={movie.id} original_title={movie.title} poster_path={movie.poster_path} />
       </Carousel.Slide>
     )) : <Carousel.Slide>2</Carousel.Slide>
     }

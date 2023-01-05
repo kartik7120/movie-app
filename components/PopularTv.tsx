@@ -28,11 +28,7 @@ export default function PopularTv() {
         <CarouselWrapper>
             {data ? data.getPoplarTv.map((tv: any, index: number) => (
                 <Carousel.Slide key={Math.random() * index * 40}>
-
-                    <Link href={`/tv/${tv.id}`}>
-                        <CardComponent key={Math.random() * index * 41} original_title={tv.name} poster_path={tv.poster_path} />
-                    </Link>
-
+                    <CardComponent id={tv.id} media_type="tv" key={Math.random() * index * 41} original_title={tv.name} poster_path={tv.poster_path} />
                 </Carousel.Slide>
             )) : ""}
         </CarouselWrapper>

@@ -6,9 +6,12 @@ import { AiFillStar, AiOutlinePlus, AiOutlineInfoCircle } from "react-icons/ai";
 import styles from "../styles/card.module.css";
 import { shimmer, toBase64 } from "../lib/util";
 import React from "react";
+import Link from "next/dist/client/link";
 
 interface CardProps {
     poster_path: string,
+    id: string,
+    media_type: "movie" | "tv",
     original_title: string,
 }
 
@@ -47,16 +50,18 @@ export default function CardComponent(props: CardProps): JSX.Element {
 
     return <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card}>
         <Card.Section>
-            <Image
-                src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
-                alt={`${props.original_title} poster`}
-                priority={true}
-                width={200}
-                height={270}
-                className={classes.imgClass}
-                placeholder="blur"
-                blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(200, 270))}`}
-            />
+            <Link href={`/${props.media_type}/${props.id}`}>
+                <Image
+                    src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
+                    alt={`${props.original_title} poster`}
+                    priority={true}
+                    width={200}
+                    height={270}
+                    className={classes.imgClass}
+                    placeholder="blur"
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(200, 270))}`}
+                />
+            </Link>
         </Card.Section>
         <div className={classes.wrapper2}>
             <Group position="apart" mt={3} sx={{ maxWidth: "100%" }}>
@@ -66,9 +71,11 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 </div>
                 <ActionIcon radius="sm" variant="subtle" size="lg"><BsStar color="cyan" size={18} /></ActionIcon>
             </Group>
-            <Text size="md" align="left" component="p" m={1} style={{ height: "2rem" }}>
-                {props.original_title}
-            </Text>
+            <Link href={`/${props.media_type}/${props.id}`}>
+                <Text size="md" align="left" component="p" m={1} style={{ height: "2rem" }}>
+                    {props.original_title}
+                </Text>
+            </Link>
         </div>
         <div className={classes.wrapper3}>
             <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
