@@ -115,6 +115,10 @@
   }
 }
 
+.upper {
+  padding: 2em;
+}
+
 @media (prefers-color-scheme: dark) {
   .card,
   .footer {
