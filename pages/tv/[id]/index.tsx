@@ -20,7 +20,7 @@ import { TvDetails } from "../../../schemaTypes";
 import { SourceMedia } from "../../../schemaTypes";
 import { Network } from "../../../schemaTypes";
 import Link from "next/link";
-// 
+
 
 const TV_DETAILS = gql`
     query TvGetTvDetails($getTvDetailsId: ID!) {
@@ -97,6 +97,10 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
     const matches3 = useMediaQuery("(max-width:1097px)");
 
 
+    // `linear-gradient(
+    //     to bottom right,
+    //     rgba(${col.r}, ${col.g}, ${col.b}, 1),
+    //     rgba(${col.r}, ${col.g}, ${col.b}, 0.84)`;
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
         variables: {
             getVideoMediaId: data.id,
@@ -110,14 +114,14 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
         const color = async () => {
             const col = await getImageColor(`https://image.tmdb.org/t/p/original${posters && posters[0] && posters[0].file_path ? posters[0].file_path : null}`);
             const gradient = `linear-gradient(
-                to bottom right,
-                rgba(${col.r}, ${col.g}, ${col.b}, 1),
-                rgba(${col.r}, ${col.g}, ${col.b}, 0.84)`;
+                to right, rgba(${col.r}, ${col.g},${col.b}, 1) calc((50vw - 170px) - 340px),
+                rgba(${col.r}, ${col.g},${col.b}, 0.84) 30%,
+                    rgba(${col.r}, ${col.g},${col.b}, 0.84) 100%)`;
             setColor(gradient);
         }
         color();
     })
-
+    // backgroundPosition: "left calc((50vw - 170px) - 340px) top" 
 
     return <>
         <Head>
@@ -141,6 +145,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
         </Modal>
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
+            style={{ backgroundPosition: "left calc((50vw - 170px) - 340px) top" }}
         >
             <div className={styles.wrapper} style={{ background: color }}>
                 <div>

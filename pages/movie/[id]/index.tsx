@@ -78,9 +78,9 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             const col = await getImageColor(`https://image.tmdb.org/t/p/original${data.poster_path}`);
             console.log(`rgb in useEffect = ${JSON.stringify(col)}`);
             const gradient = `linear-gradient(
-                to bottom right,
-                rgba(${col.r}, ${col.g}, ${col.b}, 1),
-                rgba(${col.r}, ${col.g}, ${col.b}, 0.84)`;
+                to right, rgba(${col.r}, ${col.g},${col.b}, 1) calc((50vw - 170px) - 340px),
+                rgba(${col.r}, ${col.g},${col.b}, 0.84) 30%,
+                rgba(${col.r}, ${col.g},${col.b}, 0.84) 100%)`;
             setColor(gradient);
         }
         color();
@@ -106,7 +106,6 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             closeOnClickOutside={false}
             onClose={() => setOpened(false)}>
             {videos &&
-                // <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key || null}`} />}
                 <ReactPlayer playing stopOnUnmount width={isMobile3 ? 500 : matches3 ? undefined : 1000}
                     height={isMobile3 ? 300 : matches3 ? undefined : 500}
                     controls={true} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key || null}`} />
@@ -115,6 +114,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
         </Modal>
         <BackgroundImage
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
+            style={{ backgroundPosition: "left calc((50vw - 170px) - 340px) top" }}
         >
             <div className={styles.wrapper} style={{ background: color }}>
                 <div>
