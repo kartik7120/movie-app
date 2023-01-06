@@ -142,14 +142,14 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                         <ActionIcon size="xl" mr={5}>
                             <AiTwotoneStar color={theme.colorScheme === "dark" ? theme.white : theme.black}/>
                         </ActionIcon>
-                        <Button variant="outline" onClick={() => {
+                        <Button variant="filled" onClick={() => {
                             setOpened(true);
                             getVideo();
                         }} color="blue">Play Tralier</Button>
                     </div>
                     <Text component="p" fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
                     <Title order={2} variant="text" >Overview</Title>
-                    <Text variant="text" component="p">{data.overview}</Text>
+                    <Text variant="text" component="p" size="md">{data.overview}</Text>
                 </div>
             </div>
         </BackgroundImage>

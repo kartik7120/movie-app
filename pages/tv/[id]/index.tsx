@@ -161,25 +161,25 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                     </div>
                     <div className={styles.wrapper4}>
                         <ActionIcon size="xl" mr={5}>
-                            <AiOutlineUnorderedList />
+                            <AiOutlineUnorderedList color={theme.colorScheme === "dark" ? theme.white : theme.black} />
                         </ActionIcon>
                         <ActionIcon size="xl" mr={5}>
-                            <AiOutlineHeart />
+                            <AiOutlineHeart color={theme.colorScheme === "dark" ? theme.white : theme.black} />
                         </ActionIcon>
                         <ActionIcon size="xl" mr={5}>
-                            <BsBookmark />
+                            <BsBookmark color={theme.colorScheme === "dark" ? theme.white : theme.black} />
                         </ActionIcon>
                         <ActionIcon size="xl" mr={5}>
-                            <AiTwotoneStar />
+                            <AiTwotoneStar color={theme.colorScheme === "dark" ? theme.white : theme.black} />
                         </ActionIcon>
-                        <Button variant="outline" onClick={() => {
+                        <Button variant="filled" onClick={() => {
                             setOpened(true);
                             getVideo();
                         }} color="blue">Play Tralier</Button>
                     </div>
                     <Text component="p" fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
                     <Title order={2} variant="text" >Overview</Title>
-                    <Text variant="text" component="p">{data.overview}</Text>
+                    <Text variant="text" size="md" component="p">{data.overview}</Text>
                 </div>
             </div>
         </BackgroundImage>
