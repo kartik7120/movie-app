@@ -131,16 +131,16 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                     </div>
                     <div className={styles.wrapper4}>
                         <ActionIcon size="xl" mr={5}>
-                            <AiOutlineUnorderedList />
+                            <AiOutlineUnorderedList color={theme.colorScheme === "dark" ? theme.white : theme.black} />
                         </ActionIcon>
                         <ActionIcon size="xl" mr={5}>
-                            <AiOutlineHeart />
+                            <AiOutlineHeart color={theme.colorScheme === "dark" ? theme.white : theme.black}/>
                         </ActionIcon>
                         <ActionIcon size="xl" mr={5}>
-                            <BsBookmark />
+                            <BsBookmark color={theme.colorScheme === "dark" ? theme.white : theme.black}/>
                         </ActionIcon>
                         <ActionIcon size="xl" mr={5}>
-                            <AiTwotoneStar />
+                            <AiTwotoneStar color={theme.colorScheme === "dark" ? theme.white : theme.black}/>
                         </ActionIcon>
                         <Button variant="outline" onClick={() => {
                             setOpened(true);
