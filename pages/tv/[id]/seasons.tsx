@@ -46,7 +46,7 @@ export default function Seasons(props: Props) {
                     </div>
                     <div className={styles.padClass}>
                         <Text p={5} size="xl" fw="bold">{season.name} | {season.episode_count} Episodes</Text>
-                        <Text p={30} component="p">{season.overview}</Text>
+                        <Text p={10} component="p">{season.overview}</Text>
                     </div>
                 </div>
             })}
