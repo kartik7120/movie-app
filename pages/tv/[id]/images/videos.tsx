@@ -3,7 +3,7 @@ import Head from "next/head";
 import LeftOptions from "../../../../components/LeftOptions";
 import MoreTitle from "../../../../components/MoreTitle";
 import PosterCard from "../../../../components/PosterCard";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { ApolloError, gql, useLazyQuery, useQuery } from "@apollo/client";
 import { AiOutlineArrowRight, AiOutlinePlayCircle } from "react-icons/ai";
 import ReactPlayer from "react-player/youtube";
 import styles from "../../../../styles/movie.module.css";
@@ -16,7 +16,7 @@ import videoStyles from "../../../../styles/videos.module.css";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 
 const VIDEOS_TV = gql`
-    query GetVideoMediaTv(
+    query GetVideoMediaTv2(
   $getVideoMediaId: ID!
   $sourceMedia: SourceMedia!
   $includeType: String
@@ -49,11 +49,16 @@ const VIDEOS_TV = gql`
       typeMap
     }
   }
-#   getTvDetails(id:$getVideoMediaId) {
-#     title
-#     id
-#   }
 }
+`
+
+const DETAILS = gql`
+    query GET_DETAILS($id:ID!) {
+        getTvDetails(id:$id) {
+            name
+            id
+        }
+    }
 `
 
 interface Props {
@@ -81,7 +86,7 @@ export default function Videos(props: Props) {
             <title>{props.title} - Videos</title>
         </Head>
 
-        <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
+        <MoreTitle sourceMedia="TV" id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div className={styles.wrapper3}>
                 <LeftOptions sourceMedia="TV" type="videos" id={props.id} title="Videos" videoList={props.typeMedia} />
@@ -138,45 +143,61 @@ export default function Videos(props: Props) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { params, query } = context;
 
-    if (params && (params.id === undefined || params.id === null)) {
-        return {
-            notFound: true
+    try {
+        if (params && (params.id === undefined || params.id === null)) {
+            return {
+                notFound: true
+            }
         }
-    }
 
-    if (query.includeType === null || query.includeType === undefined) {
-        return {
-            notFound: true
+        if (query.includeType === null || query.includeType === undefined) {
+            return {
+                notFound: true
+            }
         }
-    }
 
-    const { data, error } = await client.query({
-        query: VIDEOS_TV,
-        variables: {
-            getVideoMediaId: params ? params.id : null,
-            sourceMedia: "TV",
-            includeType: query.includeType ? query.includeType : null
-        },
-    });
+        const { data, error } = await client.query({
+            query: VIDEOS_TV,
+            variables: {
+                getVideoMediaId: params ? params.id : null,
+                sourceMedia: "TV",
+                includeType: query.includeType ? query.includeType : null
+            },
+            errorPolicy: "all"
+        });
 
-    if (data.getVideoMedia.typeMedia.includes(query.includeType) === false) {
-        return {
-            notFound: true
+        const { data: data2, error: error2 } = await client.query({
+            query: DETAILS,
+            variables: {
+                id: params && params.id
+            }
+        })
+
+        if (data.getVideoMedia.typeMedia.includes(query.includeType) === false) {
+            return {
+                notFound: true
+            }
         }
-    }
 
-    if (error) {
-        return {
-            notFound: true
+        if (error) {
+            return {
+                notFound: true
+            }
         }
+
+        return {
+            props: {
+                typeMedia: data.getVideoMedia.typeMedia,
+                data: data.getVideoMedia.mediaMap,
+                title: data2.getTvDetails.name,
+                id: params && params.id
+            }
+        }
+    } catch (err) {
+        console.log(`error while performing queries for video page for tv = ${err}`)
     }
 
     return {
-        props: {
-            typeMedia: data.getVideoMedia.typeMedia,
-            data: data.getVideoMedia.mediaMap,
-            title: '',
-            id: params && params.id
-        }
+        notFound: true
     }
 }
