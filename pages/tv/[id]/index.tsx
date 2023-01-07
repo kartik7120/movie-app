@@ -199,6 +199,9 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                         Media
                     </Title>
                     <MediaComponent id={id} sourceMedia={"TV"} first={4} />
+                    <Link href={`/tv/${id}/seasons`}>
+                        <Button variant="gradient" mt={20}>View All Seasons</Button>
+                    </Link>
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
