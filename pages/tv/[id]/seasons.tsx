@@ -3,6 +3,10 @@ import { GetServerSideProps } from "next/types";
 import client from "../../../apollo-client";
 import MoreTitle from "../../../components/MoreTitle";
 import { Season } from "../../../schemaTypes";
+import Head from "next/head";
+import ImageCard from "../../../components/ImageCard";
+import { Spoiler, Text } from "@mantine/core";
+import styles from "../../../styles/seasons.module.css";
 
 const SEASONS = gql`
     query GetTvDetails($getTvDetailsId: ID!) {
@@ -29,8 +33,24 @@ interface Props {
 
 export default function Seasons(props: Props) {
     return <>
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>{props.title} - Seasons</title>
+        </Head>
         <MoreTitle id={props.id} title={props.title || "Title"} sourceMedia="TV" />
-        
+        <div className={styles.wrapper}>
+            {props.season.map((season) => {
+                return <div key={season.season_number} className={styles.wrapper2}>
+                    <div>
+                        <ImageCard imgUrl={season.poster_path} w="w200" width={200} height={300} />
+                    </div>
+                    <div className={styles.padClass}>
+                        <Text p={5} size="xl" fw="bold">{season.name} | {season.episode_count} Episodes</Text>
+                        <Text p={30} component="p">{season.overview}</Text>
+                    </div>
+                </div>
+            })}
+        </div>
     </>
 }
 
@@ -55,7 +75,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             props: {
                 title: data.getTvDetails.name,
                 id: data.getTvDetails.id,
-                seasons: data.getTvDetails.seasons
+                season: data.getTvDetails.seasons
             }
         }
     } catch (error) {
