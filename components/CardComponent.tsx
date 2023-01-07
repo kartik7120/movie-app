@@ -7,6 +7,8 @@ import styles from "../styles/card.module.css";
 import { shimmer, toBase64 } from "../lib/util";
 import React from "react";
 import Link from "next/dist/client/link";
+import { gql, useLazyQuery } from "@apollo/client";
+import { SpecificMedia } from "../schemaTypes";
 
 interface CardProps {
     poster_path: string,
@@ -43,10 +45,54 @@ const useStyles = createStyles((theme, params, gerRef) => ({
     }
 }))
 
+const HOME_PAGE_VIDEOS = gql`
+    query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!, $includeType: String) {
+  getVideoMedia(id: $getVideoMediaId, sourceMedia: $sourceMedia, include_type: $includeType) {
+    ... on SpecificMedia {
+      mediaMap {
+        key
+        value {
+          key
+          name
+          site
+          type
+        }
+      }
+    }
+  }
+}
+`
+
 export default function CardComponent(props: CardProps): JSX.Element {
 
     const { classes } = useStyles();
+    const [url, setUrl] = React.useState<{ key: string, value: string }>({ key: "", value: "" });
     const theme = useMantineTheme();
+
+    const [getVideo, { loading, error, data }] = useLazyQuery<SpecificMedia>(HOME_PAGE_VIDEOS, {
+        variables: {
+            getVideoMediaId: props.id,
+            sourceMedia: props.media_type,
+            includeType: "Trailer"
+        }
+    })
+
+    const [getVideo2, { loading: loading2, error: error2, data: data2 }] = useLazyQuery(HOME_PAGE_VIDEOS, {
+        variables: {
+            getVideoMediaId: props.id,
+            sourceMedia: props.media_type,
+            includeType: "Teaser"
+        }
+    })
+
+    function handleClick() {
+        getVideo();
+        data && data.mediaMap?.forEach((media) => {
+            if (media?.value && media.value.length > 0) {
+                
+            }
+        })
+    }
 
     return <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card}>
         <Card.Section>
@@ -85,14 +131,14 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 <Button type="button" variant="outline" size="md" leftIcon={<AiOutlinePlus />}>Watchlist</Button>
             </MediaQuery>
             <div className={classes.wrapper4}>
-                <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
+                {/* <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
                     <Button type="button" variant="outline" size="xs" color="teal"
                         leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
-                </MediaQuery>
-                <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
+                </MediaQuery> */}
+                {/* <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
                     <Button type="button" variant="outline" size="sm" color="teal"
                         leftIcon={<BsFillPlayFill size={20} />}>Trailer</Button>
-                </MediaQuery>
+                </MediaQuery> */}
                 <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
                     <ActionIcon radius="md" variant="subtle" size="md">
                         <AiOutlineInfoCircle color="white" size={25} />
