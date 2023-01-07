@@ -7,6 +7,7 @@ import Head from "next/head";
 import ImageCard from "../../../components/ImageCard";
 import { Spoiler, Text } from "@mantine/core";
 import styles from "../../../styles/seasons.module.css";
+import Link from "next/link";
 
 const SEASONS = gql`
     query GetTvDetails($getTvDetailsId: ID!) {
@@ -39,13 +40,17 @@ export default function Seasons(props: Props) {
         </Head>
         <MoreTitle id={props.id} title={props.title || "Title"} sourceMedia="TV" />
         <div className={styles.wrapper}>
-            {props.season.map((season) => {
+            {props.season.map((season, index: number) => {
                 return <div key={season.season_number} className={styles.wrapper2}>
                     <div>
-                        <ImageCard imgUrl={season.poster_path} w="w200" width={200} height={300} />
+                        <Link href={`/tv/${props.id}/seasons/${season.season_number}`}>
+                            <ImageCard imgUrl={season.poster_path} w="w200" width={200} height={300} />
+                        </Link>
                     </div>
                     <div className={styles.padClass}>
-                        <Text p={5} size="xl" fw="bold">{season.name} | {season.episode_count} Episodes</Text>
+                        <Link href={`/tv/${props.id}/seasons/${season.season_number}`}>
+                            <Text p={5} size="xl" fw="bold">{season.name} | {season.episode_count} Episodes</Text>
+                        </Link>
                         <Text p={10} component="p">{season.overview}</Text>
                     </div>
                 </div>
