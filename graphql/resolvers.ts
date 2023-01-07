@@ -656,6 +656,25 @@ export const resolvers = {
             } catch (error) {
                 throw new GraphQLError("Some error occured while querying for watch providers");
             }
+        },
+        TvEpisodes: async (parent: any, args: any, context: any, info: any) => {
+            try {
+
+                if (args.id === null || args.id === undefined) {
+                    throw new GraphQLError("Provide id");
+                }
+
+                if (args.season_number === null || args.season_number === undefined) {
+                    throw new GraphQLError("Provide Season number");
+                }
+
+                const query = await fetch(`https://api.themoviedb.org/3/tv/${args.id}/season/${args.season_number}?api_key=${process.env.API_KEY}`)
+                const result = await query.json();
+                return result;
+
+            } catch (error) {
+                throw new GraphQLError("Some error occured while querying for episode provider");
+            }
         }
     },
 }

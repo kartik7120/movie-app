@@ -498,6 +498,31 @@ type WatchProviders {
   results: [WatchProvidersMap]
 }
 
+type Episode {
+  air_date: String
+  episode_number: Int
+  crew: PeopleCrew
+  id: Int
+  name: String
+  overview: String
+  production_code: String
+  season_number: Int
+  still_path: String
+  vote_average: Int
+  vote_count: Int
+}
+
+type SeasonEpisodes {
+  _id: String
+  air_date: String
+  episodes: [Episode]
+  name: String
+  overview: String
+  id: Int
+  poster_path: String
+  season_number: Int
+}
+
 union CreditsUnion = CombinedCredits | FormattedCombinedCredits
 
 union MediaTypeUnion = videoMedia | SpecificMedia
@@ -564,4 +589,5 @@ type Query {
     region: String
     media_type: MediaType!
   ): WatchProviders
+  TvEpisodes(id: ID!, season_number: Int!): SeasonEpisodes
 }
