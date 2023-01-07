@@ -14,8 +14,8 @@ export default function MoreTitle(props: Props): JSX.Element {
     const router = useRouter();
 
     React.useEffect(() => {
-        router.prefetch(`/movie/${props.id}`);
-    }, [props.id, router]);
+        router.prefetch(`/${props.sourceMedia}/${props.id}`);
+    }, [props.id, router, props.sourceMedia]);
 
     return <div className={styles.titleWrapper}>
         <div>
