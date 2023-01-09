@@ -11,6 +11,10 @@
 
 .sideWrapper {
   padding-left: 2em;
+  width: 100%;
+}
+
+.sideWrapper2 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

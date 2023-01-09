@@ -43,12 +43,11 @@ export default function Episodes(props: Props) {
                         <ImageCard height={100} width={200} w="w300" imgUrl={episode.still_path} />
                     </div>
                     <div className={styles.sideWrapper}>
-                        <div>
+                        <div className={styles.sideWrapper2}>
                             <Text fw="bold">{episode.episode_number}.{episode.name}</Text>
-                            <Text>{episode.overview}</Text>
+                            <Text>{GetDate(episode.air_date)}</Text>
                         </div>
-                        <Text>{GetDate(episode.air_date)}</Text>
-                        {/* {episode.air_date} */}
+                        <Text>{episode.overview}</Text>
                     </div>
                 </div>
             })}
@@ -64,8 +63,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             notFound: true
         }
     }
-
-    console.log(`params = ${JSON.stringify(params)}`)
 
     try {
         const { data, error, errors } = await client.query({
