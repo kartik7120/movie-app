@@ -1,5 +1,6 @@
 import axios from "axios";
 import { GraphQLError } from "graphql";
+import { an } from "vitest/dist/types-71ccd11d";
 import { convertCode } from "../lib/util";
 import { PeopleCrew, CombinedCredits, Maybe, PeopleCast, SearchResult } from "../schemaTypes";
 import { BigStringIntScaler } from "./customScalers";
@@ -674,6 +675,27 @@ export const resolvers = {
 
             } catch (error) {
                 throw new GraphQLError("Some error occured while querying for episode provider");
+            }
+        },
+        TvEpisodeDetail: async (parent: any, args: any, context: any, info: any) => {
+            try {
+                if (args.id === null || args.id === undefined) {
+                    throw new GraphQLError("Provide id");
+                }
+
+                if (args.season_number === null || args.season_number === undefined) {
+                    throw new GraphQLError("Provide Season number");
+                }
+
+                if (args.episode_number === null || args.episode_number === undefined) {
+                    throw new GraphQLError("Provide episode number");
+                }
+
+                const query = await fetch(`https://api.themoviedb.org/3/tv/${args.id}/season/${args.season_number}/episode/${args.episode_number}?api_key=${process.env.API_KEY}`)
+                const result = await query.json();
+                return result;
+            } catch (error) {
+                throw new GraphQLError("Some error occured while querying for episode details");
             }
         }
     },

@@ -523,6 +523,20 @@ type SeasonEpisodes {
   season_number: Int
 }
 
+type EpisodeDetail {
+  air_date: String
+  crew: [Crew]
+  guest_stars: [Cast]
+  name: String
+  overview: String
+  id: ID
+  production_code: String
+  season_number: Int
+  still_path: String
+  vote_average: Float
+  vote_count: Int
+}
+
 union CreditsUnion = CombinedCredits | FormattedCombinedCredits
 
 union MediaTypeUnion = videoMedia | SpecificMedia
@@ -590,4 +604,9 @@ type Query {
     media_type: MediaType!
   ): WatchProviders
   TvEpisodes(id: ID!, season_number: Int!): SeasonEpisodes
+  TvEpisodeDetail(
+    id: ID!
+    season_number: Int!
+    episode_number: Int!
+  ): EpisodeDetail
 }
