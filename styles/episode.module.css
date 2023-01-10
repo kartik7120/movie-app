@@ -1,0 +1,17 @@
+.wrapper {
+  margin: 0 auto;
+}
+
+.wrapper2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* align-items: center; */
+}
+
+.wrapper3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  /* align-items: center; */
+}

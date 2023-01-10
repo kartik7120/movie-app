@@ -8,6 +8,7 @@ import MoreTitle from "../../../../components/MoreTitle";
 import { GetDate } from "../../../../lib/util";
 import { SeasonEpisodes } from "../../../../schemaTypes";
 import styles from "../../../../styles/season.module.css";
+import EpisodeInfo from "../../../../components/EpisodeInfo";
 
 const EPISODES = gql`
 query SeasonTvEpisodes($tvEpisodesId: ID!, $seasonNumber: Int!) {
@@ -24,6 +25,7 @@ query SeasonTvEpisodes($tvEpisodesId: ID!, $seasonNumber: Int!) {
     name
     air_date
     id
+    season_number
   }
 }
 `
@@ -38,17 +40,20 @@ export default function Episodes(props: Props) {
         <MoreTitle backpath={`/tv/${props.tvId}/seasons`} id={props.tvId} sourceMedia="TV" title={props.episodes.name} />
         <div className={styles.wrapper}>
             {props.episodes.episodes.map((episode: any) => {
-                return <div key={episode.id} className={styles.wrapper2}>
-                    <div>
-                        <ImageCard height={100} width={200} w="w300" imgUrl={episode.still_path} />
-                    </div>
-                    <div className={styles.sideWrapper}>
-                        <div className={styles.sideWrapper2}>
-                            <Text fw="bold">{episode.episode_number}.{episode.name}</Text>
-                            <Text>{GetDate(episode.air_date)}</Text>
+                return <div key={episode.id} className={styles.wrapper3}>
+                    <div className={styles.wrapper2}>
+                        <div>
+                            <ImageCard height={100} width={200} w="w300" imgUrl={episode.still_path} />
                         </div>
-                        <Text>{episode.overview}</Text>
+                        <div className={styles.sideWrapper}>
+                            <div className={styles.sideWrapper2}>
+                                <Text fw="bold">{episode.episode_number}.{episode.name}</Text>
+                                <Text>{GetDate(episode.air_date)}</Text>
+                            </div>
+                            <Text>{episode.overview}</Text>
+                        </div>
                     </div>
+                    <EpisodeInfo id={props.tvId} episode_number={parseInt(episode.episode_number)} season_number={parseInt(props.episodes.season_number)} />
                 </div>
             })}
         </div>
