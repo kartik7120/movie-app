@@ -1,5 +1,5 @@
 .wrapper {
-  padding: 4em;
+  padding: 6em;
 }
 
 .wrapper2 {
@@ -19,4 +19,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.wrapper3 {
+  margin-bottom: 2em;
 }
