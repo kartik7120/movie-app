@@ -2,13 +2,13 @@ import { gql } from "@apollo/client";
 import { Text } from "@mantine/core";
 import { Maybe } from "graphql/jsutils/Maybe";
 import { GetServerSideProps } from "next/types";
-import client from "../../../../apollo-client";
-import ImageCard from "../../../../components/ImageCard";
-import MoreTitle from "../../../../components/MoreTitle";
-import { GetDate } from "../../../../lib/util";
-import { SeasonEpisodes } from "../../../../schemaTypes";
-import styles from "../../../../styles/season.module.css";
-import EpisodeInfo from "../../../../components/EpisodeInfo";
+import client from "../../../../../apollo-client";
+import ImageCard from "../../../../../components/ImageCard";
+import MoreTitle from "../../../../../components/MoreTitle";
+import { GetDate } from "../../../../../lib/util";
+import { SeasonEpisodes } from "../../../../../schemaTypes";
+import styles from "../../../../../styles/season.module.css";
+import EpisodeInfo from "../../../../../components/EpisodeInfo";
 
 const EPISODES = gql`
 query SeasonTvEpisodes($tvEpisodesId: ID!, $seasonNumber: Int!) {
