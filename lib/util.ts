@@ -148,3 +148,33 @@ export function getImageColor(img: string) {
     }
   })
 }
+
+export const monthArr = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+
+export function GetDate(date: string | null) {
+  if (date === null) {
+    return null;
+  }
+
+  const d = new Date(date);
+  const month = monthArr[d.getUTCMonth()];
+  const year = d.getUTCFullYear();
+  const day = d.getUTCDay();
+  return `${month} ${day},${year}`;
+}
+
+export function filterName(arr: any[], filter: string): string[] {
+
+  const newArr = arr.filter((ele) => {
+    if (ele.job === filter) {
+      return true;
+    }
+  });
+
+  const result = newArr.map((ele) => {
+    return ele.name
+  })
+
+  return result;
+}
