@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GraphQLError } from "graphql";
 import { an } from "vitest/dist/types-71ccd11d";
+import EpisodeInfo from "../components/EpisodeInfo";
 import { convertCode } from "../lib/util";
 import { PeopleCrew, CombinedCredits, Maybe, PeopleCast, SearchResult } from "../schemaTypes";
 import { BigStringIntScaler } from "./customScalers";
@@ -693,6 +694,8 @@ export const resolvers = {
 
                 const query = await fetch(`https://api.themoviedb.org/3/tv/${args.id}/season/${args.season_number}/episode/${args.episode_number}?api_key=${process.env.API_KEY}`)
                 const result = await query.json();
+                result.crew_number = result.crew.length;
+                result.guest_stars_count = result.guest_stars.length;
                 return result;
             } catch (error) {
                 throw new GraphQLError("Some error occured while querying for episode details");

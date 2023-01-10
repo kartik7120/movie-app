@@ -535,6 +535,8 @@ type EpisodeDetail {
   still_path: String
   vote_average: Float
   vote_count: Int
+  crew_number: Int
+  guest_stars_count: Int
 }
 
 union CreditsUnion = CombinedCredits | FormattedCombinedCredits
