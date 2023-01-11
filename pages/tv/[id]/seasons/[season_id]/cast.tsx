@@ -1,101 +1,98 @@
-import { gql } from "@apollo/client";
-import { Text } from "@mantine/core";
-import { Maybe } from "graphql/jsutils/Maybe";
-import { GetServerSideProps } from "next/types";
-import client from "../../../../../apollo-client";
-import ImageCard from "../../../../../components/ImageCard";
-import MoreTitle from "../../../../../components/MoreTitle";
-import { GetDate } from "../../../../../lib/util";
-import { SeasonEpisodes } from "../../../../../schemaTypes";
-import styles from "../../../../styles/season.module.css";
-import EpisodeInfo from "../../../../../components/EpisodeInfo";
+import { gql, useQuery } from "@apollo/client"
+import { Text, Avatar, Title } from "@mantine/core"
+import { useRouter } from "next/router"
+import Head from "next/head"
+import styles from "../../../../../styles/cast.module.css";
+import Link from "next/link";
 
-const EPISODES = gql`
-query SeasonTvEpisodes($tvEpisodesId: ID!, $seasonNumber: Int!) {
-  TvEpisodes(id: $tvEpisodesId, season_number: $seasonNumber) {
-    episodes {
+const CREDITS = gql` #graphql
+query TvEpisodeDetail($tvEpisodeDetailId: ID!, $seasonNumber: Int!, $episodeNumber: Int!) {
+  TvEpisodeDetail(id: $tvEpisodeDetailId, season_number: $seasonNumber, episode_number: $episodeNumber) {
+    crew {
+      job
       name
+      department
       id
-      overview
-      air_date
-      still_path
-      episode_number
+      profile_path
     }
-    poster_path
+    guest_stars {
+      name
+      character
+      id
+      profile_path
+    }
+    still_path
+    crew_number
     name
-    air_date
-    id
-    season_number
+    guest_stars_count
   }
 }
 `
 
 interface Props {
-    episodes: any,
-    tvId: number
+    id: number,
+    sourceMedia: "MOVIE" | "TV"
 }
 
-export default function Episodes(props: Props) {
-    return <>
-        <MoreTitle backpath={`/tv/${props.tvId}/seasons`} id={props.tvId} sourceMedia="TV" title={props.episodes.name} />
-        <div className={styles.wrapper}>
-            {props.episodes.episodes.map((episode: any) => {
-                return <div key={episode.id} className={styles.wrapper3}>
-                    <div className={styles.wrapper2}>
-                        <div>
-                            <ImageCard height={100} width={200} w="w300" imgUrl={episode.still_path} />
+export default function CastSeason() {
+    const router = useRouter();
+    const { id, season_id, episode_number } = router.query;
+
+    const { loading, error, data } = useQuery(CREDITS, {
+        variables: {
+            tvEpisodeDetailId: id,
+            seasonNumber: parseInt(season_id as string),
+            episodeNumber: parseInt(episode_number as string) | 0
+        }
+    })
+
+    if (loading) {
+        return <p>Loading....</p>
+    }
+
+    if (error) {
+        return <p>{`${error}`}</p>
+    }
+
+    return <div className={styles.wrapper}>
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta name="description" content={`Cast of movie`} />
+            <title>{data.TvEpisodeDetail.name} - Cast</title>
+        </Head>
+        <div>
+            <Title size="h2" order={3} fw="bolder">Guest Stars</Title>
+            <ul>
+                {data && data.TvEpisodeDetail.guest_stars.map((ele: any, index: number) => {
+                    return <li className={styles.list} key={ele.id * index * Math.random() * 22}>
+                        <Avatar
+                            src={ele.profile_path !== null ?
+                                `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
+                            alt="profile image" size="lg" />
+                        <div className={styles.textWrapper}>
+                            <Link href={`/people/${ele.id}`}><Text variant="text" className={styles.text} fw="bold">{ele.name}</Text></Link>
+                            <Text variant="text">{ele.character}</Text>
                         </div>
-                        <div className={styles.sideWrapper}>
-                            <div className={styles.sideWrapper2}>
-                                <Text fw="bold">{episode.episode_number}.{episode.name}</Text>
-                                <Text>{GetDate(episode.air_date)}</Text>
-                            </div>
-                            <Text>{episode.overview}</Text>
-                        </div>
-                    </div>
-                    <EpisodeInfo id={props.tvId} episode_number={parseInt(episode.episode_number)} season_number={parseInt(props.episodes.season_number)} />
-                </div>
-            })}
+                    </li>
+                })}
+            </ul>
         </div>
-    </>
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { params } = context;
-
-    if (params && !params.id && !params.season_id) {
-        return {
-            notFound: true
-        }
-    }
-
-    try {
-        const { data, error, errors } = await client.query({
-            query: EPISODES,
-            variables: {
-                tvEpisodesId: params && params.id ? params.id : null,
-                seasonNumber: params && params.season_id ? parseInt(params.season_id as string) : null
-            },
-        })
-
-        if (error) {
-            console.log(`Errors while fetching season data in error if statement = ${errors}`);
-            return {
-                notFound: true
-            }
-        }
-
-        return {
-            props: {
-                episodes: data.TvEpisodes,
-                tvId: params && params.id
-            }
-        }
-    } catch (error) {
-        console.log(`Errors while fetching season data = ${error}`)
-    }
-
-    return {
-        notFound: true
-    }
+        <div>
+            <Title size="h2" order={3} fw="bolder">Crew</Title>
+            <ul>
+                {data && data.TvEpisodeDetail.crew.map((ele: any, index: number) => {
+                    return <li className={styles.list} key={ele.id * index * Math.random() * 11}>
+                        <Avatar
+                            src={ele.profile_path !== null ?
+                                `https://image.tmdb.org/t/p/w200${ele.profile_path}` : null}
+                            alt="profile image" size="lg" />
+                        <div className={styles.textWrapper}>
+                            <Link href={`/people/${ele.id}`}><Text variant="text" className={styles.text} fw="bold">{ele.name}</Text></Link>
+                            <Text variant="text">{ele.department}</Text>
+                        </div>
+                    </li>
+                })}
+            </ul>
+        </div>
+    </div>
 }

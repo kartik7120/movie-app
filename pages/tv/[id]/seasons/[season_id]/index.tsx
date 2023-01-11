@@ -9,6 +9,7 @@ import { GetDate } from "../../../../../lib/util";
 import { SeasonEpisodes } from "../../../../../schemaTypes";
 import styles from "../../../../../styles/season.module.css";
 import EpisodeInfo from "../../../../../components/EpisodeInfo";
+import Head from "next/head";
 
 const EPISODES = gql`
 query SeasonTvEpisodes($tvEpisodesId: ID!, $seasonNumber: Int!) {
@@ -37,6 +38,10 @@ interface Props {
 
 export default function Episodes(props: Props) {
     return <>
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>{props.episodes.name}</title>
+        </Head>
         <MoreTitle backpath={`/tv/${props.tvId}/seasons`} id={props.tvId} sourceMedia="TV" title={props.episodes.name} />
         <div className={styles.wrapper}>
             {props.episodes.episodes.map((episode: any) => {
@@ -53,6 +58,7 @@ export default function Episodes(props: Props) {
                             <Text>{episode.overview}</Text>
                         </div>
                     </div>
+                        
                     <EpisodeInfo id={props.tvId} episode_number={parseInt(episode.episode_number)} season_number={parseInt(props.episodes.season_number)} />
                 </div>
             })}
