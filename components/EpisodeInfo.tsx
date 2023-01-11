@@ -5,6 +5,7 @@ import React from "react";
 import styles from "../styles/episode.module.css";
 import { EpisodeDetail } from "../schemaTypes";
 import { filterName } from "../lib/util";
+import Link from "next/link";
 
 const EPISODE_DETAIL = gql`
     query TvEpisodeDetail($tvEpisodeDetailId: ID!, $seasonNumber: Int!, $episodeNumber: Int!) {
@@ -68,6 +69,9 @@ export default function EpisodeInfo(props: Props): JSX.Element {
           <Text variant="text">Written By: {data && filterName(data.TvEpisodeDetail.crew, "Writer").map((ele) => `${ele},`)}</Text>
         </div>
         <Text variant="text" fw="bold">Guest Stars {data && data.TvEpisodeDetail.guest_stars_count}</Text>
+        <Link href={`/tv/${props.id}/seasons/${props.season_number}/cast?episode_number=${props.episode_number}`}>
+          View full crew and cast
+        </Link>
       </div>
     </Collapse>
   </div>
