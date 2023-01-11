@@ -24,3 +24,26 @@
 .wrapper3 {
   margin-bottom: 2em;
 }
+
+.imageWrapper {
+  width: min-content;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper2 {
+    flex-direction: column;
+  }
+  .wrapper {
+    padding: 4em;
+  }
+  .sideWrapper {
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .sideWrapper2 {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
