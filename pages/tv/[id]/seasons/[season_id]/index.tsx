@@ -47,7 +47,7 @@ export default function Episodes(props: Props) {
             {props.episodes.episodes.map((episode: any) => {
                 return <div key={episode.id} className={styles.wrapper3}>
                     <div className={styles.wrapper2}>
-                        <div>
+                        <div className={styles.imageWrapper}>
                             <ImageCard height={100} width={200} w="w300" imgUrl={episode.still_path} />
                         </div>
                         <div className={styles.sideWrapper}>
@@ -58,7 +58,7 @@ export default function Episodes(props: Props) {
                             <Text>{episode.overview}</Text>
                         </div>
                     </div>
-                        
+
                     <EpisodeInfo id={props.tvId} episode_number={parseInt(episode.episode_number)} season_number={parseInt(props.episodes.season_number)} />
                 </div>
             })}
