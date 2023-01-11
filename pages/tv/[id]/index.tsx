@@ -20,6 +20,7 @@ import { TvDetails } from "../../../schemaTypes";
 import { SourceMedia } from "../../../schemaTypes";
 import { Network } from "../../../schemaTypes";
 import Link from "next/link";
+import ActionButtons from "../../../components/ActionButtons";
 
 
 const TV_DETAILS = gql`
@@ -160,18 +161,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                         <span>&#9679;</span>
                     </div>
                     <div className={styles.wrapper4}>
-                        <ActionIcon size="xl" mr={5}>
-                            <AiOutlineUnorderedList color={theme.colorScheme === "dark" ? theme.white : theme.black} />
-                        </ActionIcon>
-                        <ActionIcon size="xl" mr={5}>
-                            <AiOutlineHeart color={theme.colorScheme === "dark" ? theme.white : theme.black} />
-                        </ActionIcon>
-                        <ActionIcon size="xl" mr={5}>
-                            <BsBookmark color={theme.colorScheme === "dark" ? theme.white : theme.black} />
-                        </ActionIcon>
-                        <ActionIcon size="xl" mr={5}>
-                            <AiTwotoneStar color={theme.colorScheme === "dark" ? theme.white : theme.black} />
-                        </ActionIcon>
+                        <ActionButtons />
                         <Button variant="filled" onClick={() => {
                             setOpened(true);
                             getVideo();
