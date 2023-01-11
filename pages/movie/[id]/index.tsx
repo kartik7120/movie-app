@@ -4,7 +4,7 @@ import client from "../../../apollo-client";
 import styles from "../../../styles/movie.module.css";
 import React from "react";
 import ImageCard from "../../../components/ImageCard";
-import { ActionIcon, Button, Divider, Text, Title, Group } from "@mantine/core";
+import { ActionIcon, Button, Divider, Text, Title, Group, Tooltip } from "@mantine/core";
 import Head from "next/head";
 import { runTimeConversion, covertDataFormat, getImageColor } from "../../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
@@ -130,18 +130,26 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                         <Text variant="text" component="span" size={isMobile2 ? "sm" : undefined}>{runTimeConversion(data.runtime)}</Text>
                     </div>
                     <div className={styles.wrapper4}>
-                        <ActionIcon size="xl" mr={5}>
-                            <AiOutlineUnorderedList color={theme.colorScheme === "dark" ? theme.white : theme.black} />
-                        </ActionIcon>
-                        <ActionIcon size="xl" mr={5}>
-                            <AiOutlineHeart color={theme.colorScheme === "dark" ? theme.white : theme.black}/>
-                        </ActionIcon>
-                        <ActionIcon size="xl" mr={5}>
-                            <BsBookmark color={theme.colorScheme === "dark" ? theme.white : theme.black}/>
-                        </ActionIcon>
-                        <ActionIcon size="xl" mr={5}>
-                            <AiTwotoneStar color={theme.colorScheme === "dark" ? theme.white : theme.black}/>
-                        </ActionIcon>
+                        <Tooltip label="Add to List" position="bottom">
+                            <ActionIcon size="xl" mr={5}>
+                                <AiOutlineUnorderedList color={theme.colorScheme === "dark" ? theme.white : theme.black} />
+                            </ActionIcon>
+                        </Tooltip>
+                        <Tooltip label="Add to Favourites" position="bottom">
+                            <ActionIcon size="xl" mr={5}>
+                                <AiOutlineHeart color={theme.colorScheme === "dark" ? theme.white : theme.black} />
+                            </ActionIcon>
+                        </Tooltip>
+                        <Tooltip label="Add to your watchlist" position="bottom">
+                            <ActionIcon size="xl" mr={5}>
+                                <BsBookmark color={theme.colorScheme === "dark" ? theme.white : theme.black} />
+                            </ActionIcon>
+                        </Tooltip>
+                        <Tooltip label="Rate it!" position="bottom">
+                            <ActionIcon size="xl" mr={5}>
+                                <AiTwotoneStar color={theme.colorScheme === "dark" ? theme.white : theme.black} />
+                            </ActionIcon>
+                        </Tooltip>
                         <Button variant="filled" onClick={() => {
                             setOpened(true);
                             getVideo();
