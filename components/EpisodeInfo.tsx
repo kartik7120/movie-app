@@ -70,7 +70,7 @@ export default function EpisodeInfo(props: Props): JSX.Element {
         </div>
         <Text variant="text" fw="bold">Guest Stars {data && data.TvEpisodeDetail.guest_stars_count}</Text>
         <Link href={`/tv/${props.id}/seasons/${props.season_number}/cast?episode_number=${props.episode_number}`}>
-          View full crew and cast
+          <Text variant="text" underline>View full crew and cast</Text>
         </Link>
       </div>
     </Collapse>
