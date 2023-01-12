@@ -51,6 +51,7 @@ export default function Navbar(): JSX.Element {
         <Divider orientation="vertical" size="md" m={0} className={navbar.divider} />
         <Button leftIcon={<BsFillBookmarkPlusFill />} variant="filled" className={navbar.watchlist}>Watchlist</Button>
         <Button leftIcon={<Avatar src={null} radius="md" />} className={navbar.profileBtn} variant="subtle">Profile</Button>
+        <Button className={navbar.profileBtn} onClick={() => router.push(`/signIn`)} variant="subtle">Sign In</Button>
         <ActionIcon
             variant="outline"
             color={dark ? 'yellow' : 'blue'}
