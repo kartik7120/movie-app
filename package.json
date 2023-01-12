@@ -33,6 +33,7 @@
     "plaiceholder": "^2.5.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.41.5",
     "react-icons": "^4.6.0",
     "react-player": "^2.11.0",
     "stylis-plugin-rtl": "^2.1.1"
