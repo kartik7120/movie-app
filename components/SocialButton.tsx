@@ -25,7 +25,7 @@ export default function GoogleButton() {
     }
 
     return <>
-        <Button variant="default" leftIcon={<FcGoogle />} onClick={handleSignin}>Google</Button>
+        <Button variant="default" fullWidth leftIcon={<FcGoogle />} onClick={handleSignin}>Google</Button>
     </>
 
 }
