@@ -9,6 +9,7 @@ import {
     Container,
     Group,
     Button,
+    Divider,
 } from '@mantine/core';
 
 import { useForm, Controller, useWatch } from "react-hook-form";
@@ -44,7 +45,6 @@ export default function SignIn() {
             await createUserWithEmailAndPassword(auth, data["email"], data["password"])
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log(`user logged in = ${user}`);
                 })
         } catch (error: any) {
             console.log(`error code = ${error.code} and error message = ${error.message}`)
@@ -67,8 +67,10 @@ export default function SignIn() {
                         Log in
                     </Anchor>
                 </Text>
-                <GoogleButton />
+
                 <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+                    <GoogleButton />
+                    <Divider label="Or continue with email" labelPosition="center" my="lg" />
                     <Controller control={control} name="email" rules={{ required: true }} render={({
                         field: { onChange, onBlur, value, name, ref },
                         fieldState: { isTouched, isDirty, error },
