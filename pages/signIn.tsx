@@ -20,6 +20,7 @@ import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider } from 'fir
 import GoogleButton from '../components/SocialButton';
 import { FiAlertTriangle } from 'react-icons/fi';
 import Head from 'next/head';
+import { useRouter } from 'next/dist/client/router';
 
 interface Sign {
     email: string,
@@ -29,6 +30,8 @@ interface Sign {
 }
 
 export default function SignIn() {
+
+    const router = useRouter();
 
     const { register, reset, formState: { errors }, handleSubmit, setError, control, resetField } = useForm<Sign>({
         defaultValues: {
@@ -78,7 +81,14 @@ export default function SignIn() {
                     </Title>
                     <Text color="dimmed" size="sm" align="center" mt={5}>
                         Do you have a account ?
-                        <Link href='/login'><Text underline color="blue">Log in</Text> </Link>
+                        <Link href={`/login?from=${router.query.from || '/'}`}><Text underline color="blue">Log in</Text></Link>
+                        {/* <Text color="blue" variant='link' onClick={() => router.push({
+                            pathname: "/login",
+                            query: {
+                                from: router.query.from || '/'
+                            },
+                            slashes: true
+                        })}>Log in</Text> */}
                     </Text>
 
                     <Paper withBorder shadow="md" p={30} mt={30} radius="md">

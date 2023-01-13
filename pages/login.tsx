@@ -21,6 +21,7 @@ import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWith
 import GoogleButton from '../components/SocialButton';
 import Head from 'next/head';
 import { FiAlertTriangle } from 'react-icons/fi';
+import { useRouter } from 'next/dist/client/router';
 
 interface Sign {
     email: string,
@@ -29,6 +30,8 @@ interface Sign {
 }
 
 export default function SignIn() {
+
+    const router = useRouter();
 
     const { register, reset, formState: { errors }, handleSubmit, setError, control, resetField } = useForm<Sign>({
         defaultValues: {
@@ -46,6 +49,10 @@ export default function SignIn() {
             await signInWithEmailAndPassword(auth, data["email"], data["password"])
                 .then((userCredential) => {
                     const user = userCredential.user;
+                    if (router.query && router.query.from) {
+                        return router.push(router.query.from as string || "/");
+                    }
+                    router.push('/');
                 })
         } catch (error: any) {
             if (error.code === "auth/wrong-password")
@@ -74,8 +81,8 @@ export default function SignIn() {
                     </Title>
                     <Text color="dimmed" size="sm" align="center" mt={5}>
                         Do not have a account ?
-                        <Link href='/signin'>
-                            <Text underline color="blue">Sign in</Text>
+                        <Link href={`/signin?from=${router.query.from || '/'}`}>
+                            <Text color="blue" variant='link' >Sign in</Text>
                         </Link>
                     </Text>
 
@@ -102,7 +109,7 @@ export default function SignIn() {
                         )} />
                         <Group position="apart" mt="lg">
                             <Link href={`/forgotPassword`}>
-                                <Text variant='link'> Forgot password?</Text>
+                                <Text variant='link'>Forgot password?</Text>
                             </Link>
                         </Group>
                         <Button fullWidth mt="xl" type='submit'>

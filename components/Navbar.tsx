@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useMantineColorScheme } from "@mantine/core";
 import { auth } from "../firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
+import { query } from "firebase/firestore";
 
 export default function Navbar(): JSX.Element {
     const user = auth.currentUser;
@@ -92,7 +93,13 @@ export default function Navbar(): JSX.Element {
                     Sign out
                 </Menu.Item>
             </Menu.Dropdown>
-        </Menu> : <Button className={navbar.profileBtn} onClick={() => router.push(`/signin`)} variant="subtle">Sign In</Button>}
+        </Menu> : <Button className={navbar.profileBtn} onClick={() => router.push({
+            pathname: "/login",
+            query: {
+                from: router.asPath
+            },
+            slashes: true
+        })} variant="subtle">Log In</Button>}
         <ActionIcon
             variant="outline"
             color={dark ? 'yellow' : 'blue'}
