@@ -92,7 +92,7 @@ export default function Navbar(): JSX.Element {
                     Sign out
                 </Menu.Item>
             </Menu.Dropdown>
-        </Menu> : <Button className={navbar.profileBtn} onClick={() => router.push(`/signIn`)} variant="subtle">Sign In</Button>}
+        </Menu> : <Button className={navbar.profileBtn} onClick={() => router.push(`/signin`)} variant="subtle">Sign In</Button>}
         <ActionIcon
             variant="outline"
             color={dark ? 'yellow' : 'blue'}
