@@ -101,9 +101,9 @@ export default function SignIn() {
                                 name={name} label="Password" placeholder="Your password" required mt="md" />
                         )} />
                         <Group position="apart" mt="lg">
-                            <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
-                                Forgot password?
-                            </Anchor>
+                            <Link href={`/forgotPassword`}>
+                                <Text variant='link'> Forgot password?</Text>
+                            </Link>
                         </Group>
                         <Button fullWidth mt="xl" type='submit'>
                             Log in

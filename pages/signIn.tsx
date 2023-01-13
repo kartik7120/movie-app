@@ -120,9 +120,9 @@ export default function SignIn() {
                             <PasswordInput error={`${error ? errors["password2"]!.message : ""}`} onChange={onChange} onBlur={onBlur} value={value} ref={ref} name={name} label="Re-enter password" placeholder="Your password" required mt="md" />
                         )} />
                         <Group position="apart" mt="lg">
-                            <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
-                                Forgot password?
-                            </Anchor>
+                            <Link href={`/forgotPassword`}>
+                                <Text variant='link'> Forgot password?</Text>
+                            </Link>
                         </Group>
                         <Button fullWidth mt="xl" type='submit'>
                             Sign in
