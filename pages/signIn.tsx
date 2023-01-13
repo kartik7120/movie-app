@@ -12,7 +12,7 @@ import {
     Divider,
     Alert,
 } from '@mantine/core';
-
+import Link from "next/link";
 import { useForm, Controller, useWatch } from "react-hook-form";
 import { SubmitHandler, SubmitErrorHandler } from 'react-hook-form/dist/types';
 import { auth } from "../firebase";
@@ -24,7 +24,8 @@ import Head from 'next/head';
 interface Sign {
     email: string,
     password: string,
-    password2: string
+    password2: string,
+    error: ""
 }
 
 export default function SignIn() {
@@ -50,9 +51,13 @@ export default function SignIn() {
                     const user = userCredential.user;
                 })
         } catch (error: any) {
-            setError("email", { type: "exists", message: `${error.message}` });
+            if (error.code === "auth/email-already-in-use")
+                setError("email", { type: "exists", message: `${error.message}` });
+            else
+                setError("error", { type: "custom", message: `${error.message}` });
             resetField("password");
             resetField("password2");
+            console.log(`${error.code}`)
         }
     };
     const onError: SubmitErrorHandler<Sign> = (error) => console.log(error);
@@ -72,10 +77,8 @@ export default function SignIn() {
                         Welcome to IMDb!
                     </Title>
                     <Text color="dimmed" size="sm" align="center" mt={5}>
-                        Do not have a account ?
-                        <Anchor<'a'> href="#" size="sm" onClick={(event) => event.preventDefault()}>
-                            Log in
-                        </Anchor>
+                        Do you have a account ?
+                        <Link href='/login'><Text underline color="blue">Log in</Text> </Link>
                     </Text>
 
                     <Paper withBorder shadow="md" p={30} mt={30} radius="md">
@@ -124,9 +127,9 @@ export default function SignIn() {
                         <Button fullWidth mt="xl" type='submit'>
                             Sign in
                         </Button>
-                        {/* <Alert icon={<FiAlertTriangle size={16} />} title="Bummer!" mt="xl" color="red">
-                        Something terrible happened! You made a mistake and there is no going back, your data was lost forever!
-                    </Alert> */}
+                        {errors && errors["error"] ? < Alert icon={<FiAlertTriangle size={16} />} title="Error" mt="xl" color="red">
+                            {errors["error"].message}
+                        </Alert> : ""}
                     </Paper>
                 </Container>
             </form>
