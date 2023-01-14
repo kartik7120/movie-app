@@ -539,6 +539,13 @@ type EpisodeDetail {
   guest_stars_count: Int
 }
 
+type Review {
+  rating: Int
+  title: String!
+  review: String!
+  spolier: Boolean
+}
+
 union CreditsUnion = CombinedCredits | FormattedCombinedCredits
 
 union MediaTypeUnion = videoMedia | SpecificMedia
