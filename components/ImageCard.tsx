@@ -11,7 +11,7 @@ interface Props {
 
 export default function ImageCard(props: Props): JSX.Element {
     return (
-        <Card shadow="sm" p="lg" withBorder radius="md">
+        <Card shadow="sm" p="lg" withBorder radius="md" w="min-content">
             <Card.Section>
                 <Image src={props.imgUrl !== null ? `https://image.tmdb.org/t/p/${props.w ? props.w : "w300"}${props.imgUrl}` : null} alt={`${props.title || "Media Image"}`}
                     withPlaceholder width={props.width} height={props.height} />
