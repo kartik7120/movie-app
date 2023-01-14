@@ -184,7 +184,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                     <Cast sourceMedia="TV" id={id} mediaType={"TV"} first={7} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
-                <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.title} />
+                <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} />
                 <div className={styles.paddingClass}>
                     <Title order={3} size={isMobile2 ? "h4" : "h2"} align="start"
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
