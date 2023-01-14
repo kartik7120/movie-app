@@ -11,7 +11,7 @@ interface Props {
     title: string,
     imgUrl: string,
     id: number,
-    mediaType: "MOVIE" | "TV"
+    mediaType: "movies" | "shows"
 }
 
 interface Form {
@@ -48,7 +48,7 @@ export default function Review(props: Props) {
     });
 
     const onSubmit: SubmitHandler<Form> = async (data) => {
-        await addDoc(collection(db, "movies", `${props.id}`, "reviews"), data).then((value) => {
+        await addDoc(collection(db, props.mediaType, `${props.id}`, "reviews"), data).then((value) => {
             console.log(`review written to the database`);
             setRenderForm(false);
         }).catch((error) => {

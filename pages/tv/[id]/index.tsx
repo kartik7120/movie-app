@@ -21,6 +21,7 @@ import { SourceMedia } from "../../../schemaTypes";
 import { Network } from "../../../schemaTypes";
 import Link from "next/link";
 import ActionButtons from "../../../components/ActionButtons";
+import Review from "../../../components/Review";
 
 
 const TV_DETAILS = gql`
@@ -183,6 +184,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                     <Cast sourceMedia="TV" id={id} mediaType={"TV"} first={7} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
+                <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.title} />
                 <div className={styles.paddingClass}>
                     <Title order={3} size={isMobile2 ? "h4" : "h2"} align="start"
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>

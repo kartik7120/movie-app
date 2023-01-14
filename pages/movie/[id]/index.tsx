@@ -155,7 +155,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div>
-                    <Review id={id} mediaType="MOVIE" imgUrl={data.poster_path} title={data.title} />
+                    <Review id={id} mediaType="movies" imgUrl={data.poster_path} title={data.title} />
                 </div>
                 <div className={styles.paddingClass}>
                     <Title order={3} size={isMobile2 ? "h4" : "h2"} align="start"
