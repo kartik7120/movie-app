@@ -123,6 +123,6 @@ export default function Review(props: Props) {
                 </Alert> : ""}
             </ScrollArea.Autosize>
         </Drawer>
-        <Button onClick={() => setOpened(true)}>Add Review</Button>
+        <Button mt={15} onClick={() => setOpened(true)}>Add Review</Button>
     </>
 }
