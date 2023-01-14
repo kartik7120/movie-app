@@ -21,6 +21,7 @@ import Social from "../../../components/Social";
 import { convertCode } from "../../../lib/util";
 import { useMediaQuery } from "@mantine/hooks";
 import ActionButtons from "../../../components/ActionButtons";
+import Review from "../../../components/Review";
 
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
@@ -153,6 +154,9 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                     <Cast sourceMedia="MOVIE" id={id} mediaType={"MOVIE"} first={7} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
+                <div>
+                    <Review imgUrl={data.poster_path} title={data.title} />
+                </div>
                 <div className={styles.paddingClass}>
                     <Title order={3} size={isMobile2 ? "h4" : "h2"} align="start"
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
