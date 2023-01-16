@@ -5,5 +5,10 @@ service cloud.firestore {
       allow read, write: if
           request.time < timestamp.date(2023, 2, 10);
     }
+    match /{path=**}/reviews {
+      allow write : if 
+        request.resource.data.keys().hasAll(['upvotes','downvotes','title','review','rating'])
+    }
   }
 }
+// Add rules for rating not being more than 10
