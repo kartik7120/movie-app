@@ -5,7 +5,7 @@ import styles from "../styles/review.module.css";
 import { useForm, Controller, useWatch, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { IoMdWarning } from "react-icons/io";
 import { db } from "../firebase";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 
 interface Props {
     title: string,
@@ -48,7 +48,7 @@ export default function Review(props: Props) {
     });
 
     const onSubmit: SubmitHandler<Form> = async (data) => {
-        await addDoc(collection(db, props.mediaType, `${props.id}`, "reviews"), data).then((value) => {
+        await addDoc(collection(db, props.mediaType, `${props.id}`, "reviews"), { ...data, timestamp: serverTimestamp() }).then((value) => {
             console.log(`review written to the database`);
             setRenderForm(false);
         }).catch((error) => {
