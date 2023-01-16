@@ -48,13 +48,14 @@ export default function Review(props: Props) {
     });
 
     const onSubmit: SubmitHandler<Form> = async (data) => {
-        await addDoc(collection(db, props.mediaType, `${props.id}`, "reviews"), { ...data, timestamp: serverTimestamp() }).then((value) => {
-            console.log(`review written to the database`);
-            setRenderForm(false);
-        }).catch((error) => {
-            setError("error", { message: error, type: "custom" });
-            console.log(`error occured while sending writing data to database = ${error}`);
-        })
+        await addDoc(collection(db, props.mediaType, `${props.id}`, "reviews"),
+            { ...data, timestamp: new Date().toJSON(), upvotes: 0, downvotes: 0 }).then((value) => {
+                console.log(`review written to the database`);
+                setRenderForm(false);
+            }).catch((error) => {
+                setError("error", { message: error, type: "custom" });
+                console.log(`error occured while sending writing data to database = ${error}`);
+            })
     };
     const onSubmitError: SubmitErrorHandler<Form> = (error) => console.log(error);
 
