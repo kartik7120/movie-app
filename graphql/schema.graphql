@@ -198,7 +198,7 @@ type TvDetails {
   first_air_date: String
   genres: [Genre]
   homepage: String
-  id: ID!
+  id: ID
   in_production: Boolean!
   languages: [String]!
   last_air_date: String
