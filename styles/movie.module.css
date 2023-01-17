@@ -125,6 +125,13 @@
   position: relative;
 }
 
+.reviewTitleWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 @media screen and (max-width: 766px) {
   .wrapper {
     flex-direction: column;
