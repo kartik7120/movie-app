@@ -22,6 +22,10 @@ import { Network } from "../../../schemaTypes";
 import Link from "next/link";
 import ActionButtons from "../../../components/ActionButtons";
 import Review from "../../../components/Review";
+import { MdArrowForwardIos } from "react-icons/md";
+import ReviewComment from "../../../components/ReviewComment";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 
 const TV_DETAILS = gql`
@@ -92,6 +96,8 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
     const [color, setColor] = React.useState("");
     const [opened, setOpened] = React.useState(false);
     const theme = useMantineTheme();
+    const [review, setReview] = React.useState<any[] | null>(null);
+    const q = query(collection(db, "shows", `${id}`, "reviews"), orderBy("rating", "desc"), limit(1));
 
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');
@@ -99,10 +105,6 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
     const matches3 = useMediaQuery("(max-width:1097px)");
 
 
-    // `linear-gradient(
-    //     to bottom right,
-    //     rgba(${col.r}, ${col.g}, ${col.b}, 1),
-    //     rgba(${col.r}, ${col.g}, ${col.b}, 0.84)`;
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
         variables: {
             getVideoMediaId: data.id,
@@ -122,8 +124,18 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
             setColor(gradient);
         }
         color();
-    })
-    // backgroundPosition: "left calc((50vw - 170px) - 340px) top" 
+        async function getData() {
+            const reviewDoc = await getDocs(q);
+            const data = reviewDoc.docs.map((ele) => {
+                return {
+                    id: ele.id,
+                    ...ele.data()
+                }
+            });
+            setReview(data);
+        }
+        getData();
+    }, [q, posters])
 
     return <>
         <Head>
@@ -194,6 +206,22 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                     <Link href={`/tv/${id}/seasons`}>
                         <Button variant="gradient" mt={20}>View All Seasons</Button>
                     </Link>
+                </div>
+                <Divider variant="solid" size="md" m={2} />
+                <div className={styles.paddingClass}>
+                    <Link href={`/tv/${id}/reviews`}>
+                        <div className={styles.reviewTitleWrapper}>
+                            <Title size="h1" mt={10} order={3} fw="bold">
+                                User Reviews
+                            </Title>
+                            <MdArrowForwardIos size={30} />
+                        </div>
+                    </Link>
+                    {review && review?.map((ele) => {
+                        return <ReviewComment mediaType="SHOWS" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
+                            downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
+                    })}
+                    <Review id={id} mediaType="movies" imgUrl={data.poster_path} title={data.title} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>

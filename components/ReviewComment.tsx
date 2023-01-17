@@ -19,6 +19,7 @@ interface Props {
     spolier: boolean,
     rating: number,
     id: string,
+    mediaType: "MOVIES" | "SHOWS",
     mediaId: string
 }
 
@@ -28,9 +29,8 @@ export default function ReviewComment(props: Props) {
 
     async function handleClick() {
         try {
-            await updateDoc(doc(db, "movies", props.mediaId, "reviews", props.id), {
+            await updateDoc(doc(db, `${props.mediaType.toLowerCase()}`, props.mediaId, "reviews", props.id), {
                 upvotes: increment(1),
-                downvotes: increment(-1)
             }).then((value) => {
                 console.log(`value updated`);
             }).catch((err) => {
@@ -43,9 +43,8 @@ export default function ReviewComment(props: Props) {
 
     async function handleClick2() {
         try {
-            await updateDoc(doc(db, "movies", props.mediaId, "reviews", props.id), {
-                upvotes: increment(-1),
-                downvotes: increment(1)
+            await updateDoc(doc(db, `${props.mediaType.toLowerCase()}`, props.mediaId, "reviews", props.id), {
+                downvotes: increment(-1)
             }).then((value) => {
                 console.log(`value updated`);
             }).catch((err) => {

@@ -68,7 +68,7 @@ export default function Reviews(props: Props) {
             {props.id && <Review id={props.id} mediaType="movies" imgUrl={props.data.poster_path as string} title={props.data.title} />}
             {state === null ? "Loading..." : state && state.map((ele) => {
                 return <div key={ele.id}>
-                    <ReviewComment mediaId={`${props.id ? props.id : null}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
+                    <ReviewComment mediaType="SHOWS" mediaId={`${props.id ? props.id : null}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
                         downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
                     <Divider variant="dotted" size="lg" mt={10} mb={10} />
                 </div>

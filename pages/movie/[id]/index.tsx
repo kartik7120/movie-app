@@ -189,7 +189,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                         </div>
                     </Link>
                     {review && review?.map((ele) => {
-                        return <ReviewComment key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
+                        return <ReviewComment mediaType="MOVIES" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
                             downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
                     })}
                     <Review id={id} mediaType="movies" imgUrl={data.poster_path} title={data.title} />
