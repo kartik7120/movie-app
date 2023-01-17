@@ -2,6 +2,8 @@ import { ActionIcon, Badge, Group, Spoiler, Text } from "@mantine/core";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { createStyles } from "@mantine/core";
 import { AiFillStar } from "react-icons/ai";
+import { doc, increment, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const useStyles = createStyles((theme, params, getRef) => ({
     wrapper: {
@@ -15,12 +17,29 @@ interface Props {
     upvotes?: number,
     downvotes?: number,
     spolier: boolean,
-    rating: number
+    rating: number,
+    id: string,
+    mediaId: string
 }
 
 export default function ReviewComment(props: Props) {
 
     const styles = useStyles();
+
+    async function handleClick() {
+        console.log('handle click ran')
+        try {
+            await updateDoc(doc(db, "movies", props.mediaId, "reviews", props.id), {
+                upvotes: increment(1)
+            }).then((value) => {
+                console.log(`value updated`);
+            }).catch((err) => {
+                console.log(`error occured while incrementing votes = ${err}`);
+            })
+        } catch (error) {
+            console.log(`error occured while fetching data = ${error}`);
+        }
+    }
 
     return <div className={styles.classes.wrapper}>
         <Group position="left">
@@ -34,12 +53,17 @@ export default function ReviewComment(props: Props) {
             </Text>
         </Spoiler>
         <Group spacing="xl">
-            <ActionIcon size="xl">
-                <BiLike />
+            <ActionIcon size="xl" onClick={handleClick} >
+                <Group position="left">
+                    <BiLike /><Text >{props.upvotes}</Text>
+                </Group>
             </ActionIcon>
-            <ActionIcon size="xl">
-                <BiDislike />
-            </ActionIcon>
+            <Group position="apart">
+                <ActionIcon size="xl">
+                    <BiDislike />
+                </ActionIcon>
+                <Text>{props.downvotes}</Text>
+            </Group>
         </Group>
     </div>
 }
