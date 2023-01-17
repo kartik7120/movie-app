@@ -27,10 +27,25 @@ export default function ReviewComment(props: Props) {
     const styles = useStyles();
 
     async function handleClick() {
-        console.log('handle click ran')
         try {
             await updateDoc(doc(db, "movies", props.mediaId, "reviews", props.id), {
-                upvotes: increment(1)
+                upvotes: increment(1),
+                downvotes: increment(-1)
+            }).then((value) => {
+                console.log(`value updated`);
+            }).catch((err) => {
+                console.log(`error occured while incrementing votes = ${err}`);
+            })
+        } catch (error) {
+            console.log(`error occured while fetching data = ${error}`);
+        }
+    }
+
+    async function handleClick2() {
+        try {
+            await updateDoc(doc(db, "movies", props.mediaId, "reviews", props.id), {
+                upvotes: increment(-1),
+                downvotes: increment(1)
             }).then((value) => {
                 console.log(`value updated`);
             }).catch((err) => {
@@ -52,13 +67,14 @@ export default function ReviewComment(props: Props) {
                 {props.review}
             </Text>
         </Spoiler>
-        <Group spacing="xl">
-            <ActionIcon size="xl" onClick={handleClick} >
-                <Group position="left">
-                    <BiLike /><Text >{props.upvotes}</Text>
-                </Group>
-            </ActionIcon>
-            <Group position="apart">
+        <Group position="left">
+            <Group spacing="xl">
+                <ActionIcon size="xl" onClick={handleClick} >
+                    <BiLike />
+                </ActionIcon>
+                <Text >{props.upvotes}</Text>
+            </Group>
+            <Group position="apart" onClick={handleClick2}>
                 <ActionIcon size="xl">
                     <BiDislike />
                 </ActionIcon>
