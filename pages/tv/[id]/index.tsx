@@ -150,7 +150,6 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
             closeOnClickOutside={false}
             onClose={() => setOpened(false)}>
             {videos &&
-                // <ReactPlayer controls={true} width={isMobile ? "100%" : undefined} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key}`} />}
                 <ReactPlayer playing stopOnUnmount width={isMobile3 ? 500 : matches3 ? undefined : 1000}
                     height={isMobile3 ? 300 : matches3 ? undefined : 500}
                     controls={true} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key}`} />
@@ -196,7 +195,6 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                     <Cast sourceMedia="TV" id={id} mediaType={"TV"} first={7} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
-                <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} />
                 <div className={styles.paddingClass}>
                     <Title order={3} size={isMobile2 ? "h4" : "h2"} align="start"
                         style={{ display: "block", marginLeft: "1em", marginBottom: "1em" }}>
@@ -221,7 +219,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                         return <ReviewComment mediaType="SHOWS" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
                             downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
                     })}
-                    <Review id={id} mediaType="movies" imgUrl={data.poster_path} title={data.title} />
+                <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
