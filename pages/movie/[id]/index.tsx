@@ -25,6 +25,8 @@ import Review from "../../../components/Review";
 import { MdArrowForwardIos } from "react-icons/md";
 import Link from "next/link";
 import ReviewComment from "../../../components/ReviewComment";
+import { collection, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { db } from "../../../firebase";
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
   getMovieDetails(id: $getMovieDetailsId) {
@@ -67,6 +69,8 @@ query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
 
 export default function Media({ data, id, acceptLang }: { data: any, id: number, acceptLang: string }) {
     const [color, setColor] = React.useState("");
+    const [review, setReview] = React.useState<any[] | null>(null);
+    const q = query(collection(db, "movies", `${id}`, "reviews"), orderBy("rating", "desc"), limit(1));
 
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
         variables: {
@@ -88,7 +92,18 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             setColor(gradient);
         }
         color();
-    }, [data.poster_path])
+        async function getData() {
+            const reviewDoc = await getDocs(q);
+            const data = reviewDoc.docs.map((ele) => {
+                return {
+                    id: ele.id,
+                    ...ele.data()
+                }
+            });
+            setReview(data);
+        }
+        getData();
+    }, [data.poster_path, q])
 
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');
@@ -164,7 +179,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                     <MediaComponent id={id} sourceMedia={"MOVIE"} first={4} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
-                <div>
+                <div className={styles.paddingClass}>
                     <Link href={`/movie/${id}/reviews`}>
                         <div className={styles.reviewTitleWrapper}>
                             <Title size="h1" mt={10} order={3} fw="bold">
@@ -173,7 +188,10 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                             <MdArrowForwardIos size={30} />
                         </div>
                     </Link>
-                    {/* <ReviewComment /> */}
+                    {review && review?.map((ele) => {
+                        return <ReviewComment key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
+                            downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
+                    })}
                     <Review id={id} mediaType="movies" imgUrl={data.poster_path} title={data.title} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />

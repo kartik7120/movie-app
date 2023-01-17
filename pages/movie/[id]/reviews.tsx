@@ -15,7 +15,7 @@ import Head from "next/head";
 interface Props {
     id: number | null,
     title: string,
-    error?: any
+    error?: any,
     data: MovieDetails
 }
 
@@ -67,11 +67,11 @@ export default function Reviews(props: Props) {
             <Title order={2} size="h1">User Reviews</Title>
             {props.id && <Review id={props.id} mediaType="movies" imgUrl={props.data.poster_path as string} title={props.data.title} />}
             {state === null ? "Loading..." : state && state.map((ele) => {
-                return <>
+                return <div key={ele.id}>
                     <ReviewComment mediaId={`${props.id ? props.id : null}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
-                        downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} key={ele.id} />
+                        downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
                     <Divider variant="dotted" size="lg" mt={10} mb={10} />
-                </>
+                </div>
             })}
             <Group position="center" mb={10}>
                 <Button variant="outline" onClick={() => {
@@ -93,7 +93,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     }
 
-
     try {
         const { data, error } = await client.query({
             query: MOVIE_DETAILS,
@@ -104,9 +103,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
         if (error) {
             return {
-                props: {
-                    error
-                }
+                notFound: true
             }
         }
 
