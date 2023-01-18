@@ -14,6 +14,7 @@ import { useMantineColorScheme } from "@mantine/core";
 import { auth } from "../firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { query } from "firebase/firestore";
+import Link from "next/link";
 
 export default function Navbar(): JSX.Element {
     const user = auth.currentUser;
@@ -82,7 +83,9 @@ export default function Navbar(): JSX.Element {
             <FiMenu />
         </ActionIcon>
         <Divider orientation="vertical" size="md" m={0} className={navbar.divider} />
-        <Button leftIcon={<BsFillBookmarkPlusFill />} variant="filled" className={navbar.watchlist}>Watchlist</Button>
+        <Link href={`/watchlist`}>
+            <Button leftIcon={<BsFillBookmarkPlusFill />} variant="filled" className={navbar.watchlist}>Watchlist</Button>
+        </Link>
 
         {signedIn ? <Menu shadow="md" width={200}>
             <Menu.Target>
