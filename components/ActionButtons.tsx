@@ -21,8 +21,8 @@ export default function ActionButtons() {
             </ActionIcon>
         </Tooltip>
         <Tooltip label="Rate it!" position="bottom">
-            <ActionIcon size="xl" mr={5}>
-                <AiTwotoneStar color={theme.colorScheme === "dark" ? theme.white : theme.black} />
+            <ActionIcon component="a" href={`#review`} size="xl" mr={5}>
+                <AiTwotoneStar href={`#review`} color={theme.colorScheme === "dark" ? theme.white : theme.black} />
             </ActionIcon>
         </Tooltip>
     </>
