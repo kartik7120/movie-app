@@ -1,5 +1,5 @@
 import { gql, useLazyQuery } from "@apollo/client";
-import { ActionIcon, BackgroundImage, Button, Divider, Image, List, Modal, Text, Title, useMantineTheme } from "@mantine/core";
+import { ActionIcon, BackgroundImage, Button, Divider, Group, Image, List, Modal, Text, Title, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -208,12 +208,12 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
                     <Link href={`/tv/${id}/reviews`}>
-                        <div className={styles.reviewTitleWrapper}>
-                            <Title size="h1" mt={10} order={3} fw="bold">
+                        <Group position="left" align="center">
+                            <Title size="h1" order={3} fw="bold">
                                 User Reviews
                             </Title>
                             <MdArrowForwardIos size={30} />
-                        </div>
+                        </Group>
                     </Link>
                     {review && review?.map((ele) => {
                         return <ReviewComment mediaType="SHOWS" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
