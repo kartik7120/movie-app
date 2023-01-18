@@ -173,7 +173,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                         <span>&#9679;</span>
                     </div>
                     <div className={styles.wrapper4}>
-                        <ActionButtons />
+                        <ActionButtons id={id} mediaType="SHOWS" />
                         <Button variant="filled" onClick={() => {
                             setOpened(true);
                             getVideo();
@@ -219,7 +219,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                         return <ReviewComment mediaType="SHOWS" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
                             downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
                     })}
-                <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} />
+                    <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>

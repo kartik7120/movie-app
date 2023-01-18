@@ -149,7 +149,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                         <Text variant="text" component="span" size={isMobile2 ? "sm" : undefined}>{runTimeConversion(data.runtime)}</Text>
                     </div>
                     <div className={styles.wrapper4}>
-                        <ActionButtons />
+                        <ActionButtons id={id} mediaType="MOVIES" />
                         <Button variant="filled" onClick={() => {
                             setOpened(true);
                             getVideo();
