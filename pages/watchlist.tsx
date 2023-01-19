@@ -37,7 +37,7 @@ export default function WatchList(): JSX.Element {
             }
         }
 
-    }, [])
+    }, [user])
     return <>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,13 +52,11 @@ export default function WatchList(): JSX.Element {
                 </Tabs.List>
                 <Tabs.Panel value="planToWatch">
                     {watchList && watchList.map((watch) => {
-                        console.log(`watch list item  = ${JSON.stringify(watch)}`)
                         return <WatchListItem id={watch.id} mediaType={watch.mediaType.toUpperCase()} key={watch.id} />
                     })}
                 </Tabs.Panel>
                 <Tabs.Panel value="favourite">
                     {favList && favList.map((watch) => {
-                        console.log(`watch list item  = ${JSON.stringify(watch)}`)
                         return <WatchListItem id={watch.id} mediaType={watch.mediaType.toUpperCase()} key={watch.id} />
                     })}
                 </Tabs.Panel>
