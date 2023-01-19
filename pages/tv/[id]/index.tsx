@@ -14,7 +14,7 @@ import Keywords from "../../../components/Keywords";
 import MediaComponent from "../../../components/MediaComponent";
 import Recommendation from "../../../components/Recommendation";
 import Social from "../../../components/Social";
-import { convertCode, covertDataFormat, getImageColor, runTimeConversion } from "../../../lib/util";
+import { convertCode, covertDataFormat, getImageColor, getVideoTralier, runTimeConversion } from "../../../lib/util";
 import styles from "../../../styles/movie.module.css";
 import { TvDetails } from "../../../schemaTypes";
 import { SourceMedia } from "../../../schemaTypes";
@@ -154,7 +154,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
             {videos &&
                 <ReactPlayer playing stopOnUnmount width={isMobile3 ? 500 : matches3 ? undefined : 1000}
                     height={isMobile3 ? 300 : matches3 ? undefined : 500}
-                    controls={true} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key}`} />
+                    controls={true} url={`https://www.youtube.com/watch?v=${getVideoTralier(videos.getVideoMedia.mediaVideo)}`} />
             }
 
         </Modal>

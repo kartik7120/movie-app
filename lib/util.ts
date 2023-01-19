@@ -1,4 +1,5 @@
 import React from "react";
+import { MediaVideo, SpecificMedia, VideoMedia } from "../schemaTypes";
 
 export const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -180,4 +181,37 @@ export function filterName(arr: any[], filter: string): string[] {
   })
 
   return result;
+}
+
+export function getVideoTralier(videoMedia: any | null) {
+
+  if (videoMedia === null) {
+    return null;
+  }
+
+  if (videoMedia.typeMap === null) {
+    return null;
+  }
+
+  if (videoMedia.typeMap && videoMedia.typeMap.length <= 0) {
+    return null;
+  }
+
+  if (videoMedia.typeMap?.includes("Trailer") && videoMedia.mediaVideo) {
+    for (let i = 0; i < videoMedia.mediaVideo.length; i++) {
+      if (videoMedia.mediaVideo[i]?.type === "Trailer" && videoMedia.mediaVideo[i]) {
+        return videoMedia.mediaVideo[i].key;
+      }
+    }
+  }
+
+  if (videoMedia.typeMap?.includes("Teaser") && videoMedia.mediaVideo) {
+    for (let i = 0; i < videoMedia.mediaVideo.length; i++) {
+      if (videoMedia.mediaVideo[i]?.type === "Teaser" && videoMedia.mediaVideo[i]) {
+        return videoMedia.mediaVideo[i].key;
+      }
+    }
+  }
+
+  return null;
 }

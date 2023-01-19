@@ -6,7 +6,7 @@ import React from "react";
 import ImageCard from "../../../components/ImageCard";
 import { ActionIcon, Button, Divider, Text, Title, Group, Tooltip } from "@mantine/core";
 import Head from "next/head";
-import { runTimeConversion, covertDataFormat, getImageColor } from "../../../lib/util";
+import { runTimeConversion, covertDataFormat, getImageColor, getVideoTralier } from "../../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
 import { AiOutlineHeart, AiFillFacebook, AiOutlineTwitter, AiFillInstagram, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
@@ -55,7 +55,7 @@ const VIDEO_MEDIA = gql`
 query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
   getVideoMedia(id: $getVideoMediaId, sourceMedia: $sourceMedia) {
     ... on videoMedia {
-      typeMap
+        typeMap
       mediaVideo {
         type
         id
@@ -84,7 +84,6 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
     React.useEffect(() => {
         const color = async () => {
             const col = await getImageColor(`https://image.tmdb.org/t/p/original${data.poster_path}`);
-            console.log(`rgb in useEffect = ${JSON.stringify(col)}`);
             const gradient = `linear-gradient(
                 to right, rgba(${col.r}, ${col.g},${col.b}, 1) calc((50vw - 170px) - 340px),
                 rgba(${col.r}, ${col.g},${col.b}, 0.84) 30%,
@@ -127,7 +126,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             {videos &&
                 <ReactPlayer playing stopOnUnmount width={isMobile3 ? 500 : matches3 ? undefined : 1000}
                     height={isMobile3 ? 300 : matches3 ? undefined : 500}
-                    controls={true} url={`https://www.youtube.com/watch?v=${videos.getVideoMedia.mediaVideo.find((ele: any) => ele.type === "Trailer").key || null}`} />
+                    controls={true} url={`https://www.youtube.com/watch?v=${getVideoTralier(videos.getVideoMedia) || null}`} />
             }
 
         </Modal>
