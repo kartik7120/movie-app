@@ -65,9 +65,6 @@ export default function WatchListItem(props: Props): JSX.Element {
             getTvDetailsId: parseInt(props.id),
             getMovieDetailsId: parseInt(props.id)
         },
-        onCompleted(data) {
-            console.log(data);
-        },
     });
 
     const [getImages, { data: posters }] = useLazyQuery(IMAGES, {

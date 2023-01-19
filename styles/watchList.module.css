@@ -7,11 +7,23 @@
 }
 
 .wrapper2 {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 .wrapper3 {
-    padding-left: 5em;
+  padding-left: 5em;
+}
+
+
+@media screen and (max-width: 425px) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .wrapper3 {
+    padding-left: 1em;
+  }
 }
