@@ -217,10 +217,10 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                             <MdArrowForwardIos size={30} />
                         </Group>
                     </Link>
-                    {review && review?.map((ele) => {
-                        return <ReviewComment mediaType="SHOWS" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
+                    {review !== null && review.length > 0 ? review?.map((ele) => {
+                        return <ReviewComment mediaType="MOVIES" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
                             downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
-                    })}
+                    }) : <Text size="xl">No Reviews</Text>}
                     {user !== null ? <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} /> :
                         <Text>
                             <Link href={`#login`}>

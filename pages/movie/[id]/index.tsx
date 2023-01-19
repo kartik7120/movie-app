@@ -188,10 +188,10 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                             <MdArrowForwardIos size={30} />
                         </Group>
                     </Link>
-                    {review && review?.map((ele) => {
+                    {review !== null && review.length > 0 ? review?.map((ele) => {
                         return <ReviewComment mediaType="MOVIES" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
                             downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
-                    })}
+                    }) : <Text size="xl">No Reviews</Text>}
                     <Review id={id} mediaType="movies" imgUrl={data.poster_path} title={data.title} />
                 </div>
                 <Divider variant="solid" size="md" m={2} />

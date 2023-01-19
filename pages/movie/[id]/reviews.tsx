@@ -66,20 +66,20 @@ export default function Reviews(props: Props) {
         <Container fluid p={100} pt={0} pb={0}>
             <Title order={2} size="h1">User Reviews</Title>
             {props.id && <Review id={props.id} mediaType="movies" imgUrl={props.data.poster_path as string} title={props.data.title} />}
-            {state === null ? "Loading..." : state && state.map((ele) => {
+            {state === null ? "Loading..." : state && state.length > 0 ? state.map((ele) => {
                 return <div key={ele.id}>
                     <ReviewComment mediaType="SHOWS" mediaId={`${props.id ? props.id : null}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
                         downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
                     <Divider variant="dotted" size="lg" mt={10} mb={10} />
                 </div>
-            })}
-            <Group position="center" mb={10}>
+            }) : <Text size="xl">No Reviews</Text>}
+            {state && state.length > 0 ? <Group position="center" mb={10}>
                 <Button variant="outline" onClick={() => {
                     setStart((start) => start + 10);
                 }}>
                     Load More
                 </Button>
-            </Group>
+            </Group> : ""}
         </Container>
     </>
 }
