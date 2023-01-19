@@ -24,6 +24,9 @@ export function runTimeConversion(runtime: string): string {
   const temp = new Date(parseInt(runtime) * 1000 * 60).toISOString().substring(11, 19);
   let part1 = temp.substring(0, 2);
   let part2 = temp.substring(3, 5);
+  if (parseInt(part1) <= 0) {
+    return `${part2}m`;
+  }
   return `${parseInt(part1)}h ${part2}m`;
 }
 
