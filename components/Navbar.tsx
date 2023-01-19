@@ -96,7 +96,7 @@ export default function Navbar(): JSX.Element {
                     Sign out
                 </Menu.Item>
             </Menu.Dropdown>
-        </Menu> : <Button className={navbar.profileBtn} onClick={() => router.push({
+        </Menu> : <Button id="login" className={navbar.profileBtn} onClick={() => router.push({
             pathname: "/login",
             query: {
                 from: router.asPath

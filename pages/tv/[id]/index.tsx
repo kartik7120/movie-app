@@ -26,6 +26,7 @@ import { MdArrowForwardIos } from "react-icons/md";
 import ReviewComment from "../../../components/ReviewComment";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { getAuth } from "firebase/auth";
 
 
 const TV_DETAILS = gql`
@@ -98,7 +99,8 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
     const theme = useMantineTheme();
     const [review, setReview] = React.useState<any[] | null>(null);
     const q = query(collection(db, "shows", `${id}`, "reviews"), orderBy("rating", "desc"), limit(1));
-
+    const auth = getAuth();
+    const user = auth.currentUser;
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');
     const isMobile3 = useMediaQuery('(max-width: 650px)');
@@ -219,7 +221,14 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                         return <ReviewComment mediaType="SHOWS" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
                             downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
                     })}
-                    <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} />
+                    {user !== null ? <Review id={id} mediaType="shows" imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} /> :
+                        <Text>
+                            <Link href={`#login`}>
+                                <Text underline color="blue" component="span">Login</Text>
+                            </Link>
+                            to review
+                        </Text>
+                    }
                 </div>
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>

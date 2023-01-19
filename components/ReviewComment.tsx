@@ -4,6 +4,8 @@ import { createStyles } from "@mantine/core";
 import { AiFillStar } from "react-icons/ai";
 import { doc, increment, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { getAuth } from "firebase/auth";
+import Link from "next/link";
 
 const useStyles = createStyles((theme, params, getRef) => ({
     wrapper: {
@@ -26,6 +28,8 @@ interface Props {
 export default function ReviewComment(props: Props) {
 
     const styles = useStyles();
+    const auth = getAuth();
+    const user = auth.currentUser;
 
     async function handleClick() {
         try {
@@ -66,7 +70,7 @@ export default function ReviewComment(props: Props) {
                 {props.review}
             </Text>
         </Spoiler>
-        <Group position="left">
+        {user !== null ? <Group position="left">
             <Group spacing="xl">
                 <ActionIcon size="xl" onClick={handleClick} >
                     <BiLike />
@@ -79,6 +83,11 @@ export default function ReviewComment(props: Props) {
                 </ActionIcon>
                 <Text>{props.downvotes}</Text>
             </Group>
-        </Group>
+        </Group> :
+            <Text>
+                <Link href={`#login`}>
+                    <Text underline color="blue" component="span">Login</Text>
+                </Link> to Vote Review
+            </Text>}
     </div>
 }
