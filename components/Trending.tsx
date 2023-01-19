@@ -19,6 +19,7 @@ const TRENDING = gql`
     id
     poster_path
     title
+    name
   }
 }
 `
@@ -73,7 +74,7 @@ export default function TrendingComponent(props: Props): JSX.Element {
         <CarouselWrapper>
             {data ? data.trending.map((movie: any, index: number) => (
                 <Carousel.Slide key={Math.random() * index * 37}>
-                    <CardComponent media_type={value?.toLowerCase() as "movie" | "tv"} id={movie.id} original_title={movie.title} poster_path={movie.poster_path} />
+                    <CardComponent media_type={value?.toLowerCase() as "movie" | "tv"} id={movie.id} original_title={movie.title || movie.name} poster_path={movie.poster_path} />
                 </Carousel.Slide>
             )) : <LoadingOverlay visible={true} />
             }

@@ -36,6 +36,7 @@ type Trending {
   genre_ids: [Int]!
   id: Int!
   original_title: String
+  name: String
   original_language: String!
   title: String
   backdrop_path: String
