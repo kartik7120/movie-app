@@ -5,12 +5,16 @@ import { useEffect, useState } from "react";
 import WatchListItem from "../components/WatchListItem";
 import { db } from "../firebase";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 export default function WatchList(): JSX.Element {
     const auth = getAuth();
     const user = auth.currentUser;
     const [watchList, setWatchList] = useState<any[] | null>(null);
     const [favList, setFavList] = useState<any[] | null>(null);
+
+    const router = useRouter();
+
     useEffect(() => {
         if (user) {
             const colRef = collection(db, "users", user?.uid, "watchlist");
@@ -21,7 +25,7 @@ export default function WatchList(): JSX.Element {
                 })
                 setWatchList(arr);
             })
-
+            
             const colRef2 = collection(db, "users", user.uid, "favlist");
             const unsubscribe2 = onSnapshot(colRef2, (snapshot) => {
                 const arr = new Array(0);
@@ -36,8 +40,14 @@ export default function WatchList(): JSX.Element {
                 unsubscribe2();
             }
         }
-
+        
     }, [user])
+
+    if (user === null) {
+        router.push(`/login`);
+        return <p>Login to create or edit Watch list</p>
+    }
+    
     return <>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
