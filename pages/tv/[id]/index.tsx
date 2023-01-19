@@ -154,7 +154,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
             {videos &&
                 <ReactPlayer playing stopOnUnmount width={isMobile3 ? 500 : matches3 ? undefined : 1000}
                     height={isMobile3 ? 300 : matches3 ? undefined : 500}
-                    controls={true} url={`https://www.youtube.com/watch?v=${getVideoTralier(videos.getVideoMedia.mediaVideo)}`} />
+                    controls={true} url={`https://www.youtube.com/watch?v=${getVideoTralier(videos.getVideoMedia)}`} />
             }
 
         </Modal>
