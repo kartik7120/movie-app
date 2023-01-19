@@ -1,3 +1,55 @@
+import { Container, Tabs, Title } from "@mantine/core";
+import { getAuth } from "firebase/auth";
+import { collection, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import WatchListItem from "../components/WatchListItem";
+import { db } from "../firebase";
+import Head from "next/head";
+
 export default function WatchList(): JSX.Element {
-    return <h1>This will be the watchlist</h1>
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const [watchList, setWatchList] = useState<any[] | null>(null);
+    useEffect(() => {
+        if (user) {
+            const colRef = collection(db, "users", user?.uid, "watchlist");
+            onSnapshot(colRef, (snapshot) => {
+                const arr = new Array(0);
+                snapshot.forEach((ele) => {
+                    arr.push(ele.data());
+                })
+                setWatchList(arr);
+                snapshot.docChanges().forEach((ele) => {
+                    if (ele.type === "added") {
+                        if (watchList === null) {
+                        }
+                    }
+                })
+            })
+
+        }
+
+    }, [])
+    return <>
+        <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Your Watchlist</title>
+        </Head>
+        <Container px="xl" size="xl">
+            <Title order={2} mt={10} size="h1">WatchList</Title>
+            <Tabs variant="default" mt={30} defaultValue="planToWatch">
+                <Tabs.List>
+                    <Tabs.Tab value="planToWatch">Plan To Watch</Tabs.Tab>
+                    <Tabs.Tab value="favourite">Favourite</Tabs.Tab>
+                </Tabs.List>
+                <Tabs.Panel value="planToWatch">
+                    {watchList && watchList.map((watch) => {
+                        console.log(`watch list item  = ${JSON.stringify(watch)}`)
+                        return <WatchListItem id={watch.id} mediaType={watch.mediaType.toUpperCase()} key={watch.id} />
+                    })}
+                </Tabs.Panel>
+                <Tabs.Panel value="favourite">Favourite list</Tabs.Panel>
+            </Tabs>
+        </Container>
+    </>
 }
