@@ -181,12 +181,12 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                 <Divider variant="solid" size="md" m={2} />
                 <div className={styles.paddingClass}>
                     <Link href={`/movie/${id}/reviews`}>
-                        <div className={styles.reviewTitleWrapper}>
-                            <Title size="h1" mt={10} order={3} fw="bold">
+                        <Group position="left" align="center">
+                            <Title size="h1" order={3} fw="bold">
                                 User Reviews
                             </Title>
                             <MdArrowForwardIos size={30} />
-                        </div>
+                        </Group>
                     </Link>
                     {review && review?.map((ele) => {
                         return <ReviewComment mediaType="MOVIES" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
