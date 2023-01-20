@@ -46,8 +46,8 @@ export default function ActionButtons(props: Props) {
             })
 
             return () => {
-                unsubscribe(),
-                    unsubscribe2()
+                unsubscribe();
+                unsubscribe2();
             }
         }
 
@@ -99,7 +99,7 @@ export default function ActionButtons(props: Props) {
             const docRef = doc(db, "users", user.uid, "favlist", `${props.id}`);
             await deleteDoc(docRef).then((value) => {
                 console.log(`doc deleted from watchlist`);
-                setWatchList(false);
+                setFavList(false);
             }).catch((err) => {
                 console.log(`error occured while deleting watchlist`);
             })

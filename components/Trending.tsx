@@ -24,10 +24,12 @@ const TRENDING = gql`
 }
 `
 
+type newType = "MOVIE" | "TV" | null
+
 export default function TrendingComponent(props: Props): JSX.Element {
 
     const containerRef = React.useRef<HTMLDivElement>();
-    const [value, setValue] = React.useState<string | null>("MOVIE");
+    const [value, setValue] = React.useState<newType>("MOVIE");
 
     const { ref, entry } = useIntersection({
         root: containerRef.current,
@@ -53,7 +55,7 @@ export default function TrendingComponent(props: Props): JSX.Element {
     return <>
         <SegmentedControl
             value={value!} onChange={(value: string) => {
-                setValue(value);
+                setValue(value as newType);
                 getData({
                     variables: {
                         mediaType: value,
@@ -73,8 +75,8 @@ export default function TrendingComponent(props: Props): JSX.Element {
 
         <CarouselWrapper>
             {data ? data.trending.map((movie: any, index: number) => (
-                <Carousel.Slide key={Math.random() * index * 37}>
-                    <CardComponent media_type={value?.toLowerCase() as "movie" | "tv"} id={movie.id} original_title={movie.title || movie.name} poster_path={movie.poster_path} />
+                <Carousel.Slide key={Math.random() * index * 9876}>
+                    <CardComponent media_type={value && value === "MOVIE" ? "movie" : "tv"} id={movie.id} original_title={movie.title || movie.name} poster_path={movie.poster_path} />
                 </Carousel.Slide>
             )) : <LoadingOverlay visible={true} />
             }

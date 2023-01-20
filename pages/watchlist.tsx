@@ -25,7 +25,7 @@ export default function WatchList(): JSX.Element {
                 })
                 setWatchList(arr);
             })
-            
+
             const colRef2 = collection(db, "users", user.uid, "favlist");
             const unsubscribe2 = onSnapshot(colRef2, (snapshot) => {
                 const arr = new Array(0);
@@ -40,14 +40,14 @@ export default function WatchList(): JSX.Element {
                 unsubscribe2();
             }
         }
-        
-    }, [user])
+        if (user === null) {
+            router.push(`/login`);
+        }
 
-    if (user === null) {
-        router.push(`/login`);
-        return <p>Login to create or edit Watch list</p>
-    }
-    
+    }, [user, router])
+
+
+
     return <>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
