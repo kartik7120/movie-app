@@ -70,9 +70,7 @@ export default function Navbar(): JSX.Element {
         <TextInput value={value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setValue(e.target.value);
         }} type="text" placeholder="Search" icon={<BiSearchAlt />} style={{ width: "60%" }} rightSectionWidth={100}
-            rightSection={<Select placeholder="Select" data={[
-                { value: "all", label: "All" }
-            ]} />} onKeyDown={getHotkeyHandler([
+            onKeyDown={getHotkeyHandler([
                 ['enter', handleSubmit]
             ])} />
         <Drawer opened={opened} onClose={() => setOpened(false)} title="Menu" padding="xl" size="md">
