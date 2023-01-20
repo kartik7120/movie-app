@@ -118,7 +118,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 <ActionIcon radius="sm" variant="subtle" size="lg"><BsStar color="cyan" size={18} /></ActionIcon>
             </Group>
             <Link href={`/${props.media_type}/${props.id}`}>
-                <Text size="md" align="left" component="p" m={1} style={{ height: "2rem" }}>
+                <Text lineClamp={2} size="md" align="left" component="p" m={1} style={{ height: "2rem" }}>
                     {props.original_title}
                 </Text>
             </Link>

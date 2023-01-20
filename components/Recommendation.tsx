@@ -49,8 +49,8 @@ export default function Recommendation(props: Props): JSX.Element {
             {data && data.getrecommendations.map((ele: any) => {
                 return <Link key={ele.id} href={props.sourceMedia === "MOVIE" ? `/movie/${ele.id}` : `/tv/${ele.id}`} title={`${ele.name}`}>
                     <ImageCard width={300} height={150} imgUrl={ele.backdrop_path} />
-                    <Text variant="text">{props.sourceMedia === "MOVIE" ? ele.title : ele.name}</Text>
-                    <Text variant="text">{props.sourceMedia === "MOVIE" ? ele.release_date : ele.first_air_date}</Text>
+                    <Text lineClamp={1} variant="text">{props.sourceMedia === "MOVIE" ? ele.title : ele.name}</Text>
+                    <Text lineClamp={1} variant="text">{props.sourceMedia === "MOVIE" ? ele.release_date : ele.first_air_date}</Text>
                 </Link>
             })}
         </div>

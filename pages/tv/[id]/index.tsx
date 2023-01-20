@@ -119,6 +119,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
     React.useEffect(() => {
         const color = async () => {
             const col = await getImageColor(`https://image.tmdb.org/t/p/original${posters && posters[0] && posters[0].file_path ? posters[0].file_path : null}`);
+            console.log(col)
             const gradient = `linear-gradient(
                 to right, rgba(${col.r}, ${col.g},${col.b}, 1) calc((50vw - 170px) - 340px),
                 rgba(${col.r}, ${col.g},${col.b}, 0.84) 30%,
@@ -137,7 +138,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
             setReview(data);
         }
         getData();
-    }, [q, posters])
+    }, [])
 
     return <>
         <Head>

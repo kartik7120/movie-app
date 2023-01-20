@@ -102,7 +102,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             setReview(data);
         }
         getData();
-    }, [data.poster_path, q])
+    }, [])
 
     const isMobile = useMediaQuery('(max-width: 694px)');
     const isMobile2 = useMediaQuery('(max-width: 490px)');
