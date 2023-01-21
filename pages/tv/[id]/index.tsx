@@ -14,7 +14,7 @@ import Keywords from "../../../components/Keywords";
 import MediaComponent from "../../../components/MediaComponent";
 import Recommendation from "../../../components/Recommendation";
 import Social from "../../../components/Social";
-import { convertCode, covertDataFormat, getImageColor, getVideoTralier, runTimeConversion } from "../../../lib/util";
+import { convertCode, covertDataFormat, getImageColor, getVideoTralier, runTimeConversion, setTextColor } from "../../../lib/util";
 import styles from "../../../styles/movie.module.css";
 import { TvDetails } from "../../../schemaTypes";
 import { SourceMedia } from "../../../schemaTypes";
@@ -96,6 +96,7 @@ query GetVideoMedia($getVideoMediaId: ID!, $sourceMedia: SourceMedia!) {
 export default function Tv({ data, id, acceptLang, posters }: { data: any, id: number, acceptLang: string, posters: any[] }) {
     const [color, setColor] = React.useState("");
     const [opened, setOpened] = React.useState(false);
+    const [contrast, setContrast] = React.useState<'black' | 'white'>('black');
     const theme = useMantineTheme();
     const [review, setReview] = React.useState<any[] | null>(null);
     const q = query(collection(db, "shows", `${id}`, "reviews"), orderBy("rating", "desc"), limit(1));
@@ -117,15 +118,19 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
     });
 
     React.useEffect(() => {
-        const color = async () => {
+        const getColor = async () => {
             const col = await getImageColor(`https://image.tmdb.org/t/p/original${posters && posters[0] && posters[0].file_path ? posters[0].file_path : null}`);
             const gradient = `linear-gradient(
                 to right, rgba(${col.r}, ${col.g},${col.b}, 1) calc((50vw - 170px) - 340px),
                 rgba(${col.r}, ${col.g},${col.b}, 0.84) 30%,
-                    rgba(${col.r}, ${col.g},${col.b}, 0.84) 100%)`;
+                rgba(${col.r}, ${col.g},${col.b}, 0.84) 100%)`;
             setColor(gradient);
+            if (col) {
+                const con = setTextColor(col);
+                setContrast(con);
+            }
         }
-        color();
+        getColor();
         async function getData() {
             const reviewDoc = await getDocs(q);
             const data = reviewDoc.docs.map((ele) => {
@@ -137,6 +142,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
             setReview(data);
         }
         getData();
+
     }, [])
 
     return <>
@@ -164,15 +170,19 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
         >
             <div className={styles.wrapper} style={{ background: color }}>
                 <div>
-                    <ImageCard imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null} title={data.name} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
+                    <ImageCard imgUrl={posters && posters[0] && posters[0].file_path ? posters[0].file_path : null}
+                        title={data.name} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
                 </div>
                 <div className={styles.rightWrapper}>
-                    <Title order={1} m={0} size={isMobile2 ? "h6" : "h2"}>{data.name}</Title>
+                    <Title color={contrast === "black" ? theme.black : theme.white} order={1} m={0}
+                        size={isMobile2 ? "h6" : "h2"}>{data.name}</Title>
                     <div className={styles.wrapper2}>
-                        <Text variant="text" size={isMobile2 ? "sm" : undefined} component="p" ml={5}>{covertDataFormat(data.first_air_date)}</Text>
-                        <span>&#9679;</span>
-                        <Text variant="text" size={isMobile2 ? "sm" : undefined}>{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
-                        <span>&#9679;</span>
+                        <Text variant="text" color={contrast === "black" ? theme.black : theme.white}
+                            size={isMobile2 ? "sm" : undefined} component="p" ml={5}>{covertDataFormat(data.first_air_date)}</Text>
+                        <span color={contrast === "black" ? theme.black : theme.white}>&#9679;</span>
+                        <Text variant="text" color={contrast === "black" ? theme.black : theme.white}
+                            size={isMobile2 ? "sm" : undefined}>{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
+                        <span color={contrast === "black" ? theme.black : theme.white} >&#9679;</span>
                     </div>
                     <div className={styles.wrapper4}>
                         <ActionButtons id={id} mediaType="SHOWS" />
@@ -181,9 +191,12 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                             getVideo();
                         }} color="blue">Play Tralier</Button>
                     </div>
-                    <Text component="p" fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
-                    <Title order={2} variant="text" >Overview</Title>
-                    <Text variant="text" size="md" component="p">{data.overview}</Text>
+                    <Text component="p" color={contrast === "black" ? theme.black : theme.white}
+                        fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
+                    <Title order={2} color={contrast === "black" ? theme.black : theme.white}
+                        variant="text" >Overview</Title>
+                    <Text variant="text" color={contrast === "black" ? theme.black : theme.white}
+                        size="md" component="p">{data.overview}</Text>
                 </div>
             </div>
         </BackgroundImage>

@@ -6,7 +6,7 @@ import React from "react";
 import ImageCard from "../../../components/ImageCard";
 import { ActionIcon, Button, Divider, Text, Title, Group, Tooltip } from "@mantine/core";
 import Head from "next/head";
-import { runTimeConversion, covertDataFormat, getImageColor, getVideoTralier } from "../../../lib/util";
+import { runTimeConversion, covertDataFormat, getImageColor, getVideoTralier, setTextColor } from "../../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
 import { AiOutlineHeart, AiFillFacebook, AiOutlineTwitter, AiFillInstagram, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
@@ -71,6 +71,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
     const [color, setColor] = React.useState("");
     const [review, setReview] = React.useState<any[] | null>(null);
     const q = query(collection(db, "movies", `${id}`, "reviews"), orderBy("rating", "desc"), limit(1));
+    const [contrast, setContrast] = React.useState<'black' | 'white'>('black');
 
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
         variables: {
@@ -82,15 +83,19 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
     });
 
     React.useEffect(() => {
-        const color = async () => {
+        const getColor = async () => {
             const col = await getImageColor(`https://image.tmdb.org/t/p/original${data.poster_path}`);
             const gradient = `linear-gradient(
                 to right, rgba(${col.r}, ${col.g},${col.b}, 1) calc((50vw - 170px) - 340px),
                 rgba(${col.r}, ${col.g},${col.b}, 0.84) 30%,
                 rgba(${col.r}, ${col.g},${col.b}, 0.84) 100%)`;
             setColor(gradient);
+            if (col) {
+                const con = setTextColor(col);
+                setContrast(con);
+            }
         }
-        color();
+        getColor();
         async function getData() {
             const reviewDoc = await getDocs(q);
             const data = reviewDoc.docs.map((ele) => {
@@ -139,13 +144,13 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                     <ImageCard imgUrl={data.poster_path} title={data.title} width={isMobile ? 220 : 320} height={isMobile ? 340 : 440} />
                 </div>
                 <div className={styles.rightWrapper}>
-                    <Title order={1} m={0} size={isMobile2 ? "h6" : "h2"}>{data.title}</Title>
+                    <Title color={contrast === "black" ? theme.black : theme.white} order={1} m={0} size={isMobile2 ? "h6" : "h2"}>{data.title}</Title>
                     <div className={styles.wrapper2}>
-                        <Text variant="text" size={isMobile2 ? "sm" : undefined} component="p" ml={5}>{covertDataFormat(data.release_date)}</Text>
+                        <Text color={contrast === "black" ? theme.black : theme.white} variant="text" size={isMobile2 ? "sm" : undefined} component="p" ml={5}>{covertDataFormat(data.release_date)}</Text>
                         <span>&#9679;</span>
-                        <Text variant="text" size={isMobile2 ? "sm" : undefined}>{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
+                        <Text color={contrast === "black" ? theme.black : theme.white} variant="text" size={isMobile2 ? "sm" : undefined}>{data.genres.map((ele: { name: string }) => ele.name).join(",")}</Text>
                         <span>&#9679;</span>
-                        <Text variant="text" component="span" size={isMobile2 ? "sm" : undefined}>{runTimeConversion(data.runtime)}</Text>
+                        <Text color={contrast === "black" ? theme.black : theme.white} variant="text" component="span" size={isMobile2 ? "sm" : undefined}>{runTimeConversion(data.runtime)}</Text>
                     </div>
                     <div className={styles.wrapper4}>
                         <ActionButtons id={id} mediaType="MOVIES" />
@@ -154,9 +159,9 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                             getVideo();
                         }} color="blue">Play Tralier</Button>
                     </div>
-                    <Text component="p" fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
-                    <Title order={2} variant="text" >Overview</Title>
-                    <Text variant="text" component="p" size="md">{data.overview}</Text>
+                    <Text color={contrast === "black" ? theme.black : theme.white} component="p" fs="italic" weight="bold" size="lg" variant="text" >{data.tagline}</Text>
+                    <Title color={contrast === "black" ? theme.black : theme.white} order={2} variant="text" >Overview</Title>
+                    <Text color={contrast === "black" ? theme.black : theme.white} variant="text" component="p" size="md">{data.overview}</Text>
                 </div>
             </div>
         </BackgroundImage>

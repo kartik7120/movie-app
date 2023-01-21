@@ -215,3 +215,18 @@ export function getVideoTralier(videoMedia: any | null) {
 
   return null;
 }
+
+export function setTextColor(rgb: { r: number, g: number, b: number } | null): 'white' | 'black' {
+  if (rgb === null) {
+    return 'white'
+  }
+
+  // const brightness = Math.round(((parseInt(rgb.r) * 299) +
+  //   (parseInt(rgb.g) * 587) +
+  //   (parseInt(rgb.b) * 114)) / 1000);
+  const brightness = Math.round((((rgb.r) * 299) +
+    ((rgb.g) * 587) +
+    ((rgb.b) * 114)) / 1000);
+  const textColour = (brightness > 125) ? 'black' : 'white';
+  return textColour;
+}
