@@ -8,15 +8,12 @@ import { ActionIcon, Button, Divider, Text, Title, Group, Tooltip } from "@manti
 import Head from "next/head";
 import { runTimeConversion, covertDataFormat, getImageColor, getVideoTralier, setTextColor } from "../../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
-import { AiOutlineHeart, AiFillFacebook, AiOutlineTwitter, AiFillInstagram, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
-import { BsBookmark } from "react-icons/bs";
 import { useLazyQuery } from "@apollo/client";
 import ReactPlayer from "react-player/youtube";
 import Cast from "../../../components/Cast";
 import MediaComponent from "../../../components/MediaComponent";
 import Recommendation from "../../../components/Recommendation";
 import Keywords from "../../../components/Keywords";
-import { BiLink } from "react-icons/bi";
 import Social from "../../../components/Social";
 import { convertCode } from "../../../lib/util";
 import { useMediaQuery } from "@mantine/hooks";
@@ -25,7 +22,7 @@ import Review from "../../../components/Review";
 import { MdArrowForwardIos } from "react-icons/md";
 import Link from "next/link";
 import ReviewComment from "../../../components/ReviewComment";
-import { collection, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from "../../../firebase";
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
