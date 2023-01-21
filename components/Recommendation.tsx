@@ -44,15 +44,18 @@ export default function Recommendation(props: Props): JSX.Element {
         return <p>Loading...</p>
     }
 
-    return <ScrollArea style={{ width: "100%", height: "100%" }}>
-        <div className={styles.videoWrapper}>
-            {data && data.getrecommendations.map((ele: any) => {
-                return <Link key={ele.id} href={props.sourceMedia === "MOVIE" ? `/movie/${ele.id}` : `/tv/${ele.id}`} title={`${ele.name}`}>
-                    <ImageCard width={300} height={150} imgUrl={ele.backdrop_path} />
-                    <Text lineClamp={1} variant="text">{props.sourceMedia === "MOVIE" ? ele.title : ele.name}</Text>
-                    <Text lineClamp={1} variant="text">{props.sourceMedia === "MOVIE" ? ele.release_date : ele.first_air_date}</Text>
-                </Link>
-            })}
-        </div>
-    </ScrollArea>
+    return <>
+        {data && data.getrecommendations.length > 0 ? <ScrollArea style={{ width: "100%", height: "100%" }}>
+            <div className={styles.videoWrapper}>
+                {data && data.getrecommendations.map((ele: any) => {
+                    return <Link key={ele.id} href={props.sourceMedia === "MOVIE" ? `/movie/${ele.id}` : `/tv/${ele.id}`} title={`${ele.name}`}>
+                        <ImageCard width={300} height={150} imgUrl={ele.backdrop_path} />
+                        <Text lineClamp={1} variant="text">{props.sourceMedia === "MOVIE" ? ele.title : ele.name}</Text>
+                        <Text lineClamp={1} variant="text">{props.sourceMedia === "MOVIE" ? ele.release_date : ele.first_air_date}</Text>
+                    </Link>
+                })}
+            </div>
+        </ScrollArea>
+            : <Text align="center">No Recommendations has been added </Text>}
+    </>
 }

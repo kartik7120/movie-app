@@ -43,24 +43,27 @@ export default function Cast(props: Props): JSX.Element {
 
 
   return <>
-    <Carousel slideSize="10%" align="start" height={300} slideGap="sm" dragFree>
-      {data && data.getCast.cast.map((ele: any, index: number) => {
-        return <Link href={`/people/${ele.id}`} key={Math.random() * index * 41}>
-          <Carousel.Slide >
-            <ImageCard imgUrl={ele.profile_path} width={150} height={200} title={`${ele.name} image`} />
-            <Text fw="bold" size="md" variant="text" >{ele.name}</Text>
-            <Text size="sm" variant="text" >{ele.character}</Text>
-          </Carousel.Slide>
-        </Link>
-      })}
-      <Carousel.Slide style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <Button type="button" size="sm" component="a" href="#" rightIcon={<AiOutlineArrowRight />}>
-          View more
-        </Button>
-      </Carousel.Slide>
-    </Carousel>
-    <Button type="button" variant="outline" size="sm" component="a" href={`/${props.sourceMedia.toLowerCase()}/${props.id}/cast`}>
-      Full cast and Crew
-    </Button>
+    {data && data.getCast.cast.length > 0 ? <>
+      <Carousel slideSize="10%" align="start" height={300} slideGap="sm" dragFree>
+        {data && data.getCast.cast.length > 0 && data.getCast.cast.map((ele: any, index: number) => {
+          return <Link href={`/people/${ele.id}`} key={Math.random() * index * 41}>
+            <Carousel.Slide >
+              <ImageCard imgUrl={ele.profile_path} width={150} height={200} title={`${ele.name} image`} />
+              <Text fw="bold" size="md" variant="text" >{ele.name}</Text>
+              <Text size="sm" variant="text" >{ele.character}</Text>
+            </Carousel.Slide>
+          </Link>
+        })}
+        <Carousel.Slide style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Button type="button" size="sm" component="a" href="#" rightIcon={<AiOutlineArrowRight />}>
+            View more
+          </Button>
+        </Carousel.Slide>
+      </Carousel>
+      <Button type="button" variant="outline" size="sm" component="a" href={`/${props.sourceMedia.toLowerCase()}/${props.id}/cast`}>
+        Full cast and Crew
+      </Button>
+    </> : <Text align="center">We don&apos;t have any cast added to this movie</Text>
+    }
   </>
 }

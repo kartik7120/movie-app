@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { Button, ScrollArea } from "@mantine/core";
+import { Button, ScrollArea, Text } from "@mantine/core";
 import { gql } from "apollo-server-micro";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import styles from "../styles/movie.module.css";
@@ -35,16 +35,18 @@ export default function Backdrops(props: Props): JSX.Element {
     if (loading)
         return <p>Loading...</p>
 
-    return <ScrollArea style={{ width: "100%", height: "100%" }}>
-        <div className={styles.videoWrapper}>
-            {data && data.getImageMedia.backdrops.map((img: any, index: number) => {
-                return <Image key={Math.random() * index * 47} src={`https://image.tmdb.org/t/p/w400${img.file_path}?api_key=${process.env.API_KEY}`}
-                    width="auto" alt="Poster" />
-            })}
-            <Button type="button" component="a" href={`/${props.sourceMedia.toLowerCase()}/${props.id}/images/backdrops`}
-                rightIcon={<AiOutlineArrowRight />}>
-                View More
-            </Button>
-        </div>
-    </ScrollArea>
+    return <>
+        {data && data.getImageMedia.backdrops.length > 0 ? <ScrollArea style={{ width: "100%", height: "100%" }}>
+            <div className={styles.videoWrapper}>
+                {data && data.getImageMedia.backdrops.map((img: any, index: number) => {
+                    return <Image key={Math.random() * index * 47} src={`https://image.tmdb.org/t/p/w400${img.file_path}?api_key=${process.env.API_KEY}`}
+                        width="auto" alt="Poster" />
+                })}
+                <Button type="button" component="a" href={`/${props.sourceMedia.toLowerCase()}/${props.id}/images/backdrops`}
+                    rightIcon={<AiOutlineArrowRight />}>
+                    View More
+                </Button>
+            </div>
+        </ScrollArea> : <Text align="center">No Backdrops have been added </Text>}
+    </>
 }
