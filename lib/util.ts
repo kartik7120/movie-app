@@ -230,3 +230,15 @@ export function setTextColor(rgb: { r: number, g: number, b: number } | null): '
   const textColour = (brightness > 125) ? 'black' : 'white';
   return textColour;
 }
+
+export function formatter(num: number) {
+  if (num < 0) {
+    throw new Error("Please provide a positive number");
+  }
+  
+  if (num > 999) {
+    return Math.floor(Math.sign(num) * (Math.abs(num) / 1000)) + 'k';
+  }
+
+  return (Math.sign(num) * Math.abs(num)).toString();
+}
