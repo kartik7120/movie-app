@@ -5,7 +5,8 @@ import styles from "../styles/review.module.css";
 import { useForm, Controller, useWatch, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { IoMdWarning } from "react-icons/io";
 import { db } from "../firebase";
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, runTransaction, serverTimestamp, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 interface Props {
     title: string,
@@ -23,6 +24,8 @@ interface Form {
 }
 
 export default function Review(props: Props) {
+    const auth = getAuth();
+    const user = auth.currentUser;
     const [opened, setOpened] = React.useState(false);
     const [renderForm, setRenderForm] = React.useState(true);
 
@@ -49,15 +52,54 @@ export default function Review(props: Props) {
 
     const onSubmit: SubmitHandler<Form> = async (data) => {
         await addDoc(collection(db, props.mediaType, `${props.id}`, "reviews"),
-            { ...data, timestamp: new Date().toJSON(), upvotes: 0, downvotes: 0 }).then((value) => {
+            { ...data, timestamp: new Date().toJSON(), upvotes: 0, downvotes: 0, user_id: user?.uid }).then((value) => {
                 console.log(`review written to the database`);
                 setRenderForm(false);
             }).catch((error) => {
                 setError("error", { message: error, type: "custom" });
                 console.log(`error occured while sending writing data to database = ${error}`);
             })
+
+        async function getReviews() {
+            try {
+                await runTransaction(db, async (transaction) => {
+                    const docRef = await transaction.get(doc(db, props.mediaType, `${props.id}`));
+                    if (!docRef.exists()) {
+                        await setDoc(doc(db, props.mediaType, `${props.id}`), {
+                            averageRating: 0,
+                            numberOfReviews: 0
+                        }, { merge: true })
+                        throw "Document does not exists";
+                    }
+
+                    let total = 0;
+                    let totalCount = 0;
+
+                    const reviewColRef = query(collection(db, props.mediaType, `${props.id}`, "reviews"));
+                    const reviewDocs = await getDocs(reviewColRef);
+
+                    totalCount = reviewDocs.size;
+                    reviewDocs.forEach((review) => {
+                        const reviewDoc = review.data();
+                        total += reviewDoc.rating;
+                    });
+
+                    let averageRating = total / totalCount;
+                    docRef.data().averageRating = averageRating;
+                    docRef.data().numberOfReviews = reviewDocs.size;
+                    transaction.update(doc(db, props.mediaType, `${props.id}`),
+                        { averageRating: parseFloat(averageRating.toFixed(1)), numberOfReviews: reviewDocs.size });
+                });
+            } catch (error) {
+                console.log(`error occured while performing transactions = ${error}`);
+            }
+        }
+        getReviews();
     };
-    const onSubmitError: SubmitErrorHandler<Form> = (error) => console.log(error);
+    const onSubmitError: SubmitErrorHandler<Form> = (error) => {
+        setError("error", { message: error.error?.message, type: "custom" });
+        console.log(error)
+    };
 
     return <>
         <Drawer closeOnClickOutside={false} opened={opened} position="right"
