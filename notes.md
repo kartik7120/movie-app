@@ -22,7 +22,7 @@ Fetch images from tbdm api
 
 ### Things to do before launching to produnction
 
-- [ ] Get the formula for calculating the average rating
+- [x] Get the formula for calculating the average rating
 - [ ] Add modal for rating a movie / tv on home page and indivisual page
 - [ ] add proper width and padding to right component to both movie and tv pages
 - [ ] add firebase securityy rules
