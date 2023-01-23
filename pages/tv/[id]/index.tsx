@@ -149,7 +149,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
         getData();
         async function getRating() {
             try {
-                const docRef = doc(db, "movies", `${id}`);
+                const docRef = doc(db, "shows", `${id}`);
                 const movieDoc = await getDoc(docRef);
                 if (movieDoc && movieDoc.data() !== undefined)
                     setRating({ averageRating: movieDoc.data()!.averageRating, reviewCount: movieDoc.data()!.numberOfReviews || NaN });

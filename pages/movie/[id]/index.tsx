@@ -122,20 +122,6 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             }
         }
         getRating();
-        // async function getReviews() {
-        //     const docsRef = query(collection(db, "movies", `${id}`, "reviews"));
-        //     const docs = await getDocs(docsRef);
-
-        //     let total = 0;
-        //     // let totalCount = 0;
-
-        //     docs.forEach((review) => {
-        //         total += review.data().rating;
-        //     });
-
-        //     console.log(`average rating = ${total / docs.size}`);
-
-        // }
     }, [])
 
     const isMobile = useMediaQuery('(max-width: 694px)');
