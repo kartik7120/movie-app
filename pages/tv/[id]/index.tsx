@@ -1,11 +1,11 @@
 import { gql, useLazyQuery } from "@apollo/client";
-import { ActionIcon, BackgroundImage, Button, Divider, Group, Image, List, Modal, Text, Title, useMantineTheme } from "@mantine/core";
+import { ActionIcon, BackgroundImage, Button, Divider, Group, Image, List, Modal, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineHeart, AiOutlineUnorderedList, AiTwotoneStar } from "react-icons/ai";
-import { BsBookmark } from "react-icons/bs";
+import { BsBookmark, BsFillStarFill } from "react-icons/bs";
 import ReactPlayer from "react-player";
 import client from "../../../apollo-client";
 import Cast from "../../../components/Cast";
@@ -14,7 +14,7 @@ import Keywords from "../../../components/Keywords";
 import MediaComponent from "../../../components/MediaComponent";
 import Recommendation from "../../../components/Recommendation";
 import Social from "../../../components/Social";
-import { convertCode, covertDataFormat, getImageColor, getVideoTralier, runTimeConversion, setTextColor } from "../../../lib/util";
+import { convertCode, covertDataFormat, formatter, getImageColor, getVideoTralier, runTimeConversion, setTextColor } from "../../../lib/util";
 import styles from "../../../styles/movie.module.css";
 import { TvDetails } from "../../../schemaTypes";
 import { SourceMedia } from "../../../schemaTypes";
@@ -24,7 +24,7 @@ import ActionButtons from "../../../components/ActionButtons";
 import Review from "../../../components/Review";
 import { MdArrowForwardIos } from "react-icons/md";
 import ReviewComment from "../../../components/ReviewComment";
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { getAuth } from "firebase/auth";
 
@@ -106,6 +106,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
     const isMobile2 = useMediaQuery('(max-width: 490px)');
     const isMobile3 = useMediaQuery('(max-width: 650px)');
     const matches3 = useMediaQuery("(max-width:1097px)");
+    const [rating, setRating] = useState<{ averageRating: number, reviewCount: number }>({ averageRating: NaN, reviewCount: NaN });
 
 
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
@@ -132,16 +133,31 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
         }
         getColor();
         async function getData() {
-            const reviewDoc = await getDocs(q);
-            const data = reviewDoc.docs.map((ele) => {
-                return {
-                    id: ele.id,
-                    ...ele.data()
-                }
-            });
-            setReview(data);
+            try {
+                const reviewDoc = await getDocs(q);
+                const data = reviewDoc.docs.map((ele) => {
+                    return {
+                        id: ele.id,
+                        ...ele.data()
+                    }
+                });
+                setReview(data);
+            } catch (error) {
+                throw error;
+            }
         }
         getData();
+        async function getRating() {
+            try {
+                const docRef = doc(db, "movies", `${id}`);
+                const movieDoc = await getDoc(docRef);
+                if (movieDoc && movieDoc.data() !== undefined)
+                    setRating({ averageRating: movieDoc.data()!.averageRating, reviewCount: movieDoc.data()!.numberOfReviews || NaN });
+            } catch (error) {
+                console.log(`error occured while fetching rating = ${error}`);
+            }
+        }
+        getRating();
 
     }, [])
 
@@ -185,6 +201,16 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
                         <span color={contrast === "black" ? theme.black : theme.white} >&#9679;</span>
                     </div>
                     <div className={styles.wrapper4}>
+                        <Stack align="center" spacing="xs" pr={7}>
+                            <Group>
+                                <BsFillStarFill size={20} color="#f5c92a" />
+                                <Text size="xl" color={contrast === "black" ?
+                                    theme.black : theme.white}>
+                                    {Number.isNaN(rating.averageRating) ? "Not Rated yet" : `${rating.averageRating}/10`}
+                                </Text>
+                            </Group>
+                            <Text color={contrast === "black" ? theme.black : theme.white}>By {rating.reviewCount && formatter(rating.reviewCount) || 0}</Text>
+                        </Stack>
                         <ActionButtons id={id} mediaType="SHOWS" />
                         <Button variant="filled" onClick={() => {
                             setOpened(true);

@@ -2,11 +2,11 @@ import { gql } from "apollo-server-micro";
 import { GetServerSideProps } from "next";
 import client from "../../../apollo-client";
 import styles from "../../../styles/movie.module.css";
-import React from "react";
+import React, { useState } from "react";
 import ImageCard from "../../../components/ImageCard";
-import { ActionIcon, Button, Divider, Text, Title, Group, Tooltip } from "@mantine/core";
+import { ActionIcon, Button, Divider, Text, Title, Group, Tooltip, Stack } from "@mantine/core";
 import Head from "next/head";
-import { runTimeConversion, covertDataFormat, getImageColor, getVideoTralier, setTextColor } from "../../../lib/util";
+import { runTimeConversion, covertDataFormat, getImageColor, getVideoTralier, setTextColor, formatter } from "../../../lib/util";
 import { BackgroundImage, Modal, useMantineTheme } from "@mantine/core";
 import { useLazyQuery } from "@apollo/client";
 import ReactPlayer from "react-player/youtube";
@@ -22,8 +22,10 @@ import Review from "../../../components/Review";
 import { MdArrowForwardIos } from "react-icons/md";
 import Link from "next/link";
 import ReviewComment from "../../../components/ReviewComment";
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { addDoc, collection, doc, DocumentReference, getDoc, getDocs, limit, orderBy, query, runTransaction, setDoc, where } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { BsFillStarFill } from "react-icons/bs";
+
 const MOVIE_DETAILS = gql`
 query GetMovieDetails($getMovieDetailsId: ID!) {
   getMovieDetails(id: $getMovieDetailsId) {
@@ -69,6 +71,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
     const [review, setReview] = React.useState<any[] | null>(null);
     const q = query(collection(db, "movies", `${id}`, "reviews"), orderBy("rating", "desc"), limit(1));
     const [contrast, setContrast] = React.useState<'black' | 'white'>('black');
+    const [rating, setRating] = useState<{ averageRating: number, reviewCount: number }>({ averageRating: NaN, reviewCount: NaN });
 
     const [getVideo, { loading, data: videos, error }] = useLazyQuery(VIDEO_MEDIA, {
         variables: {
@@ -94,16 +97,45 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
         }
         getColor();
         async function getData() {
-            const reviewDoc = await getDocs(q);
-            const data = reviewDoc.docs.map((ele) => {
-                return {
-                    id: ele.id,
-                    ...ele.data()
-                }
-            });
-            setReview(data);
+            try {
+                const reviewDoc = await getDocs(q);
+                const data = reviewDoc.docs.map((ele) => {
+                    return {
+                        id: ele.id,
+                        ...ele.data()
+                    }
+                });
+                setReview(data);
+            } catch (error) {
+                throw error;
+            }
         }
         getData();
+        async function getRating() {
+            try {
+                const docRef = doc(db, "movies", `${id}`);
+                const movieDoc = await getDoc(docRef);
+                if (movieDoc && movieDoc.data() !== undefined)
+                    setRating({ averageRating: movieDoc.data()!.averageRating, reviewCount: movieDoc.data()!.numberOfReviews || NaN });
+            } catch (error) {
+                console.log(`error occured while fetching rating = ${error}`);
+            }
+        }
+        getRating();
+        // async function getReviews() {
+        //     const docsRef = query(collection(db, "movies", `${id}`, "reviews"));
+        //     const docs = await getDocs(docsRef);
+
+        //     let total = 0;
+        //     // let totalCount = 0;
+
+        //     docs.forEach((review) => {
+        //         total += review.data().rating;
+        //     });
+
+        //     console.log(`average rating = ${total / docs.size}`);
+
+        // }
     }, [])
 
     const isMobile = useMediaQuery('(max-width: 694px)');
@@ -150,6 +182,16 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                         <Text color={contrast === "black" ? theme.black : theme.white} variant="text" component="span" size={isMobile2 ? "sm" : undefined}>{runTimeConversion(data.runtime)}</Text>
                     </div>
                     <div className={styles.wrapper4}>
+                        <Stack align="center" spacing="xs" pr={7}>
+                            <Group>
+                                <BsFillStarFill size={20} color="#f5c92a" />
+                                <Text size="xl" color={contrast === "black" ?
+                                    theme.black : theme.white}>
+                                    {Number.isNaN(rating.averageRating) ? "Not Rated yet" : `${rating.averageRating}/10`}
+                                </Text>
+                            </Group>
+                            <Text color={contrast === "black" ? theme.black : theme.white}>By {formatter(rating.reviewCount) || 0}</Text>
+                        </Stack>
                         <ActionButtons id={id} mediaType="MOVIES" />
                         <Button variant="filled" onClick={() => {
                             setOpened(true);
@@ -189,7 +231,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                             <MdArrowForwardIos size={30} />
                         </Group>
                     </Link>
-                    {review !== null && review.length > 0 ? review?.map((ele) => {
+                    {review !== null && review !== undefined && review.length > 0 ? review?.map((ele) => {
                         return <ReviewComment mediaType="MOVIES" key={ele.id} mediaId={`${id}`} id={ele.id} rating={ele.rating} spolier={ele.spolier}
                             downvotes={ele.downvotes} upvotes={ele.upvotes} review={ele.review} title={ele.title} />
                     }) : <Text size="xl">No Reviews</Text>}
