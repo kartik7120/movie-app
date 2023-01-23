@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Button, Card, createStyles, Group, Menu, Skeleton, Text, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Badge, Button, Card, createStyles, Group, Menu, Modal, Rating, Skeleton, Stack, Text, useMantineTheme } from "@mantine/core";
 import Image from "next/image";
 import { BsStar, BsFillPlayFill, BsFillBookmarkPlusFill } from "react-icons/bs";
 import { MediaQuery } from "@mantine/core";
@@ -69,29 +69,13 @@ const HOME_PAGE_VIDEOS = gql`
 export default function CardComponent(props: CardProps): JSX.Element {
 
     const { classes } = useStyles();
-    const [url, setUrl] = React.useState<{ key: string, value: string }>({ key: "", value: "" });
-    const theme = useMantineTheme();
+    const [value, setValue] = useState(0);
     const [watchList, setWatchList] = useState(false);
     const [favList, setFavList] = useState(false);
+    const [review, setReview] = React.useState<any | null>(null);
     const auth = getAuth();
     const user = auth.currentUser;
-
-
-    const [getVideo, { loading, error, data }] = useLazyQuery<SpecificMedia>(HOME_PAGE_VIDEOS, {
-        variables: {
-            getVideoMediaId: props.id,
-            sourceMedia: props.media_type,
-            includeType: "Trailer"
-        }
-    })
-
-    const [getVideo2, { loading: loading2, error: error2, data: data2 }] = useLazyQuery(HOME_PAGE_VIDEOS, {
-        variables: {
-            getVideoMediaId: props.id,
-            sourceMedia: props.media_type,
-            includeType: "Teaser"
-        }
-    })
+    const [opened, setOpened] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -180,61 +164,77 @@ export default function CardComponent(props: CardProps): JSX.Element {
         }
     }
 
-    return <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card}>
-        <Card.Section>
-            <Link href={`/${props.media_type}/${props.id}`}>
-                <Image
-                    src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
-                    alt={`${props.original_title} poster`}
-                    priority={true}
-                    width={200}
-                    height={270}
-                    className={classes.imgClass}
-                    placeholder="blur"
-                    blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(200, 270))}`}
-                />
-            </Link>
-        </Card.Section>
-        <div className={classes.wrapper2}>
-            <Group position="apart" mt={3} sx={{ maxWidth: "100%" }}>
-                <div className={classes.wrapper}>
-                    <AiFillStar color="yellow" size={20} style={{ alignSelf: "center" }} />
-                    <Text variant="text" pl={3}>6.5</Text>
-                </div>
-                <ActionIcon radius="sm" variant="subtle" size="lg"><BsStar color="cyan" size={18} /></ActionIcon>
-            </Group>
-            <Link href={`/${props.media_type}/${props.id}`}>
-                <Text lineClamp={3} size="md" align="left" component="p" m={1} style={{ height: "2rem" }}>
-                    {props.original_title}
-                </Text>
-            </Link>
-        </div>
-        <div className={classes.wrapper3}>
-            <div className={classes.wrapper4}>
-                <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
-                    <ActionIcon radius="md" variant="subtle" size="md">
-                        <AiOutlineInfoCircle color="white" size={25} />
+    return <>
+        <Modal
+            opened={opened}
+            onClose={() => setOpened(false)}
+            title={<Text align="center" size="xl" color="yellow">RATE THIS!</Text>}
+            centered
+        >
+            <Stack align="center">
+                <Text align="center" size="lg" pt={10} pb={10}>{props.original_title}</Text>
+                <Rating value={(review && review.rating) || value} onChange={setValue} size="xl" count={10} />
+            </Stack>
+        </Modal>
+
+        <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card}>
+            <Card.Section>
+                <Link href={`/${props.media_type}/${props.id}`}>
+                    <Image
+                        src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
+                        alt={`${props.original_title} poster`}
+                        priority={true}
+                        width={200}
+                        height={270}
+                        className={classes.imgClass}
+                        placeholder="blur"
+                        blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(200, 270))}`}
+                    />
+                </Link>
+            </Card.Section>
+            <div className={classes.wrapper2}>
+                {/* <Group position="apart" mt={3} sx={{ maxWidth: "100%" }}>
+                    <div className={classes.wrapper}>
+                        <AiFillStar color="yellow" size={20} style={{ alignSelf: "center" }} />
+                        <Text variant="text" pl={3}>6.5</Text>
+                    </div>
+                    <ActionIcon radius="sm" variant="subtle" onClick={() => setOpened(true)} size="lg">
+                        <BsStar color="cyan" size={18} />
                     </ActionIcon>
-                </MediaQuery>
-                <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
-                    <Menu shadow="md" width={200}>
-                        <Menu.Target>
-                            <ActionIcon radius="md" variant="subtle" size="xl">
-                                <AiOutlineInfoCircle color="white" size={25} />
-                            </ActionIcon>
-                        </Menu.Target>
-                        <Menu.Dropdown>
-                            <Menu.Label>Options</Menu.Label>
-                            <Menu.Item onClick={!watchList ? handleClick : removeWatchList} icon={<BsFillBookmarkPlusFill size={14} />}>
-                                {!watchList ? 'Add to' : "Remove from"} Watchlist
-                            </Menu.Item>
-                            <Menu.Item onClick={!favList ? handleFavouriteButton : removeFavList} icon={<AiFillHeart size={14} />}>
-                                {!favList ? 'Add to' : "Remove from"} Favourite
-                            </Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu>
-                </MediaQuery>
+                </Group> */}
+                <Link href={`/${props.media_type}/${props.id}`}>
+                    <Text lineClamp={3} size="md" align="left" component="p" m={1} style={{ height: "2rem" }}>
+                        {props.original_title}
+                    </Text>
+                </Link>
             </div>
-        </div>
-    </Card>
+            <div className={classes.wrapper3}>
+                <div className={classes.wrapper4}>
+                    <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
+                        <ActionIcon radius="md" variant="subtle" size="md">
+                            <AiOutlineInfoCircle color="white" size={25} />
+                        </ActionIcon>
+                    </MediaQuery>
+                    <MediaQuery styles={{ display: "none" }} query="(max-width:690px)">
+                        <Menu shadow="md" width={200}>
+                            <Menu.Target>
+                                <ActionIcon radius="md" variant="subtle" size="xl">
+                                    <AiOutlineInfoCircle color="white" size={25} />
+                                </ActionIcon>
+                            </Menu.Target>
+                            <Menu.Dropdown>
+                                <Menu.Label>Options</Menu.Label>
+                                <Menu.Item onClick={!watchList ? handleClick : removeWatchList} icon={<BsFillBookmarkPlusFill size={14} />}>
+                                    {!watchList ? 'Add to' : "Remove from"} Watchlist
+                                </Menu.Item>
+                                <Menu.Item onClick={!favList ? handleFavouriteButton : removeFavList} icon={<AiFillHeart size={14} />}>
+                                    {!favList ? 'Add to' : "Remove from"} Favourite
+                                </Menu.Item>
+                            </Menu.Dropdown>
+                        </Menu>
+                    </MediaQuery>
+                </div>
+            </div>
+        </Card>
+    </>
 }
