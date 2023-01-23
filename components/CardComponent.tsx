@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/dist/client/link";
 import { gql, useLazyQuery } from "@apollo/client";
 import { SpecificMedia } from "../schemaTypes";
-import { collection, deleteDoc, doc, onSnapshot, query, setDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, onSnapshot, query, setDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
 
@@ -76,6 +76,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
     const auth = getAuth();
     const user = auth.currentUser;
     const [opened, setOpened] = useState(false);
+    const [rating, setRating] = useState<{ averageRating: number }>({ averageRating: NaN });
 
     useEffect(() => {
         if (user) {
@@ -103,6 +104,21 @@ export default function CardComponent(props: CardProps): JSX.Element {
                     }
                 })
             })
+
+
+            async function getRating() {
+                try {
+                    const docRef = doc(db, props.media_type === "movie" ? "movies" : "shows", `${props.id}`);
+                    const movieDoc = await getDoc(docRef);
+                    if (movieDoc && movieDoc.data() !== undefined)
+                        setRating({ averageRating: movieDoc.data()!.averageRating });
+                    if (props.id === "315162")
+                        console.log(movieDoc.data());
+                } catch (error) {
+                    console.log(`error occured while fetching rating = ${error}`);
+                }
+            }
+            getRating();
 
             return () => {
                 unsubscribe();
@@ -193,15 +209,15 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 </Link>
             </Card.Section>
             <div className={classes.wrapper2}>
-                {/* <Group position="apart" mt={3} sx={{ maxWidth: "100%" }}>
+                <Group position="apart" mt={3} sx={{ maxWidth: "100%" }}>
                     <div className={classes.wrapper}>
-                        <AiFillStar color="yellow" size={20} style={{ alignSelf: "center" }} />
-                        <Text variant="text" pl={3}>6.5</Text>
+                        <AiFillStar color="#c39400" size={20} style={{ alignSelf: "center" }} />
+                        <Text variant="text" pl={3}>{rating.averageRating || "N\\A"}</Text>
                     </div>
-                    <ActionIcon radius="sm" variant="subtle" onClick={() => setOpened(true)} size="lg">
+                    {/* <ActionIcon radius="sm" variant="subtle" onClick={() => setOpened(true)} size="lg">
                         <BsStar color="cyan" size={18} />
-                    </ActionIcon>
-                </Group> */}
+                    </ActionIcon> */}
+                </Group>
                 <Link href={`/${props.media_type}/${props.id}`}>
                     <Text lineClamp={3} size="md" align="left" component="p" m={1} style={{ height: "2rem" }}>
                         {props.original_title}
