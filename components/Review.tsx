@@ -85,8 +85,6 @@ export default function Review(props: Props) {
                     });
 
                     let averageRating = total / totalCount;
-                    docRef.data().averageRating = averageRating;
-                    docRef.data().numberOfReviews = reviewDocs.size;
                     transaction.update(doc(db, props.mediaType, `${props.id}`),
                         { averageRating: parseFloat(averageRating.toFixed(1)), numberOfReviews: reviewDocs.size });
                 });
