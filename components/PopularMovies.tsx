@@ -1,7 +1,6 @@
 import { gql } from "apollo-server-micro";
 import CardComponent from '../components/CardComponent';
 import { Carousel } from "@mantine/carousel";
-import React from "react";
 import { useQuery } from "@apollo/client";
 import CarouselWrapper from "./CarouselComponent";
 import { LoadingOverlay } from "@mantine/core";
