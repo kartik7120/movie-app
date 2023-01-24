@@ -159,7 +159,7 @@ export default function Tv({ data, id, acceptLang, posters }: { data: any, id: n
         }
         getRating();
 
-    }, [])
+    }, [data, id])
 
     return <>
         <Head>
