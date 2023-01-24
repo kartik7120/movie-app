@@ -1,7 +1,7 @@
 import navbar from "../styles/navbar.module.css";
 import { FaImdb } from "react-icons/fa";
-import { ActionIcon, Button, Select, Divider, Drawer, Menu, Text } from "@mantine/core";
-import { AiOutlineMenu } from "react-icons/ai";
+import { ActionIcon, Button, Select, Divider, Drawer, Menu, Text, Collapse, Center, Stack } from "@mantine/core";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { TextInput } from "@mantine/core";
 import { BiSearchAlt } from "react-icons/bi";
 import { BsFillBookmarkPlusFill, BsMoon, BsSun } from "react-icons/bs";
@@ -37,6 +37,8 @@ export default function Navbar(): JSX.Element {
     const router = useRouter();
     const [opened, setOpened] = React.useState<boolean>(false);
     const [modelOpened, setModelOpened] = React.useState(false);
+    const [opened2, setOpened2] = React.useState(false);
+
     const [value, setValue] = React.useState("");
 
     useEffect(() => {
@@ -126,8 +128,8 @@ export default function Navbar(): JSX.Element {
                 </ActionIcon>
             </div>
             <div className={navbar.wrapper2Div}>
-                <ActionIcon>
-                    <BiSearchAlt />
+                <ActionIcon onClick={() => setOpened2(o => !o)}>
+                    {!opened2 ? <BiSearchAlt /> : <AiOutlineClose />}
                 </ActionIcon>
                 {signedIn ? <Menu shadow="md" width={200}>
                     <Menu.Target>
@@ -150,5 +152,15 @@ export default function Navbar(): JSX.Element {
                     })} variant="subtle">Log In</Button>}
             </div>
         </nav>
+        <Collapse in={opened2}>
+            <Center>
+                <TextInput value={value} size="md" onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setValue(e.target.value);
+                }} type="text" placeholder="Search" icon={<BiSearchAlt />} style={{ width: "60%" }} rightSectionWidth={100}
+                    onKeyDown={getHotkeyHandler([
+                        ['enter', handleSubmit]
+                    ])} />
+            </Center>
+        </Collapse>
     </>
 }
