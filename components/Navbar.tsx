@@ -1,6 +1,6 @@
 import navbar from "../styles/navbar.module.css";
 import { FaImdb } from "react-icons/fa";
-import { ActionIcon, Button, Select, Divider, Drawer, Menu } from "@mantine/core";
+import { ActionIcon, Button, Select, Divider, Drawer, Menu, Text } from "@mantine/core";
 import { AiOutlineMenu } from "react-icons/ai";
 import { TextInput } from "@mantine/core";
 import { BiSearchAlt } from "react-icons/bi";
@@ -109,14 +109,17 @@ export default function Navbar(): JSX.Element {
             >
                 {dark ? <BsSun size={18} /> : <BsMoon size={18} />}
             </ActionIcon>
-
         </nav>
         <nav className={navbar.wrapper2}>
             <div className={navbar.wrapper2Div}>
-                <FaImdb size={50} color="#F08C00" />
+                <Link href={`/`}>
+                    <FaImdb size={50} color="#F08C00" />
+                </Link>
                 <Drawer opened={opened} onClose={() => setOpened(false)} title="Menu" padding="xl" size="md">
                     <div>Menu Content</div>
-                    <div>Watch list</div>
+                    <Link href={`/watchlist`} onClick={() => setOpened(false)}>
+                        <Text variant="text" size="lg">WatchList</Text>
+                    </Link>
                 </Drawer>
                 <ActionIcon className={navbar.drawer} onClick={() => setOpened(true)}>
                     <FiMenu />
@@ -126,9 +129,25 @@ export default function Navbar(): JSX.Element {
                 <ActionIcon>
                     <BiSearchAlt />
                 </ActionIcon>
-                <ActionIcon>
-                    <Avatar src={null} radius="md" />
-                </ActionIcon>
+                {signedIn ? <Menu shadow="md" width={200}>
+                    <Menu.Target>
+                        <ActionIcon>
+                            <Avatar src={null} radius="md" />
+                        </ActionIcon>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                        <Menu.Item onClick={handleSignOut}>
+                            Sign out
+                        </Menu.Item>
+                    </Menu.Dropdown>
+                </Menu> :
+                    <Button id="login" className={navbar.profileBtn} onClick={() => router.push({
+                        pathname: "/login",
+                        query: {
+                            from: router.asPath
+                        },
+                        slashes: true
+                    })} variant="subtle">Log In</Button>}
             </div>
         </nav>
     </>
