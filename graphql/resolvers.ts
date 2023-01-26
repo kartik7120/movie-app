@@ -99,25 +99,36 @@ export const resolvers = {
         },
         nowPlayingMovies: async (parent: any, args: any, context: any, info: any) => {
 
-            const query = await fetch(`${process.env.API_URL}movie/now_playing?api_key=${process.env.API_KEY}`);
+            const query = await fetch(`${process.env.API_URL}movie/now_playing?api_key=${process.env.API_KEY}${args.page ? `&page=${args.page}` : ""}`);
             const result = await query.json();
             return {
                 dates: result.dates,
-                nowPlaying: result.results
+                nowPlaying: result.results,
+                total_pages: result.total_pages,
+                total_results: result.total_results,
+                page: result.page
             }
         },
         upcomingMovies: async (parent: any, args: any, context: any, info: any) => {
-            const query = await fetch(`${process.env.API_URL}movie/upcoming?api_key=${process.env.API_KEY}`);
+            const query = await fetch(`${process.env.API_URL}movie/upcoming?api_key=${process.env.API_KEY}${args.page ? `&page=${args.page}` : ""}`);
             const result = await query.json();
             return {
                 dates: result.dates,
-                nowPlaying: result.results
+                nowPlaying: result.results,
+                total_pages: result.total_pages,
+                total_results: result.total_results,
+                page: result.page
             }
         },
         nowPlayingTv: async (parent: any, args: any, context: any, info: any) => {
-            const query = await fetch(`${process.env.API_URL}tv/on_the_air?api_key=${process.env.API_KEY}`);
+            const query = await fetch(`${process.env.API_URL}tv/on_the_air?api_key=${process.env.API_KEY}${args.page ? `&page=${args.page}` : ""}`);
             const result = await query.json();
-            return result.results;
+            return {
+                page: result.page,
+                total_pages: result.total_pages,
+                total_results: result.total_results,
+                results: result.results
+            };
         },
         topRatedMovies: async (parent: any, args: any, context: any, info: any) => {
             const query = await fetch(`${process.env.API_URL}movie/top_rated?api_key=${process.env.API_KEY}`);
@@ -288,15 +299,21 @@ export const resolvers = {
         },
         getPopularMovies: async (parent: any, args: any, context: any, info: any) => {
 
-            const query = await fetch(`${process.env.API_URL}movie/popular?api_key=${process.env.API_KEY}`);
+            const query = await
+                fetch(`${process.env.API_URL}movie/popular?api_key=${process.env.API_KEY}${args.page ? `&page=${args.page}` : ""}`);
             const result = await query.json();
-            return result.results
+            return result;
         },
         getPoplarTv: async (parent: any, args: any, context: any, info: any) => {
 
-            const query = await fetch(`${process.env.API_URL}tv/popular?api_key=${process.env.API_KEY}`);
+            const query = await fetch(`${process.env.API_URL}tv/popular?api_key=${process.env.API_KEY}${args.page ? `&page=${args.page}` : ""}`);
             const result = await query.json();
-            return result.results
+            return {
+                page: result.page,
+                total_pages: result.total_pages,
+                total_results: result.total_results,
+                results: result.results
+            }
         },
         getSimilarMovies: async (parent: any, args: any, context: any, info: any) => {
 

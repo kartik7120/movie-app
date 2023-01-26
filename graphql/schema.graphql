@@ -89,8 +89,11 @@ type NowPlayingTv {
 }
 
 type NowPlayingMovies {
+  page: Int
   nowPlaying: [NowPlaying]
   dates: Dates
+  total_pages: Int
+  total_results: Int
 }
 
 type MediaVideo {
@@ -551,12 +554,26 @@ union CreditsUnion = CombinedCredits | FormattedCombinedCredits
 
 union MediaTypeUnion = videoMedia | SpecificMedia
 
+type NowPopularComplete {
+  page: Int
+  results: [NowPlaying]
+  total_pages: Int
+  total_results: Int
+}
+
+type NowPopularCompleteTv {
+  page: Int
+  results: [NowPlayingTv]
+  total_pages: Int
+  total_results: Int
+}
+
 type Query {
   trending(mediaType: MediaType, timeWindow: TimeWindow): [Trending]
-  nowPlayingMovies: NowPlayingMovies
-  upcomingMovies: NowPlayingMovies
-  nowPlayingTv: [NowPlayingTv]
-  topRatedMovies: [NowPlaying]
+  nowPlayingMovies(page: Int): NowPlayingMovies
+  upcomingMovies(page: Int): NowPlayingMovies
+  nowPlayingTv(page: Int): NowPopularCompleteTv
+  topRatedMovies(page: Int): [NowPlaying]
   topRatedTvShows: [NowPlayingTv]
   getVideoMedia(
     id: ID!
@@ -569,8 +586,8 @@ type Query {
     first: Int
     includeLanguage: String
   ): MediaImages
-  getPopularMovies: [NowPlaying]
-  getPoplarTv: [NowPlayingTv]
+  getPopularMovies(page: Int): NowPopularComplete
+  getPoplarTv(page: Int): NowPopularCompleteTv
   getSimilarMovies(id: ID!, page: Int): [NowPlaying]
   getKeywords(id: ID!, mediaType: SourceMedia!): MovieKeywords
   getCast(id: ID!, mediaType: SourceMedia!, first: Int): Credits
