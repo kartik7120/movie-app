@@ -61,9 +61,9 @@ export default function ActionButtons(props: Props) {
                 id: props.id,
                 mediaType: props.mediaType === "MOVIES" ? "movie" : "tv"
             }, { merge: true }).then((value) => {
-                console.log(`added to watch list`)
+                console.log(`added to watch list`);
             }).catch((err) => {
-                console.log(`error occured while adding data to database`)
+                console.log(`error occured while adding data to database`);
             })
         }
     }
@@ -75,9 +75,9 @@ export default function ActionButtons(props: Props) {
                 id: props.id,
                 mediaType: props.mediaType === "MOVIES" ? "movie" : "tv"
             }, { merge: true }).then((value) => {
-                console.log(`added to favourite list`)
+                console.log(`added to favourite list`);
             }).catch((err) => {
-                console.log(`error occured while adding data to database`)
+                console.log(`error occured while adding data to database`);
             })
         }
     }

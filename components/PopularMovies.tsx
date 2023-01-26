@@ -7,16 +7,17 @@ import { LoadingOverlay } from "@mantine/core";
 import Link from "next/link";
 
 const NOW_PLAYING = gql`
-  query nowPlaying {
-    getPopularMovies {
-    id
-    original_title
-    # vote_count
-    # vote_average
-    poster_path
-    # adult
-    title
-    # release_date
+query GetPopularMovies($page: Int) {
+  getPopularMovies(page: $page) {
+    page
+    results {
+      id
+      original_title
+      poster_path
+      title
+      release_date
+    }
+    total_pages
   }
 }
 `
@@ -29,7 +30,7 @@ export default function PopularMovies(): JSX.Element {
   }
 
   return <CarouselWrapper>
-    {data ? data.getPopularMovies.map((movie: any, index: number) => (
+    {data ? data.getPopularMovies.results.map((movie: any, index: number) => (
       <Carousel.Slide key={Math.random() * index * 45}>
         <CardComponent media_type="movie" id={movie.id} original_title={movie.title} poster_path={movie.poster_path} />
       </Carousel.Slide>

@@ -65,6 +65,11 @@ export default function Navbar(): JSX.Element {
             <Modal opened={modelOpened} fullScreen={true} transition="slide-down" exitTransitionDuration={100}
                 onClose={() => setModelOpened(false)} title="Menu Model" >
                 <h1>Look at me I am a web developer</h1>
+                <Link href={`/movie/nowpopular`}><Text>Now Popular Movies</Text></Link>
+                <Link href={`/movie/nowplaying`}><Text>Now Playing Movies</Text></Link>
+                <Link href={`/movie/upcoming`}><Text>Upcoming Movies</Text></Link>
+                <Link href={`/tv/nowplaying`}><Text>Now Playing Shows</Text></Link>
+                <Link href={`/tv/nowpopular`}><Text>Now Popular Shows</Text></Link>
             </Modal>
             <FaImdb size={50} color="#F08C00" className={navbar.cursor} onClick={() => router.push("/")} />
             <Button leftIcon={<AiOutlineMenu />} variant="filled" onClick={() => setModelOpened(true)}

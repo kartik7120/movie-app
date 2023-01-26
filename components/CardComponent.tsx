@@ -28,7 +28,9 @@ const useStyles = createStyles((theme, params, gerRef) => ({
         maxWidth: "100%"
     },
     wrapper2: {
-        marginBottom: "2rem",
+        // marginBottom: "2rem",
+        overflowWrap: "break-word",
+        width: "10em"
     },
     wrapper3: {
         marginTop: "2rem"
@@ -45,6 +47,11 @@ const useStyles = createStyles((theme, params, gerRef) => ({
         width: "auto",
         height: "auto",
         maxHeight: "100%"
+    },
+    wrapper5: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
     }
 }))
 
@@ -208,23 +215,18 @@ export default function CardComponent(props: CardProps): JSX.Element {
                     />
                 </Link>
             </Card.Section>
-            <div className={classes.wrapper2}>
-                <Group position="apart" mt={3} sx={{ maxWidth: "100%" }}>
+            <div className={classes.wrapper5}>
+                <div className={classes.wrapper2}>
                     <div className={classes.wrapper}>
                         <AiFillStar color="#c39400" size={20} style={{ alignSelf: "center" }} />
                         <Text variant="text" pl={3}>{rating.averageRating || "N\\A"}</Text>
                     </div>
-                    {/* <ActionIcon radius="sm" variant="subtle" onClick={() => setOpened(true)} size="lg">
-                        <BsStar color="cyan" size={18} />
-                    </ActionIcon> */}
-                </Group>
-                <Link href={`/${props.media_type}/${props.id}`}>
-                    <Text lineClamp={3} size="md" align="left" component="p" m={1} style={{ height: "2rem" }}>
-                        {props.original_title}
-                    </Text>
-                </Link>
-            </div>
-            <div className={classes.wrapper3}>
+                    <Link style={{ margin: 0 }} href={`/${props.media_type}/${props.id}`}>
+                        <Text span sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }} size="md" align="left">
+                            {props.original_title}
+                        </Text>
+                    </Link>
+                </div>
                 <div className={classes.wrapper4}>
                     <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
                         <ActionIcon radius="md" variant="subtle" size="md">
