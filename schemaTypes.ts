@@ -325,6 +325,14 @@ export type NowPlayingTv = {
   vote_count?: Maybe<Scalars['Float']>;
 };
 
+export type NowPopularComplete = {
+  __typename?: 'NowPopularComplete';
+  page?: Maybe<Scalars['Int']>;
+  results?: Maybe<Array<Maybe<NowPlaying>>>;
+  total_pages?: Maybe<Scalars['Int']>;
+  total_results?: Maybe<Scalars['Int']>;
+};
+
 export type People = {
   __typename?: 'People';
   adult: Scalars['Boolean'];
@@ -460,7 +468,7 @@ export type Query = {
   getPeopleExternalIDs?: Maybe<ExternalIds>;
   getPeopleImages?: Maybe<PeopleImages>;
   getPoplarTv?: Maybe<Array<Maybe<NowPlayingTv>>>;
-  getPopularMovies?: Maybe<Array<Maybe<NowPlaying>>>;
+  getPopularMovies?: Maybe<NowPopularComplete>;
   getSimilarMovies?: Maybe<Array<Maybe<NowPlaying>>>;
   getTvDetails?: Maybe<TvDetails>;
   getVideoMedia?: Maybe<MediaTypeUnion>;
@@ -567,6 +575,11 @@ export type QueryGetPeopleImagesArgs = {
 };
 
 
+export type QueryGetPopularMoviesArgs = {
+  page?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type QueryGetSimilarMoviesArgs = {
   id: Scalars['ID'];
   page?: InputMaybe<Scalars['Int']>;
@@ -627,6 +640,14 @@ export type QueryTrendingArgs = {
 };
 
 export type Recommendation = NowPlaying | NowPlayingTv;
+
+export type Review = {
+  __typename?: 'Review';
+  rating?: Maybe<Scalars['Int']>;
+  review: Scalars['String'];
+  spolier?: Maybe<Scalars['Boolean']>;
+  title: Scalars['String'];
+};
 
 export type Search = {
   __typename?: 'Search';
@@ -723,6 +744,7 @@ export type Trending = {
   backdrop_path?: Maybe<Scalars['String']>;
   genre_ids: Array<Maybe<Scalars['Int']>>;
   id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
   original_language: Scalars['String'];
   original_title?: Maybe<Scalars['String']>;
   overview: Scalars['String'];
@@ -746,7 +768,7 @@ export type TvDetails = {
   first_air_date?: Maybe<Scalars['String']>;
   genres?: Maybe<Array<Maybe<Genre>>>;
   homepage?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id?: Maybe<Scalars['ID']>;
   in_production: Scalars['Boolean'];
   languages: Array<Maybe<Scalars['String']>>;
   last_air_date?: Maybe<Scalars['String']>;
@@ -902,6 +924,7 @@ export type ResolversTypes = {
   NowPlaying: ResolverTypeWrapper<NowPlaying>;
   NowPlayingMovies: ResolverTypeWrapper<NowPlayingMovies>;
   NowPlayingTv: ResolverTypeWrapper<NowPlayingTv>;
+  NowPopularComplete: ResolverTypeWrapper<NowPopularComplete>;
   People: ResolverTypeWrapper<Omit<People, 'known_for'> & { known_for?: Maybe<ResolversTypes['Recommendation']> }>;
   PeopleCast: ResolverTypeWrapper<PeopleCast>;
   PeopleCrew: ResolverTypeWrapper<PeopleCrew>;
@@ -913,6 +936,7 @@ export type ResolversTypes = {
   ProviderInfo: ResolverTypeWrapper<ProviderInfo>;
   Query: ResolverTypeWrapper<{}>;
   Recommendation: ResolversTypes['NowPlaying'] | ResolversTypes['NowPlayingTv'];
+  Review: ResolverTypeWrapper<Review>;
   Search: ResolverTypeWrapper<Omit<Search, 'results'> & { results?: Maybe<Array<Maybe<ResolversTypes['SearchResult']>>> }>;
   SearchCollection: ResolverTypeWrapper<SearchCollection>;
   SearchKeyword: ResolverTypeWrapper<SearchKeyword>;
@@ -971,6 +995,7 @@ export type ResolversParentTypes = {
   NowPlaying: NowPlaying;
   NowPlayingMovies: NowPlayingMovies;
   NowPlayingTv: NowPlayingTv;
+  NowPopularComplete: NowPopularComplete;
   People: Omit<People, 'known_for'> & { known_for?: Maybe<ResolversParentTypes['Recommendation']> };
   PeopleCast: PeopleCast;
   PeopleCrew: PeopleCrew;
@@ -982,6 +1007,7 @@ export type ResolversParentTypes = {
   ProviderInfo: ProviderInfo;
   Query: {};
   Recommendation: ResolversParentTypes['NowPlaying'] | ResolversParentTypes['NowPlayingTv'];
+  Review: Review;
   Search: Omit<Search, 'results'> & { results?: Maybe<Array<Maybe<ResolversParentTypes['SearchResult']>>> };
   SearchCollection: SearchCollection;
   SearchKeyword: SearchKeyword;
@@ -1301,6 +1327,14 @@ export type NowPlayingTvResolvers<ContextType = any, ParentType extends Resolver
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type NowPopularCompleteResolvers<ContextType = any, ParentType extends ResolversParentTypes['NowPopularComplete'] = ResolversParentTypes['NowPopularComplete']> = {
+  page?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  results?: Resolver<Maybe<Array<Maybe<ResolversTypes['NowPlaying']>>>, ParentType, ContextType>;
+  total_pages?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  total_results?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type PeopleResolvers<ContextType = any, ParentType extends ResolversParentTypes['People'] = ResolversParentTypes['People']> = {
   adult?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -1435,7 +1469,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getPeopleExternalIDs?: Resolver<Maybe<ResolversTypes['ExternalIds']>, ParentType, ContextType, RequireFields<QueryGetPeopleExternalIDsArgs, 'id'>>;
   getPeopleImages?: Resolver<Maybe<ResolversTypes['PeopleImages']>, ParentType, ContextType, RequireFields<QueryGetPeopleImagesArgs, 'id'>>;
   getPoplarTv?: Resolver<Maybe<Array<Maybe<ResolversTypes['NowPlayingTv']>>>, ParentType, ContextType>;
-  getPopularMovies?: Resolver<Maybe<Array<Maybe<ResolversTypes['NowPlaying']>>>, ParentType, ContextType>;
+  getPopularMovies?: Resolver<Maybe<ResolversTypes['NowPopularComplete']>, ParentType, ContextType, Partial<QueryGetPopularMoviesArgs>>;
   getSimilarMovies?: Resolver<Maybe<Array<Maybe<ResolversTypes['NowPlaying']>>>, ParentType, ContextType, RequireFields<QueryGetSimilarMoviesArgs, 'id'>>;
   getTvDetails?: Resolver<Maybe<ResolversTypes['TvDetails']>, ParentType, ContextType, RequireFields<QueryGetTvDetailsArgs, 'id'>>;
   getVideoMedia?: Resolver<Maybe<ResolversTypes['MediaTypeUnion']>, ParentType, ContextType, RequireFields<QueryGetVideoMediaArgs, 'id' | 'sourceMedia'>>;
@@ -1454,6 +1488,14 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type RecommendationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Recommendation'] = ResolversParentTypes['Recommendation']> = {
   __resolveType: TypeResolveFn<'NowPlaying' | 'NowPlayingTv', ParentType, ContextType>;
+};
+
+export type ReviewResolvers<ContextType = any, ParentType extends ResolversParentTypes['Review'] = ResolversParentTypes['Review']> = {
+  rating?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  review?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  spolier?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type SearchResolvers<ContextType = any, ParentType extends ResolversParentTypes['Search'] = ResolversParentTypes['Search']> = {
@@ -1532,6 +1574,7 @@ export type TrendingResolvers<ContextType = any, ParentType extends ResolversPar
   backdrop_path?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   genre_ids?: Resolver<Array<Maybe<ResolversTypes['Int']>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   original_language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   original_title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   overview?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -1554,7 +1597,7 @@ export type TvDetailsResolvers<ContextType = any, ParentType extends ResolversPa
   first_air_date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   genres?: Resolver<Maybe<Array<Maybe<ResolversTypes['Genre']>>>, ParentType, ContextType>;
   homepage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   in_production?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   languages?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   last_air_date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1637,6 +1680,7 @@ export type Resolvers<ContextType = any> = {
   NowPlaying?: NowPlayingResolvers<ContextType>;
   NowPlayingMovies?: NowPlayingMoviesResolvers<ContextType>;
   NowPlayingTv?: NowPlayingTvResolvers<ContextType>;
+  NowPopularComplete?: NowPopularCompleteResolvers<ContextType>;
   People?: PeopleResolvers<ContextType>;
   PeopleCast?: PeopleCastResolvers<ContextType>;
   PeopleCrew?: PeopleCrewResolvers<ContextType>;
@@ -1648,6 +1692,7 @@ export type Resolvers<ContextType = any> = {
   ProviderInfo?: ProviderInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Recommendation?: RecommendationResolvers<ContextType>;
+  Review?: ReviewResolvers<ContextType>;
   Search?: SearchResolvers<ContextType>;
   SearchCollection?: SearchCollectionResolvers<ContextType>;
   SearchKeyword?: SearchKeywordResolvers<ContextType>;
