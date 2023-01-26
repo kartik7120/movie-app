@@ -16,7 +16,7 @@ import { getAuth } from "firebase/auth";
 interface CardProps {
     poster_path: string,
     id: string,
-    media_type: "movie" | "tv",
+    media_type: "movie" | "tv" | "people",
     original_title: string,
 }
 
@@ -196,7 +196,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
         >
             <Stack align="center">
                 <Text align="center" size="lg" pt={10} pb={10}>{props.original_title}</Text>
-                <Rating value={(review && review.rating) || value} onChange={setValue} size="xl" count={10} />
+                {props.media_type !== "people" && <Rating value={(review && review.rating) || value} onChange={setValue} size="xl" count={10} />}
             </Stack>
         </Modal>
 
@@ -227,7 +227,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
                         </Text>
                     </Link>
                 </div>
-                <div className={classes.wrapper4}>
+                {props.media_type !== "people" && <div className={classes.wrapper4}>
                     <MediaQuery styles={{ display: "none" }} query="(min-width:690px)">
                         <ActionIcon radius="md" variant="subtle" size="md">
                             <AiOutlineInfoCircle color="white" size={25} />
@@ -251,7 +251,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
                             </Menu.Dropdown>
                         </Menu>
                     </MediaQuery>
-                </div>
+                </div>}
             </div>
         </Card>
     </>

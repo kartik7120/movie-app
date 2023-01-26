@@ -717,6 +717,15 @@ export const resolvers = {
             } catch (error) {
                 throw new GraphQLError("Some error occured while querying for episode details");
             }
+        },
+        getPopularPeople: async (parent: any, args: any, context: any, info: any) => {
+            try {
+                const query = await fetch(`https://api.themoviedb.org/3/person/popular?api_key=${process.env.API_KEY}${args.page ? `&page=${args.page}` : ""}`)
+                const result = await query.json();
+                return result;
+            } catch (error) {
+                throw new GraphQLError("Some error occured while querying for People");
+            }
         }
     },
 }

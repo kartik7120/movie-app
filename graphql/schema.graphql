@@ -318,6 +318,7 @@ type PeopleResult {
   total_results: Int
   total_pages: Int
   result: [People]
+  results: [People]
   page: Int
 }
 
@@ -636,4 +637,5 @@ type Query {
     season_number: Int!
     episode_number: Int!
   ): EpisodeDetail
+  getPopularPeople(page: Int): PeopleResult
 }

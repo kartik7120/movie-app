@@ -70,6 +70,7 @@ export default function Navbar(): JSX.Element {
                 <Link href={`/movie/upcoming`}><Text>Upcoming Movies</Text></Link>
                 <Link href={`/tv/nowplaying`}><Text>Now Playing Shows</Text></Link>
                 <Link href={`/tv/nowpopular`}><Text>Now Popular Shows</Text></Link>
+                <Link href={`/people/popularpeople`}><Text>Popular People</Text></Link>
             </Modal>
             <FaImdb size={50} color="#F08C00" className={navbar.cursor} onClick={() => router.push("/")} />
             <Button leftIcon={<AiOutlineMenu />} variant="filled" onClick={() => setModelOpened(true)}
