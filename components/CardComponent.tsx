@@ -196,7 +196,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
         >
             <Stack align="center">
                 <Text align="center" size="lg" pt={10} pb={10}>{props.original_title}</Text>
-                {props.media_type !== "people" && <Rating value={(review && review.rating) || value} onChange={setValue} size="xl" count={10} />}
+                {props.media_type !== "people" ? <Rating value={(review && review.rating) || value} onChange={setValue} size="xl" count={10} /> : ""}
             </Stack>
         </Modal>
 
@@ -219,7 +219,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 <div className={classes.wrapper2}>
                     <div className={classes.wrapper}>
                         <AiFillStar color="#c39400" size={20} style={{ alignSelf: "center" }} />
-                        <Text variant="text" pl={3}>{rating.averageRating || "N\\A"}</Text>
+                        {props.media_type !== "people" && <Text variant="text" pl={3}>{rating.averageRating || "N\\A"}</Text>}
                     </div>
                     <Link style={{ margin: 0 }} href={`/${props.media_type}/${props.id}`}>
                         <Text span sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }} size="md" align="left">

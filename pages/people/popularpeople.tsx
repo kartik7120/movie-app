@@ -28,9 +28,6 @@ export default function UpcomingTv() {
         onError(error) {
             console.log(error);
         },
-        onCompleted(data) {
-            console.log(data);
-        },
     })
 
     if (error) {
