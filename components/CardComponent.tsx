@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Button, Card, createStyles, Group, Menu, Modal, Rating, Skeleton, Stack, Text, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Badge, Button, Card, Image as Image2, createStyles, Group, Menu, Modal, Rating, Skeleton, Stack, Text, useMantineTheme } from "@mantine/core";
 import Image from "next/image";
 import { BsStar, BsFillPlayFill, BsFillBookmarkPlusFill } from "react-icons/bs";
 import { MediaQuery } from "@mantine/core";
@@ -203,7 +203,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
         <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card}>
             <Card.Section>
                 <Link href={`/${props.media_type}/${props.id}`}>
-                    <Image
+                    {/* <Image
                         src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
                         alt={`${props.original_title} poster`}
                         priority={true}
@@ -212,7 +212,10 @@ export default function CardComponent(props: CardProps): JSX.Element {
                         className={classes.imgClass}
                         placeholder="blur"
                         blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(200, 270))}`}
-                    />
+                    /> */}
+                    <Image2 withPlaceholder className={classes.imgClass}
+                        height={300} src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
+                        alt={`${props.original_title} poster`} />
                 </Link>
             </Card.Section>
             <div className={classes.wrapper5}>

@@ -7,6 +7,16 @@
   width: 80%;
 }
 
+.textClass:hover {
+  text-decoration: underline;
+}
+
+.menuWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .wrapper2 {
   display: none;
 }
