@@ -3,7 +3,7 @@ import { AiOutlineHeart, AiOutlineUnorderedList, AiTwotoneStar } from "react-ico
 import { BsBookmark } from "react-icons/bs";
 import { db } from "../firebase";
 import { collection, deleteDoc, doc, onSnapshot, query, setDoc, where } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -16,9 +16,21 @@ export default function ActionButtons(props: Props) {
     const auth = getAuth();
     const [watchList, setWatchList] = useState(false);
     const [favList, setFavList] = useState(false);
-    const user = auth.currentUser;
+    // const user = auth.currentUser;
+    const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
+        onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser) {
+                if (user !== currentUser) {
+                    setUser(currentUser);
+                }
+            }
+            else {
+                setUser(null);
+            }
+        })
+
         if (user) {
             const q = query(collection(db, "users", user.uid, "watchlist"), where("id", "==", `${props.id}`))
             const unsubscribe = onSnapshot(q, (snapshot) => {
