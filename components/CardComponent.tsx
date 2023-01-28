@@ -12,6 +12,7 @@ import { SpecificMedia } from "../schemaTypes";
 import { collection, deleteDoc, doc, getDoc, onSnapshot, query, setDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
+import { getPlaiceholder } from "plaiceholder";
 
 interface CardProps {
     poster_path: string,
@@ -80,6 +81,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
     const [watchList, setWatchList] = useState(false);
     const [favList, setFavList] = useState(false);
     const [review, setReview] = React.useState<any | null>(null);
+    const [placeholder, setPlaceholder] = useState("");
     const auth = getAuth();
     const user = auth.currentUser;
     const [opened, setOpened] = useState(false);
@@ -126,7 +128,6 @@ export default function CardComponent(props: CardProps): JSX.Element {
                 }
             }
             getRating();
-
             return () => {
                 unsubscribe();
                 unsubscribe2();
@@ -203,7 +204,7 @@ export default function CardComponent(props: CardProps): JSX.Element {
         <Card shadow="md" p="lg" radius="sm" withBorder className={styles.card}>
             <Card.Section>
                 <Link href={`/${props.media_type}/${props.id}`}>
-                    {/* <Image
+                    <Image
                         src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
                         alt={`${props.original_title} poster`}
                         priority={true}
@@ -211,11 +212,11 @@ export default function CardComponent(props: CardProps): JSX.Element {
                         height={270}
                         className={classes.imgClass}
                         placeholder="blur"
-                        blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(200, 270))}`}
-                    /> */}
-                    <Image2 withPlaceholder className={classes.imgClass}
+                        blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8dmz9fgAHkQL8eDWg2QAAAABJRU5ErkJggg==`}
+                    />
+                    {/* <Image2 withPlaceholder className={classes.imgClass}
                         height={300} src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
-                        alt={`${props.original_title} poster`} />
+                        alt={`${props.original_title} poster`} /> */}
                 </Link>
             </Card.Section>
             <div className={classes.wrapper5}>

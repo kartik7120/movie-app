@@ -46,15 +46,18 @@
   .watchlist {
     display: none;
   }
+  .menuWrapper {
+    flex-direction: column;
+  }
 }
 
 @media screen and (max-width: 721px) {
   .divider {
     display: none;
   }
-  /* .profileBtn {
-    display: none;
-  } */
+  .menuWrapper {
+    flex-direction: column;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -66,6 +69,9 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+  }
+  .menuWrapper {
+    flex-direction: column;
   }
   .wrapper2Div {
     display: flex;

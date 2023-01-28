@@ -67,7 +67,7 @@ export default function Navbar(): JSX.Element {
                 <div className={navbar.menuWrapper}>
                     <div>
                         <Text size="xl">Movie</Text>
-                        <Link href={`/movie/nowpopular`}>
+                        <Link href={`/movie/nowpopular`} onClick={() => setModelOpened(false)}>
                             <Text className={navbar.textClass}>Now Popular Movies</Text>
                         </Link>
                         <Link href={`/movie/nowplaying`}>
@@ -150,6 +150,36 @@ export default function Navbar(): JSX.Element {
                     <Link href={`/watchlist`} onClick={() => setOpened(false)}>
                         <Text variant="text" size="lg">WatchList</Text>
                     </Link>
+
+                    <div className={navbar.menuWrapper}>
+                        <div>
+                            <Text size="xl">Movie</Text>
+                            <Link href={`/movie/nowpopular`} onClick={() => setModelOpened(false)}>
+                                <Text className={navbar.textClass}>Now Popular Movies</Text>
+                            </Link>
+                            <Link href={`/movie/nowplaying`}>
+                                <Text className={navbar.textClass}>Now Playing Movies</Text>
+                            </Link>
+                            <Link href={`/movie/upcoming`}>
+                                <Text className={navbar.textClass}>Upcoming Movies</Text>
+                            </Link>
+                        </div>
+                        <div>
+                            <Text size="xl">Tv</Text>
+                            <Link href={`/tv/nowplaying`}>
+                                <Text className={navbar.textClass}>Now Playing Shows</Text>
+                            </Link>
+                            <Link href={`/tv/nowpopular`}>
+                                <Text className={navbar.textClass}>Now Popular Shows</Text>
+                            </Link>
+                        </div>
+                        <div>
+                            <Text size="xl">People</Text>
+                            <Link href={`/people/popularpeople`}>
+                                <Text className={navbar.textClass}>Popular People</Text>
+                            </Link>
+                        </div>
+                    </div>
                 </Drawer>
                 <ActionIcon className={navbar.drawer} onClick={() => setOpened(true)}>
                     <FiMenu />
