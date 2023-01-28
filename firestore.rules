@@ -7,7 +7,11 @@ service cloud.firestore {
     }
     match /{path=**}/reviews {
       allow write : if 
-        request.resource.data.keys().hasAll(['upvotes','downvotes','title','review','rating'])
+        request.resource.data.keys().hasAll(['upvotes','downvotes','title','review','rating']) && request.auth != null
+    }
+    match /users/{userid}/{path=**} {
+      allow read, write: if
+        request.auth != null && request.auth.uid == userid
     }
   }
 }
