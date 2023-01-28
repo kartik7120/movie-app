@@ -12,7 +12,6 @@ import { SpecificMedia } from "../schemaTypes";
 import { collection, deleteDoc, doc, getDoc, onSnapshot, query, setDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
-import { getPlaiceholder } from "plaiceholder";
 
 interface CardProps {
     poster_path: string,
