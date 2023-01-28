@@ -4,11 +4,9 @@ import { BsStar, BsFillPlayFill, BsFillBookmarkPlusFill } from "react-icons/bs";
 import { MediaQuery } from "@mantine/core";
 import { AiFillStar, AiOutlinePlus, AiOutlineInfoCircle, AiFillHeart } from "react-icons/ai";
 import styles from "../styles/card.module.css";
-import { shimmer, toBase64 } from "../lib/util";
 import React, { useEffect, useState } from "react";
 import Link from "next/dist/client/link";
 import { gql, useLazyQuery } from "@apollo/client";
-import { SpecificMedia } from "../schemaTypes";
 import { collection, deleteDoc, doc, getDoc, onSnapshot, query, setDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
@@ -28,7 +26,6 @@ const useStyles = createStyles((theme, params, gerRef) => ({
         maxWidth: "100%"
     },
     wrapper2: {
-        // marginBottom: "2rem",
         overflowWrap: "break-word",
         width: "10em"
     },
@@ -213,9 +210,6 @@ export default function CardComponent(props: CardProps): JSX.Element {
                         placeholder="blur"
                         blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8dmz9fgAHkQL8eDWg2QAAAABJRU5ErkJggg==`}
                     />
-                    {/* <Image2 withPlaceholder className={classes.imgClass}
-                        height={300} src={`https://image.tmdb.org/t/p/w300${props.poster_path}`}
-                        alt={`${props.original_title} poster`} /> */}
                 </Link>
             </Card.Section>
             <div className={classes.wrapper5}>
