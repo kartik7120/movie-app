@@ -176,7 +176,7 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
                                     {Number.isNaN(rating.averageRating) ? "Not Rated yet" : `${rating.averageRating}/10`}
                                 </Text>
                             </Group>
-                            <Text color={contrast === "black" ? theme.black : theme.white}>By {formatter(rating.reviewCount) || 0}</Text>
+                            <Text color={contrast === "black" ? theme.black : theme.white}>By {!Number.isNaN(rating.reviewCount) && formatter(rating.reviewCount) || 0}</Text>
                         </Stack>
                         <ActionButtons id={id} mediaType="MOVIES" />
                         <Button variant="filled" onClick={() => {
