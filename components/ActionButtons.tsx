@@ -16,7 +16,6 @@ export default function ActionButtons(props: Props) {
     const auth = getAuth();
     const [watchList, setWatchList] = useState(false);
     const [favList, setFavList] = useState(false);
-    // const user = auth.currentUser;
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
