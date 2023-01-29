@@ -43,7 +43,7 @@ export default function BackDrops(props: Props) {
             <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
             <title>{props.title} - Backdrops</title>
         </Head>
-        <MoreTitle id={props.id} title={`${props.title || "Movie Title"}`} />
+        <MoreTitle sourceMedia="MOVIE" id={props.id} title={`${props.title || "Movie Title"}`} />
         <div className={styles.wrapper}>
             <div className={styles.wrapper3}>
                 <LeftOptions sourceMedia="MOVIE" type="backdrops" id={props.id} title="Backdrops" list={props.languageMap} />
