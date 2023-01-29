@@ -125,7 +125,7 @@ export default function ActionButtons(props: Props) {
         </Tooltip>
         <Tooltip label={!favList ? "Add to Favourites" : "Remove from your Favourites"} position="bottom">
             <ActionIcon disabled={user ? false : true} size="xl" mr={5} onClick={!favList ? handleFavouriteButton : removeFavList}>
-                <AiOutlineHeart fill={favList ? "red" : undefined} color={theme.colorScheme === "dark" ? theme.white : theme.black} />
+                <AiOutlineHeart fill={favList ? "red" : "white"} color={theme.colorScheme === "dark" ? theme.white : theme.black} />
             </ActionIcon>
         </Tooltip>
         <Tooltip label={user !== null ? !watchList ? "Add to your watchlist" : "Remove from your watchlist" : "Log in to add to Favourites"} position="bottom">
