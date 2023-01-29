@@ -122,6 +122,9 @@ export default function Media({ data, id, acceptLang }: { data: any, id: number,
             }
         }
         getRating();
+        return () => {
+            setRating({ averageRating: NaN, reviewCount: NaN })
+        }
     }, [data, id])
 
     const isMobile = useMediaQuery('(max-width: 694px)');

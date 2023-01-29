@@ -59,6 +59,8 @@ export default function ActionButtons(props: Props) {
             return () => {
                 unsubscribe();
                 unsubscribe2();
+                setFavList(false);
+                setWatchList(false);
             }
         }
 
