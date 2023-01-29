@@ -235,10 +235,24 @@ export function formatter(num: number) {
   if (num < 0) {
     throw new Error("Please provide a positive number");
   }
-  
+
   if (num > 999) {
     return Math.floor(Math.sign(num) * (Math.abs(num) / 1000)) + 'k';
   }
 
   return (Math.sign(num) * Math.abs(num)).toString();
+}
+
+export function getBaseUrl() {
+  // if (typeof window !== 'undefined')
+  //   // browser should use relative path
+  //   return '';
+  if (process.env.VERCEL_URL)
+    // reference for vercel.com
+    return `https://${process.env.VERCEL_URL}`;
+  if (process.env.RENDER_INTERNAL_HOSTNAME)
+    // reference for render.com
+    return `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}`;
+  // assume localhost
+  return `http://localhost:${process.env.PORT ?? 3000}`;
 }
