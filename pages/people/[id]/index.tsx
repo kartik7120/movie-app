@@ -29,6 +29,7 @@ const PEOPLE_DETAILS = gql`
     profile_path
     homepage
     known_for_department
+    # also_known_as
   }
   getPeopleExternalIDs(id: $peopleDetailsId) {
     instagram_id
@@ -46,6 +47,7 @@ const PEOPLE_DETAILS = gql`
           title
           name
           first_air_date
+          media_type
         }
       }
       cast {
@@ -57,6 +59,7 @@ const PEOPLE_DETAILS = gql`
           title
           character
           release_date
+          media_type
         }
       }
     }
@@ -81,18 +84,21 @@ export default function People(props: Props): JSX.Element {
             <div>
                 <ImageCard width={300} height={500} imgUrl={props.people.profile_path!} />
                 <div className={styles.iconWrapper}>
-                    <ActionIcon variant="outline" size="lg" m={10} component="a" target="_blank"
-                        href={`https://www.twitter.com/${props.externalIds.twitter_id}`}>
-                        <BsTwitter size={30} />
-                    </ActionIcon>
-                    <ActionIcon variant="outline" size="lg" m={10} component="a" target="_blank"
-                        href={`https://www.facebook.com/${props.externalIds.facebook_id}`}>
-                        <GrFacebook size={30} />
-                    </ActionIcon>
-                    <ActionIcon variant="outline" size="lg" m={10} component="a" target="_blank"
-                        href={`https://www.instagram.com/${props.externalIds.instagram_id}`}>
-                        <AiFillInstagram size={30} />
-                    </ActionIcon>
+                    {props.externalIds.twitter_id &&
+                        <ActionIcon variant="outline" size="lg" m={10} component="a" target="_blank"
+                            href={`https://www.twitter.com/${props.externalIds.twitter_id}`}>
+                            <BsTwitter size={30} />
+                        </ActionIcon>}
+                    {props.externalIds.facebook_id &&
+                        <ActionIcon variant="outline" size="lg" m={10} component="a" target="_blank"
+                            href={`https://www.facebook.com/${props.externalIds.facebook_id}`}>
+                            <GrFacebook size={30} />
+                        </ActionIcon>}
+                    {props.externalIds.instagram_id &&
+                        <ActionIcon variant="outline" size="lg" m={10} component="a" target="_blank"
+                            href={`https://www.instagram.com/${props.externalIds.instagram_id}`}>
+                            <AiFillInstagram size={30} />
+                        </ActionIcon>}
                 </div>
                 <div>
                     <Text variant="text" fw="bold" size="xl">Personal Info</Text>
@@ -137,8 +143,11 @@ export default function People(props: Props): JSX.Element {
                                     lineActive={JSON.stringify(movie?.release_date).length === 2 && JSON.stringify(movie?.first_air_date).length === 4 ? false : true}
                                     key={Math.random() * 55 * index}
                                     bullet={<BiRadioCircleMarked size={12} />}
-                                    title={<><Link href={`/movie/${movie?.id}`}><Text variant="text">{movie?.title || movie?.name}
-                                    </Text></Link> <Text color="dimmed" component="span" inline>as {movie?.character} ({movie?.first_air_date?.substring(0, 4) || movie?.release_date?.substring(0, 4)})</Text></>}>
+                                    title={<>
+                                        <Link href={`/${movie?.media_type}/${movie?.id}`}>
+                                            <Text variant="text">{movie?.title || movie?.name}</Text>
+                                        </Link>
+                                        <Text color="dimmed" component="span" inline>{movie?.character && `as ${movie?.character}`} ({movie?.first_air_date?.substring(0, 4) || movie?.release_date?.substring(0, 4)})</Text></>}>
                                 </Timeline.Item>
                             })}
                         </Timeline>
@@ -153,7 +162,7 @@ export default function People(props: Props): JSX.Element {
                                     lineActive={JSON.stringify(crew?.release_date).length === 2 && JSON.stringify(crew?.first_air_date).length === 4 ? false : true}
                                     key={Math.random() * 55 * index}
                                     bullet={<BiRadioCircleMarked size={12} />}
-                                    title={<><Link href={`/movie/${crew?.id}`}><Text variant="text">{crew?.title || crew?.name}
+                                    title={<><Link href={`/${crew?.media_type}/${crew?.id}`}><Text variant="text">{crew?.title || crew?.name}
                                     </Text></Link> <Text color="dimmed" component="span" inline>as {crew?.department} ({crew?.first_air_date?.substring(0, 4) || crew?.release_date?.substring(0, 4)})</Text></>}>
                                 </Timeline.Item>
                             })}
