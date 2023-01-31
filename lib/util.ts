@@ -249,6 +249,7 @@ export function getBaseUrl() {
   //   return '';
   if (process.env.VERCEL_URL)
     // reference for vercel.com
+    console.log(`vercel url = ${process.env.VERCEL_URL}`)
     return `https://${process.env.VERCEL_URL}`;
   if (process.env.RENDER_INTERNAL_HOSTNAME)
     // reference for render.com
