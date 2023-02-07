@@ -1,3 +1,3 @@
 # Movie App
 
-url: https://movie-6o9ywfgxm-kartik7120.vercel.app/
+url: https://movie-app-smoky-three.vercel.app/
